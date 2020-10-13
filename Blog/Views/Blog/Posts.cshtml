@@ -1,0 +1,32 @@
+﻿@model IQueryable<Post>
+
+<head>
+    <title>@ViewData["Title"] - Список постов</title>
+</head>
+
+<body>
+    @if (Model.Any())
+    {
+        @foreach (Post post in Model)
+        {
+            var path = "";
+            @if (post.TitleImagePath != null)
+            {
+                path = post.TitleImagePath;
+            }
+            else
+            {
+                path = "1.jpg";
+            }
+            <div class="card mb-3">
+                <img class="card-img-top" src="~/images/@path" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">@post.Title</h5>
+                    <p class="card-text">@Html.Raw(post.Content)</p>
+                    <p class="card-text"><small class="text-muted">@Html.Raw(post.PostedDate)</small></p>
+                    <a asp-area="" asp-controller="Blog" asp-action="Detail" asp-route-id="@post.Id" class="btn btn-primary">Читать полностью</a>
+                </div>
+            </div>
+        }
+    }
+</body>

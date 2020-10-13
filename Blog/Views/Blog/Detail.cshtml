@@ -1,0 +1,54 @@
+﻿@model Entities.Post
+
+<head>
+    <title>@ViewData["Title"] - Пост</title>
+</head>
+<body>
+    <header>
+        <h1>@Model.Title</h1>
+    </header>
+    <div>
+        @if (Model.TitleImagePath != null)
+        {
+            <img class="card-img-top" src="~/images/@Model.TitleImagePath" alt="">
+        }
+        @Html.Raw(Model.Content)
+    </div>
+    <form asp-controller="Blog" asp-action="AddComment" asp-route-id="@Model.Id">
+        <div class="form-group">
+            <textarea class="form-control" placeholder="Комментарий" rows="5" name="content"></textarea>
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Отправить" class="btn btn-primary" />
+        </div>
+    </form>
+    <div id="notify">
+        @if (ViewBag.Comments != null)
+        {
+            @foreach (Comment comment in ViewBag.Comments)
+            {
+                <div class="card border-dark mb-3 w-50">
+                    <div class="card-header">
+                        <p class="card-text">@comment.Content</p>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">@comment.Content</p>
+                        <p class="card-text text-right"><small class="text-muted">@comment.PostedDate</small></p>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+    <script src="~/js/signalr/dist/browser/signalr.js"></script>
+    <script>
+        const hubConnection = new signalR.HubConnectionBuilder()
+            .withUrl("/comment")
+            .build();
+
+        hubConnection.on('Notify', function (message) {
+
+            document.getElementById("notify").insertAdjacentHTML("afterend", '<div class="card border-dark mb-3 w-50"><div class="card-header"><p class="card-text">' + message + '</p></div><div class="card-body"><p class="card-text">' + message + '</p><p class="card-text text-right"><small class="text-muted">' + message + '</small></p></div></div>');
+        });
+        hubConnection.start();
+    </script>
+</body>

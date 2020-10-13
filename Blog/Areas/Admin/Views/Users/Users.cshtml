@@ -1,0 +1,27 @@
+﻿@model IQueryable<ApplicationUser>
+<head>
+    <title>@ViewData["Title"] - Пользователи</title>
+</head>
+<body>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th scope="col">Пользователь</th>
+                <th scope="col">Действия</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Email</td>
+                    <td>
+                        <a type="button" class="btn btn-primary" asp-action="Edit" asp-route-id="@item.Id">Изменить</a>
+                        <a type="button" class="btn btn-primary" asp-action="SendMessage" asp-route-id="@item.Id">Отправить сообщение</a>
+                        <a type="button" class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id">Удалить</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</body>

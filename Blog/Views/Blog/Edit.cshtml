@@ -1,0 +1,54 @@
+﻿@model Entities.Post
+
+<head>
+    @if (Model.Id == default)
+    {
+        <title>@ViewData["Title"] - Создать пост</title>
+    }
+    else
+    {
+        <title>@ViewData["Title"] - Редактировать пост</title>
+    }
+</head>
+
+<body>
+    <form asp-action="Edit" enctype="multipart/form-data">
+        <div class="form-group">
+            <label asp-for="Title"></label>
+            <input asp-for="Title" class="form-control" />
+            <span asp-validation-for="Title"></span>
+        </div>
+        <div class="form-group">
+            <label class="mr-sm-2" asp-for="Category"></label>
+            <select class="custom-select mr-sm-2" asp-for="CategoryId" asp-items="ViewBag.Categories"></select>
+        </div>
+        <div>
+            <label asp-for="Content"></label>
+            <textarea asp-for="Content" class="form-control" rows="10"></textarea>
+            <span asp-validation-for="Content"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="TitleImagePath"></label>
+            <input type="file" name="imageFile" id="imageFile" class="form-control-file">
+            <div>
+                <span class="card-img"><img src="~/images/@Model.TitleImagePath" /></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary">Сохранить</button>
+        </div>
+    </form>
+    <script src="~/js/ckeditor5/ckeditor.js"></script>
+    <script>
+        ClassicEditor
+            .create(document.querySelector('#Content'), {
+                uploadUrl: '@Html.IdFor(x => x.Content)'
+            })
+            .then(editor => {
+                window.editor = editor;
+            })
+            .catch(err => {
+                console.error(err.stack);
+            });
+    </script>
+</body>
