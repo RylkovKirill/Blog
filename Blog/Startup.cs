@@ -34,6 +34,7 @@ namespace Blog
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("ApplicationDbContextConnection")));
+            services.AddSingleton<ImageService>();
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddTransient<IPostService, PostService>();
             services.AddTransient<ICommentService, CommentService>();
@@ -58,7 +59,6 @@ namespace Blog
             else
             {
                 app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
             app.UseHttpsRedirection();
@@ -79,7 +79,7 @@ namespace Blog
 
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Home}/{action=Posts}/{id?}");
                 endpoints.MapRazorPages();
                 endpoints.MapHub<CommentHub>("/comment");
             });

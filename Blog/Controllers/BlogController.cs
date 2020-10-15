@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Blog.Hubs;
+using Blog.Service;
 using Entities;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -11,6 +12,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.SignalR;
+using Microsoft.Extensions.Logging;
 using Services.CategoryService;
 using Services.CommentService;
 using Services.PostService;
@@ -22,11 +24,13 @@ namespace Blog.Controllers
         private readonly IPostService postService;
         private readonly ICommentService commentService;
         private readonly ICategoryService categoryService;
+        private readonly ImageService image;
         private readonly IWebHostEnvironment webHostEnvironment;
         private readonly UserManager<ApplicationUser> userManager;
         private readonly IHubContext<CommentHub> hubContext;
+        private readonly ILogger<BlogController> _logger;
 
-        public BlogController(IPostService postService, ICommentService commentService, ICategoryService categoryService, IWebHostEnvironment webHostEnvironment, UserManager<ApplicationUser> userManager, IHubContext<CommentHub> hubContext)
+        public BlogController(IPostService postService, ICommentService commentService, ICategoryService categoryService, IWebHostEnvironment webHostEnvironment, UserManager<ApplicationUser> userManager, IHubContext<CommentHub> hubContext, ILogger<BlogController> logger, ImageService image)
         {
             this.postService = postService;
             this.commentService = commentService;
@@ -34,6 +38,8 @@ namespace Blog.Controllers
             this.webHostEnvironment = webHostEnvironment;
             this.userManager = userManager;
             this.hubContext = hubContext;
+            _logger = logger;
+            this.image = image;
         }
 
         [HttpGet]
@@ -61,11 +67,7 @@ namespace Blog.Controllers
                 model.User = await userManager.GetUserAsync(HttpContext.User);
                 if (imageFile != null)
                 {
-                    model.TitleImagePath = imageFile.FileName;
-                    using (var stream = new FileStream(Path.Combine(webHostEnvironment.WebRootPath, "images/", imageFile.FileName), FileMode.Create))
-                    {
-                        imageFile.CopyTo(stream);
-                    }
+                    model.TitleImagePath = image.Save(imageFile, this.webHostEnvironment);
                 }
                 postService.UpdatePost(model);
                 return RedirectToAction(nameof(BlogController.EditPosts), nameof(BlogController).Replace("Controller", ""));
@@ -87,6 +89,7 @@ namespace Blog.Controllers
 
         public IActionResult Delete(Guid id)
         {
+            commentService.DeletePostComments(postService.GetPost(id));
             postService.DeletePost(id);
             return RedirectToAction(nameof(BlogController.EditPosts), nameof(BlogController).Replace("Controller", ""));
         }
@@ -110,7 +113,7 @@ namespace Blog.Controllers
             commentService.InsertComment(comment);
             var comments = commentService.GetCommentsByPost(comment.Post);
             ViewBag.Comments = comments;
-            await hubContext.Clients.All.SendAsync("Notify", $" {content}");
+            await hubContext.Clients.All.SendAsync("Notify", $" {content}", $" {userManager.GetUserNameAsync(comment.User).Result}", $" {comment.PostedDate}");
             return View("Detail", postService.GetPost(id));
         }
     }

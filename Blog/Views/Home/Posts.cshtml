@@ -1,8 +1,8 @@
 ﻿@model IQueryable<Post>
 
-<head>
-    <title>@ViewData["Title"] - Список постов</title>
-</head>
+@{
+    ViewData["Title"] = "Список постов";
+}
 
 <body>
     @if (Model.Any())
@@ -21,14 +21,13 @@
             <div class="card mb-3">
                 <img class="card-img-top" src="~/images/@path" alt="Card image cap">
                 <div class="card-body">
-                    <h5 class="card-title">@post.Title</h5>
-                    @if (post.Content.Length > 100)
+                    @if (post.Title.Length > 100)
                     {
-                        <p class="card-text">@Html.Raw(post.Content.Substring(0, 100) + " ...")</p> 
+                        <h5 class="card-title">@post.Title.Substring(0, 100) + " ..."</h5>
                     }
                     else
                     {
-                        <p class="card-text">@Html.Raw(post.Content)</p>
+                        <h5 class="card-title">@post.Title</h5>
                     }
                     @*<p class="card-text">@Html.Raw(post.Content)</p>*@
                     <p class="card-text"><small class="text-muted">@Html.Raw(post.PostedDate)</small></p>

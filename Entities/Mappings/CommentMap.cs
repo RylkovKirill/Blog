@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Entities.Mappings
 {
@@ -6,7 +7,7 @@ namespace Entities.Mappings
     {
         public CommentMap(EntityTypeBuilder<Comment> entityTypeBuilder)
         {
-            entityTypeBuilder.HasOne(c => c.Post).WithMany(p => p.Comments);
+            entityTypeBuilder.HasOne(c => c.Post).WithMany(p => p.Comments).OnDelete(DeleteBehavior.Cascade);
             entityTypeBuilder.HasOne(c => c.User).WithMany(u => u.Comments);
         }
     }

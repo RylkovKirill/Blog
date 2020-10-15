@@ -48,5 +48,15 @@ namespace Services.CommentService
         {
             repository.Delete(GetComment(id));
         }
+
+        public void DeletePostComments(Post post)
+        {
+            IQueryable<Comment> comments = GetCommentsByPost(post);
+            foreach (Comment comment in comments)
+            {
+                repository.Remove(comment);
+            }
+            repository.SaveChanges();
+        }
     }
 }

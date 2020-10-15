@@ -45,9 +45,8 @@
             .withUrl("/comment")
             .build();
 
-        hubConnection.on('Notify', function (message) {
-
-            document.getElementById("notify").insertAdjacentHTML("afterend", '<div class="card border-dark mb-3 w-50"><div class="card-header"><p class="card-text">' + message + '</p></div><div class="card-body"><p class="card-text">' + message + '</p><p class="card-text text-right"><small class="text-muted">' + message + '</small></p></div></div>');
+        hubConnection.on('Notify', function (message, user, data) {
+            document.getElementById("notify").insertAdjacentHTML("afterbegin", '<div class="card border-dark mb-3 w-50"><div class="card-header"><p class="card-text">' + user + '</p></div><div class="card-body"><p class="card-text">' + message + '</p><p class="card-text text-right"><small class="text-muted">' + data + '</small></p></div></div>');
         });
         hubConnection.start();
     </script>

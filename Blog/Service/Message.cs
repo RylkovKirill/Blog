@@ -10,11 +10,11 @@ namespace Blog.Service
 {
     public class Message
     {
-        private readonly ILogger<Message> logger;
+        private readonly ILogger<Message> _logger;
 
         public Message(ILogger<Message> logger)
         {
-            this.logger = logger;
+            _logger = logger;
         }
 
         public void SendMessage(MailMessage message)
@@ -27,12 +27,12 @@ namespace Blog.Service
                     smtpClient.Port = 587;
                     smtpClient.EnableSsl = true;
                     smtpClient.Send(message);
-                    logger.LogInformation("Message sent");
+                    _logger.LogInformation("Сообщение отправлено");
                 }
             }
             catch (Exception e)
             {
-                logger.LogError(e.GetBaseException().Message);
+                _logger.LogError(e.GetBaseException().Message);
             }
         }
 

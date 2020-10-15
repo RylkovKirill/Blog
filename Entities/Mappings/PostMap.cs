@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Entities.Mappings
 {
@@ -7,7 +8,7 @@ namespace Entities.Mappings
         public PostMap(EntityTypeBuilder<Post> entityTypeBuilder)
         {
             entityTypeBuilder.HasOne(p => p.Category).WithMany(c => c.Posts);
-            entityTypeBuilder.HasMany(p => p.Comments).WithOne(c => c.Post);
+            entityTypeBuilder.HasMany(p => p.Comments).WithOne(c => c.Post).OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

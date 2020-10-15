@@ -13,5 +13,6 @@ namespace Services.CommentService
         void InsertComment(Comment user);
         void UpdateComment(Comment user);
         void DeleteComment(Guid id);
+        void DeletePostComments(Post post);
     }
 }
