@@ -21,100 +21,111 @@ namespace Blog.Controllers
 {
     public class BlogController : Controller
     {
-        private readonly IPostService postService;
-        private readonly ICommentService commentService;
-        private readonly ICategoryService categoryService;
-        private readonly ImageService image;
-        private readonly IWebHostEnvironment webHostEnvironment;
-        private readonly UserManager<ApplicationUser> userManager;
-        private readonly IHubContext<CommentHub> hubContext;
+        private readonly IPostService _postService;
+        private readonly ICommentService _commentService;
+        private readonly ICategoryService _categoryService;
+        private readonly ImageService _image;
+        private readonly IWebHostEnvironment _webHostEnvironment;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IHubContext<CommentHub> _hubContext;
         private readonly ILogger<BlogController> _logger;
 
         public BlogController(IPostService postService, ICommentService commentService, ICategoryService categoryService, IWebHostEnvironment webHostEnvironment, UserManager<ApplicationUser> userManager, IHubContext<CommentHub> hubContext, ILogger<BlogController> logger, ImageService image)
         {
-            this.postService = postService;
-            this.commentService = commentService;
-            this.categoryService = categoryService;
-            this.webHostEnvironment = webHostEnvironment;
-            this.userManager = userManager;
-            this.hubContext = hubContext;
+            _postService = postService;
+            _commentService = commentService;
+            _categoryService = categoryService;
+            _webHostEnvironment = webHostEnvironment;
+            _userManager = userManager;
+            _hubContext = hubContext;
             _logger = logger;
-            this.image = image;
+            _image = image;
         }
 
         [HttpGet]
         public IActionResult Edit(Guid id)
         {
-            Post model;
+            Post post;
             if (id == default)
             {
-                model = new Post();
+                post = new Post();
             }
             else
             {
-                model = postService.GetPost(id);
+                post = _postService.GetPost(id);
+                if (post == null)
+                {
+                    return NotFound();
+                }
             }
-            IQueryable<Category> categories = categoryService.GetCategories();
-            ViewBag.Categories = new SelectList(categories, "Id", "Name");
-            return View(model);
+            ViewBag.Categories = new SelectList(_categoryService.GetCategories(), "Id", "Name");
+            return View(post);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(Post model, IFormFile imageFile)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(Post post, IFormFile imageFile)
         {
             if (ModelState.IsValid)
             {
-                model.User = await userManager.GetUserAsync(HttpContext.User);
+                post.User = await _userManager.GetUserAsync(HttpContext.User);
                 if (imageFile != null)
                 {
-                    model.TitleImagePath = image.Save(imageFile, this.webHostEnvironment);
+                    post.TitleImagePath = _image.Save(imageFile, this._webHostEnvironment);
                 }
-                postService.UpdatePost(model);
-                return RedirectToAction(nameof(BlogController.EditPosts), nameof(BlogController).Replace("Controller", ""));
+                _postService.UpdatePost(post);
+                return RedirectToAction(nameof(EditPosts));
             }
-            return View(model);
+            ViewBag.Categories = new SelectList(_categoryService.GetCategories(), "Id", "Name");
+            return View(post);
         }
 
         public async Task<IActionResult> EditPosts()
         {
-            var user = await userManager.GetUserAsync(HttpContext.User);
-            return View(postService.GetPostsByUser(user));
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            return View(_postService.GetPostsByUser(user));
         }
 
         public async Task<IActionResult> Posts()
         {
-            var user = await userManager.GetUserAsync(HttpContext.User);
-            return View(postService.GetPostsByUser(user));
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            return View(_postService.GetPostsByUser(user));
         }
 
         public IActionResult Delete(Guid id)
         {
-            commentService.DeletePostComments(postService.GetPost(id));
-            postService.DeletePost(id);
-            return RedirectToAction(nameof(BlogController.EditPosts), nameof(BlogController).Replace("Controller", ""));
+            _commentService.DeletePostComments(_postService.GetPost(id));
+            _postService.DeletePost(id);
+            return RedirectToAction(nameof(EditPosts));
         }
 
-        public IActionResult Detail(Guid id)
+        public IActionResult Details(Guid id)
         {
-            var article = postService.GetPost(id);
-            var comments = commentService.GetCommentsByPost(article);
+            var post = _postService.GetPost(id);
+
+            if (post == null)
+            {
+                return NotFound();
+            }
+
+            var comments = _commentService.GetCommentsByPost(post);
             ViewBag.Comments = comments;
-            return View(article);
+            return View(post);
         }
 
         [HttpPost]
         public async Task<IActionResult> AddComment(string content, Guid id)
         {
             Comment comment = new Comment();
-            var user = await userManager.GetUserAsync(HttpContext.User);
-            comment.Post = postService.GetPost(id);
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            comment.Post = _postService.GetPost(id);
             comment.User = user;
             comment.Content = content;
-            commentService.InsertComment(comment);
-            var comments = commentService.GetCommentsByPost(comment.Post);
+            _commentService.InsertComment(comment);
+            var comments = _commentService.GetCommentsByPost(comment.Post);
             ViewBag.Comments = comments;
-            await hubContext.Clients.All.SendAsync("Notify", $" {content}", $" {userManager.GetUserNameAsync(comment.User).Result}", $" {comment.PostedDate}");
-            return View("Detail", postService.GetPost(id));
+            await _hubContext.Clients.All.SendAsync("Notify", $" {content}", $" {_userManager.GetUserNameAsync(comment.User).Result}", $" {comment.PostedDate}");
+            return View("Detail", _postService.GetPost(id));
         }
     }
 }

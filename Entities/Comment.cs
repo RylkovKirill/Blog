@@ -11,8 +11,12 @@ namespace Entities
         [Display(Name = "Дата Публикации")]
         public DateTime PostedDate { get; set; } = DateTime.UtcNow;
 
+        public string UserId { get; set; }
+
         [Display(Name = "Пользователь")]
         public ApplicationUser User { get; set; }
+
+        public Guid? PostId { get; set; }
 
         [Display(Name = "Пост")]
         public Post Post { get; set; }

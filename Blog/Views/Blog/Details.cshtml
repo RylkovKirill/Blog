@@ -1,5 +1,5 @@
 ﻿@model Entities.Post
-
+@inject UserManager<ApplicationUser> userManager
 <head>
     <title>@ViewData["Title"] - Пост</title>
 </head>
@@ -29,7 +29,7 @@
             {
                 <div class="card border-dark mb-3 w-50">
                     <div class="card-header">
-                        <p class="card-text">@comment.Content</p>
+                        <p class="card-text">@userManager.GetUserNameAsync(userManager.FindByIdAsync(comment.UserId.ToString()).Result).Result</p>
                     </div>
                     <div class="card-body">
                         <p class="card-text">@comment.Content</p>

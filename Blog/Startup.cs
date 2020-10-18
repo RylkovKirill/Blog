@@ -51,6 +51,7 @@ namespace Blog
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            //env.EnvironmentName = "Production";
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -58,9 +59,10 @@ namespace Blog
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+                app.UseExceptionHandler("/error");
                 app.UseHsts();
             }
+            app.UseStatusCodePagesWithReExecute("/error/{0}");
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 

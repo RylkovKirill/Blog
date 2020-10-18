@@ -29,7 +29,25 @@ namespace Blog.Controllers
 
         public IActionResult Posts()
         {
+            //throw new ArgumentException("Test Error");
             return View(_postService.GetPosts());
+        }
+
+        public IActionResult Search(string name)
+        {
+            if (name != null)
+            {
+                return PartialView(_postService.GetPosts().Where(a => a.Title.Contains(name)));
+            }
+            else
+            {
+                return PartialView(_postService.GetPosts());
+            }
+        }
+
+        public IActionResult NewPosts()
+        {
+            return View("Posts", _postService.GetPosts().Where(p => p.PostedDate >= DateTime.Now.AddDays(-7)));
         }
 
         public IActionResult Privacy()
