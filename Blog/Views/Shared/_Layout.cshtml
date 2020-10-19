@@ -11,7 +11,7 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Posts">Главная</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Главная</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -22,14 +22,14 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle text-dark" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" asp-area="" asp-controller="" asp-action="">Читать</a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="Posts">Главная</a>
+                                <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="Index">Главная</a>
                                 <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="NewPosts">Новые</a>
                             </div>
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle text-dark" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" asp-area="" asp-controller="" asp-action="">Мой блог</a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" asp-area="" asp-controller="Blog" asp-action="Posts">Список постов</a>
+                                <a class="dropdown-item" asp-area="" asp-controller="Blog" asp-action="Index">Список постов</a>
                                 <a class="dropdown-item" asp-area="" asp-controller="Blog" asp-action="Edit">Добавить пост</a>
                                 <a class="dropdown-item" asp-area="" asp-controller="Blog" asp-action="EditPosts">Редактировать пост</a>
                             </div>

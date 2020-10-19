@@ -25,7 +25,7 @@ namespace Blog.Areas.Admin.Controllers
 
         public IActionResult Index()
         {
-            return View(_roleManager.Roles.ToList());
+            return View(_roleManager.Roles);
         }
 
         [HttpGet]
@@ -43,7 +43,7 @@ namespace Blog.Areas.Admin.Controllers
             }
 
             await _roleManager.CreateAsync(new IdentityRole(name));
-           
+
             return RedirectToAction("Index");
         }
 
@@ -58,10 +58,11 @@ namespace Blog.Areas.Admin.Controllers
             }
 
             await _roleManager.DeleteAsync(role);
-            
+
             return RedirectToAction("Index");
         }
 
+        [HttpGet]
         public async Task<IActionResult> ChangeUserRole(string userId)
         {
             var user = await _userManager.FindByIdAsync(userId);
@@ -74,7 +75,7 @@ namespace Blog.Areas.Admin.Controllers
             var userRoles = (await _userManager.GetRolesAsync(user)).ToList();
             var allRoles = _roleManager.Roles.ToList();
             RoleViewModel model = new RoleViewModel(user.Id, user.UserName, allRoles, userRoles);
-            
+
             return View(model);
         }
 

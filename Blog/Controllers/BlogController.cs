@@ -30,16 +30,29 @@ namespace Blog.Controllers
         private readonly IHubContext<CommentHub> _hubContext;
         private readonly ILogger<BlogController> _logger;
 
-        public BlogController(IPostService postService, ICommentService commentService, ICategoryService categoryService, IWebHostEnvironment webHostEnvironment, UserManager<ApplicationUser> userManager, IHubContext<CommentHub> hubContext, ILogger<BlogController> logger, ImageService image)
+        public BlogController(IPostService postService, ICommentService commentService, ICategoryService categoryService, ImageService image, IWebHostEnvironment webHostEnvironment, UserManager<ApplicationUser> userManager,  IHubContext<CommentHub> hubContext, ILogger<BlogController> logger)
         {
             _postService = postService;
             _commentService = commentService;
             _categoryService = categoryService;
+            _image = image;
             _webHostEnvironment = webHostEnvironment;
             _userManager = userManager;
             _hubContext = hubContext;
             _logger = logger;
-            _image = image;
+
+        }
+
+        public async Task<IActionResult> Index()
+        {
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+
+            if(user == null)
+            {
+                return NotFound();
+            }
+
+            return View(_postService.GetPostsByUser(user));
         }
 
         [HttpGet]
@@ -86,11 +99,7 @@ namespace Blog.Controllers
             return View(_postService.GetPostsByUser(user));
         }
 
-        public async Task<IActionResult> Posts()
-        {
-            var user = await _userManager.GetUserAsync(HttpContext.User);
-            return View(_postService.GetPostsByUser(user));
-        }
+  
 
         public IActionResult Delete(Guid id)
         {
@@ -125,7 +134,7 @@ namespace Blog.Controllers
             var comments = _commentService.GetCommentsByPost(comment.Post);
             ViewBag.Comments = comments;
             await _hubContext.Clients.All.SendAsync("Notify", $" {content}", $" {_userManager.GetUserNameAsync(comment.User).Result}", $" {comment.PostedDate}");
-            return View("Detail", _postService.GetPost(id));
+            return View("Details", _postService.GetPost(id));
         }
     }
 }

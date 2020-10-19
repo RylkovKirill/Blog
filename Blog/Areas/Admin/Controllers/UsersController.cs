@@ -17,24 +17,37 @@ namespace Blog.Areas.Admin.Controllers
     [Authorize(Roles = "admin")]
     public class UsersController : Controller
     {
-        private readonly UserManager<ApplicationUser> userManager;
-        private readonly Message message;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly Message _message;
         public UsersController(UserManager<ApplicationUser> userManager, Message message)
         {
-            this.userManager = userManager;
-            this.message = message;
+            _userManager = userManager;
+            _message = message;
         }
 
         public IActionResult Index()
         {
-            var users = userManager.Users;
-            return View(users);
+            return View(_userManager.Users);
         }
 
         public IActionResult Edit()
         {
-            var users = userManager.Users;
+            var users = _userManager.Users;
             return View(users);
+        }
+
+        public async Task<IActionResult> Delete(string id)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            await _userManager.DeleteAsync(user);
+
+            return RedirectToAction("Index");
         }
 
         [HttpGet]
@@ -45,24 +58,17 @@ namespace Blog.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> SendMessage(MailMessage model, Guid? Id)
+        public async Task<IActionResult> SendMessage(MailMessage model, Guid Id)
         {
             if (ModelState.IsValid)
             {
-                var user = await userManager.FindByIdAsync(Id.ToString());
+                var user = await _userManager.FindByIdAsync(Id.ToString());
                 model.From = new MailAddress("asp.net.core.blog@gmail.com", "Blog");
                 model.To.Add(user.Email);
-                message.SendMessage(model);
+                _message.SendMessage(model);
                 return RedirectToAction(nameof(UsersController.Index), nameof(UsersController).Replace("Controller", ""));
             }
             return View(model);
-        }
-
-        public async Task<IActionResult> Delete(string id)
-        {
-            var user = await userManager.FindByIdAsync(id);
-            await userManager.DeleteAsync(user);
-            return RedirectToAction("Users");
         }
     }
 }

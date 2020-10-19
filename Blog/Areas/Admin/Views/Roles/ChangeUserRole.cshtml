@@ -2,7 +2,8 @@
 @{
     ViewData["Title"] = "Изменить роль пользователю";
 }
-<h1>@ViewData["Title"] @Model.UserName</h1>
+<h1>@ViewData["Title"]</h1>
+<h2>@Model.UserName</h2>
 <form asp-action="ChangeUserRole" method="post">
     <div class="form-group">
         <input type="hidden" name="userId" value="@Model.UserId" />

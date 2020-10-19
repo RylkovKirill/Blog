@@ -17,7 +17,7 @@
                     <td>@item.Email</td>
                     <td>
                         <a type="button" class="btn btn-primary" asp-action="Edit" asp-route-id="@item.Id">Изменить</a>
-                        <a type="button" class="btn btn-primary" asp-controller="Roles" asp-action="ChangeUserRole" asp-route-userid="@item.Id">Права доступа</a>
+                        <a type="button" class="btn btn-primary" asp-controller="Roles" asp-action="ChangeUserRole" asp-route-userid="@item.Id">Изменить роль</a>
                         <a type="button" class="btn btn-primary" asp-action="SendMessage" asp-route-id="@item.Id">Отправить сообщение</a>
                         <a type="button" class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id">Удалить</a>
 
