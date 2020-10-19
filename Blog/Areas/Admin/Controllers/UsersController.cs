@@ -6,12 +6,15 @@ using System.Threading.Tasks;
 using Blog.Models;
 using Blog.Service;
 using Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Blog.Areas.Admin.Controllers
 {
+
     [Area("Admin")]
+    [Authorize(Roles = "admin")]
     public class UsersController : Controller
     {
         private readonly UserManager<ApplicationUser> userManager;
@@ -22,7 +25,7 @@ namespace Blog.Areas.Admin.Controllers
             this.message = message;
         }
 
-        public IActionResult Users()
+        public IActionResult Index()
         {
             var users = userManager.Users;
             return View(users);
@@ -50,15 +53,16 @@ namespace Blog.Areas.Admin.Controllers
                 model.From = new MailAddress("asp.net.core.blog@gmail.com", "Blog");
                 model.To.Add(user.Email);
                 message.SendMessage(model);
-                return RedirectToAction(nameof(UsersController.Users), nameof(UsersController).Replace("Controller", ""));
+                return RedirectToAction(nameof(UsersController.Index), nameof(UsersController).Replace("Controller", ""));
             }
             return View(model);
         }
 
-        public IActionResult Delete()
+        public async Task<IActionResult> Delete(string id)
         {
-            var users = userManager.Users;
-            return View(users);
+            var user = await userManager.FindByIdAsync(id);
+            await userManager.DeleteAsync(user);
+            return RedirectToAction("Users");
         }
     }
 }

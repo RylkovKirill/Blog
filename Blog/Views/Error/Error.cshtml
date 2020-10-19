@@ -1,18 +1,6 @@
-﻿<h3>Exception Details:</h3>
-<div class="alert alert-danger">
-    <h5>Exception Path</h5>
-    <hr />
-    <p>@ViewBag.ExceptionPath</p>
-</div>
-
-<div class="alert alert-danger">
-    <h5>Exception Message</h5>
-    <hr />
-    <p>@ViewBag.ExceptionMessage</p>
-</div>
-
-<div class="alert alert-danger">
-    <h5>Exception Stack Trace</h5>
-    <hr />
-    <p>@ViewBag.StackTrace</p>
+﻿<div class="jumbotron jumbotron-fluid">
+    <div class="container">
+        <h1>Ошибка <span class="badge badge-secondary">@ViewBag.Code</span></h1>
+        <a class="lead" asp-area="" asp-controller="Home" asp-action="Posts">Щелкните здесь, чтобы перейти на главную страницу</a>
+    </div>
 </div>

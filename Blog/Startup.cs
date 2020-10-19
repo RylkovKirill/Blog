@@ -47,6 +47,14 @@ namespace Blog
                 hubOptions.EnableDetailedErrors = true;
                 hubOptions.KeepAliveInterval = System.TimeSpan.FromMinutes(1);
             });
+            services.AddAuthentication().AddGoogle(options =>
+            {
+                IConfigurationSection googleAuthNSection =
+                Configuration.GetSection("Authentication:Google");
+
+                options.ClientId = "";
+                options.ClientSecret = "";
+            });
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -59,10 +67,10 @@ namespace Blog
             }
             else
             {
-                app.UseExceptionHandler("/error");
+                app.UseExceptionHandler("/Exception");
                 app.UseHsts();
             }
-            app.UseStatusCodePagesWithReExecute("/error/{0}");
+            app.UseStatusCodePagesWithReExecute("/Error/{0}");
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
@@ -76,7 +84,7 @@ namespace Blog
                 endpoints.MapAreaControllerRoute(
                     name: "admin",
                     areaName: "Admin",
-                    pattern: "Admin/{controller=Users}/{action=Users}/{id?}");
+                    pattern: "Admin/{controller=Users}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
 
                 endpoints.MapControllerRoute(

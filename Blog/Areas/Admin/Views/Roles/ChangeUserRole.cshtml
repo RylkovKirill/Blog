@@ -1,0 +1,22 @@
+﻿@model RoleViewModel
+@{
+    ViewData["Title"] = "Изменить роль пользователю";
+}
+<h1>@ViewData["Title"] @Model.UserName</h1>
+<form asp-action="ChangeUserRole" method="post">
+    <div class="form-group">
+        <input type="hidden" name="userId" value="@Model.UserId" />
+    </div>
+    <div class="form-group">
+        @foreach (IdentityRole role in Model.Roles)
+        {
+            <div>
+                <label>@role.Name</label>
+                <input type="checkbox" name="roles" value="@role.Name" @(Model.UserRoles.Contains(role.Name) ? "checked=\"checked\"" : "") />
+            </div>
+        }
+    </div>
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Сохранить</button>
+    </div>
+</form>

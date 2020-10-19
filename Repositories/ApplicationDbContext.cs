@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Entities;
 using Entities.Mappings;
 using System;
+using Microsoft.AspNetCore.Identity;
 
 namespace Repositories
 {
@@ -37,6 +38,18 @@ namespace Repositories
             modelBuilder.Entity<Category>().HasData(new Category { Id = Guid.NewGuid(), Name = "Развлечение", });
             modelBuilder.Entity<Category>().HasData(new Category { Id = Guid.NewGuid(), Name = "Разное", });
             modelBuilder.Entity<Category>().HasData(new Category { Id = Guid.NewGuid(), Name = "Спорт", });
+
+            modelBuilder.Entity<IdentityRole>().HasData(new IdentityRole
+            {
+                Id = "ca1bfd9b-9749-45e0-9e7b-8413a15414cc",
+                Name = "admin",
+            });
+
+            modelBuilder.Entity<IdentityUserRole<string>>().HasData(new IdentityUserRole<string>
+            {
+                RoleId = "ca1bfd9b-9749-45e0-9e7b-8413a15414cc",
+                UserId = "5e7a4393-074c-405f-afc5-b97a378eb57e"
+            });
 
             base.OnModelCreating(modelBuilder);
         }

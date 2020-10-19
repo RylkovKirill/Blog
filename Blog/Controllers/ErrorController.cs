@@ -17,8 +17,8 @@ namespace Blog.Controllers
             _logger = logger;
         }
 
-        [Route("error/{code}")]
-        public IActionResult Index(int code)
+        [Route("Error/{code}")]
+        public IActionResult Error(int code)
         {
             ViewBag.Code = code;
             //_logger.LogError($"Error. Status code: {code}");
@@ -26,8 +26,8 @@ namespace Blog.Controllers
         }
 
         [AllowAnonymous]
-        [Route("error")]
-        public IActionResult Error()
+        [Route("Exception")]
+        public IActionResult Exception()
         {
             var exeptionDetails = HttpContext.Features.Get<IExceptionHandlerPathFeature>();
 
@@ -35,7 +35,7 @@ namespace Blog.Controllers
             ViewBag.ExceptionMessage = exeptionDetails.Error.Message;
             ViewBag.Stacktrace = exeptionDetails.Error.StackTrace;
 
-            return View("Error");
+            return View();
         }
     }
 }
