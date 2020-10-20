@@ -24,17 +24,17 @@ namespace Services.CategoryService
             return repository.GetAll();
         }
 
-        public void InsertCategoriy(Category category)
+        public void InsertCategory(Category category)
         {
             repository.Insert(category);
         }
 
-        public void UpdateCategoriy(Category category)
+        public void UpdateCategory(Category category)
         {
             repository.Update(category);
         }
 
-        public void DeleteCategoriy(Guid id)
+        public void DeleteCategory(Guid id)
         {
             repository.Delete(GetCategory(id));
         }

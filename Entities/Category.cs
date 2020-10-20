@@ -5,6 +5,7 @@ namespace Entities
 {
     public class Category : Base
     {
+        [Required(ErrorMessage = "Название не может быть пустым")]
         [Display(Name = "Название")]
         public string Name { get; set; }
 

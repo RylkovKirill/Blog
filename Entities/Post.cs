@@ -6,9 +6,11 @@ namespace Entities
 {
     public class Post : Base
     {
+        [Required(ErrorMessage = "Название не может быть пустым")]
         [Display(Name = "Название")]
         public string Title { get; set; }
 
+        [Required(ErrorMessage = "Содержание не может быть пустым")]
         [Display(Name = "Содержание")]
         public string Content { get; set; }
 

@@ -1,0 +1,27 @@
+﻿@model IQueryable<Category>
+@{
+    ViewData["Title"] = "Категории";
+}
+<h1>@ViewData["Title"]</h1>
+<table class="table table-bordered">
+        <thead>
+            <tr>
+                <th scope="col">Категория</th>
+                <th scope="col">Действия</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Name</td>
+                    <td>
+                        <a type="button" class="btn btn-primary" asp-controller="Categories" asp-action="Edit" asp-route-id="@item.Id">Изменить</a>
+                        <a type="button" class="btn btn-danger" asp-controller="Categories" asp-action="Delete" asp-route-id="@item.Id">Удалить</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+</table>
+<br />
+<a type="button" class="btn btn-primary" asp-controller="Categories" asp-action="Create">Добавить категорию</a>
