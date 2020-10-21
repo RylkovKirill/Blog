@@ -24,7 +24,7 @@ namespace Blog.Areas.Identity
                         context.Configuration.GetConnectionString("ApplicationDbContextConnection")));
                 services.AddTransient<IEmailSender, EmailSender>();
                 services.AddIdentity<ApplicationUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = false)
-                    .AddEntityFrameworkStores<ApplicationDbContext>();
+                    .AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
 
             });
         }

@@ -88,6 +88,24 @@ namespace Blog.Data.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "b809eea3-e39d-4721-b56e-7a19be0b34d4",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "",
+                            Email = "asp.net.core.blog@gmail.com",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "ASP.NET.CORE.BLOG@GMAIL.COM",
+                            NormalizedUserName = "ASP.NET.CORE.BLOG@GMAIL.COM",
+                            PasswordHash = "AQAAAAEAACcQAAAAEOEKElUzhOEW81I9h2pnWIwnGlHOvNXypzurxZGfMpXSO4G5Fnq4qIG1b703CpyhWA==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "",
+                            TwoFactorEnabled = false,
+                            UserName = "asp.net.core.blog@gmail.com"
+                        });
                 });
 
             modelBuilder.Entity("Entities.Category", b =>
@@ -100,6 +118,7 @@ namespace Blog.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -109,42 +128,42 @@ namespace Blog.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("773e0e42-fab0-4839-9d50-295080c0f52f"),
+                            Id = new Guid("4d134864-0453-486e-85c9-661674d9a261"),
                             Name = "Дом и сад"
                         },
                         new
                         {
-                            Id = new Guid("89188345-b201-4827-8076-c707fe0d9721"),
+                            Id = new Guid("8800563e-843f-49cb-b8ed-c0bdb70341c0"),
                             Name = "Еда и напитки"
                         },
                         new
                         {
-                            Id = new Guid("5d84f307-4b97-466a-ac2a-c6656fdd5659"),
+                            Id = new Guid("5e578c08-ab04-484c-ac42-03c3272d0eb5"),
                             Name = "Здоровье и фитнес"
                         },
                         new
                         {
-                            Id = new Guid("e4219b54-f765-4650-8772-44eea00cf97f"),
+                            Id = new Guid("c068f9d5-cc91-43f6-ae7b-47a5f3f6b466"),
                             Name = "Наука и техника"
                         },
                         new
                         {
-                            Id = new Guid("756ec259-faa3-4d38-a42a-e8e942abf101"),
+                            Id = new Guid("9443b6be-27fc-4b5b-80ae-6190deb3f497"),
                             Name = "Новости и политика"
                         },
                         new
                         {
-                            Id = new Guid("d2f3b43e-e84e-47b9-b3e9-948fa76d96fb"),
+                            Id = new Guid("bb685dac-ab24-4ecd-a291-a0542c624170"),
                             Name = "Развлечение"
                         },
                         new
                         {
-                            Id = new Guid("b530a79e-be67-425c-a044-79f3e9620b26"),
+                            Id = new Guid("a216c6f5-0be5-4d50-84ea-ee2fee208cfc"),
                             Name = "Разное"
                         },
                         new
                         {
-                            Id = new Guid("3acfc59c-8009-423b-9529-0e82285920a1"),
+                            Id = new Guid("66b02aec-0ab5-4af8-a969-39ac6493f5ba"),
                             Name = "Спорт"
                         });
                 });
@@ -186,6 +205,7 @@ namespace Blog.Data.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Content")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("ModifiedDate")
@@ -195,6 +215,7 @@ namespace Blog.Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Title")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TitleImagePath")
@@ -273,9 +294,10 @@ namespace Blog.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "ca1bfd9b-9749-45e0-9e7b-8413a15414cc",
-                            ConcurrencyStamp = "a4bc1989-4ee8-4c10-8b07-1fdf92168b74",
-                            Name = "admin"
+                            Id = "e16895dd-7352-4cb4-b1b6-2a97f596e2ae",
+                            ConcurrencyStamp = "24cf080a-9b9a-40ef-abc5-6a63bc8c0bed",
+                            Name = "admin",
+                            NormalizedName = "ADMIN"
                         });
                 });
 
@@ -330,12 +352,10 @@ namespace Blog.Data.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("nvarchar(128)")
-                        .HasMaxLength(128);
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ProviderKey")
-                        .HasColumnType("nvarchar(128)")
-                        .HasMaxLength(128);
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ProviderDisplayName")
                         .HasColumnType("nvarchar(max)");
@@ -368,8 +388,8 @@ namespace Blog.Data.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = "5e7a4393-074c-405f-afc5-b97a378eb57e",
-                            RoleId = "ca1bfd9b-9749-45e0-9e7b-8413a15414cc"
+                            UserId = "b809eea3-e39d-4721-b56e-7a19be0b34d4",
+                            RoleId = "e16895dd-7352-4cb4-b1b6-2a97f596e2ae"
                         });
                 });
 
@@ -379,12 +399,10 @@ namespace Blog.Data.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("nvarchar(128)")
-                        .HasMaxLength(128);
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(128)")
-                        .HasMaxLength(128);
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Value")
                         .HasColumnType("nvarchar(max)");

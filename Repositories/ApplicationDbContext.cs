@@ -41,14 +41,26 @@ namespace Repositories
 
             modelBuilder.Entity<IdentityRole>().HasData(new IdentityRole
             {
-                Id = "ca1bfd9b-9749-45e0-9e7b-8413a15414cc",
+                Id = "e16895dd-7352-4cb4-b1b6-2a97f596e2ae",
                 Name = "admin",
+                NormalizedName ="ADMIN"
+            });
+
+            modelBuilder.Entity<ApplicationUser>().HasData(new ApplicationUser
+            {
+                Id = "b809eea3-e39d-4721-b56e-7a19be0b34d4",
+                UserName = "asp.net.core.blog@gmail.com",
+                NormalizedUserName = "ASP.NET.CORE.BLOG@GMAIL.COM",
+                Email = "asp.net.core.blog@gmail.com",
+                NormalizedEmail = "ASP.NET.CORE.BLOG@GMAIL.COM",
+                PasswordHash = new PasswordHasher<ApplicationUser>().HashPassword(null, "m8RwntY%ew"),
+                SecurityStamp = string.Empty,
             });
 
             modelBuilder.Entity<IdentityUserRole<string>>().HasData(new IdentityUserRole<string>
             {
-                RoleId = "ca1bfd9b-9749-45e0-9e7b-8413a15414cc",
-                UserId = "5e7a4393-074c-405f-afc5-b97a378eb57e"
+                RoleId = "e16895dd-7352-4cb4-b1b6-2a97f596e2ae",
+                UserId = "b809eea3-e39d-4721-b56e-7a19be0b34d4"
             });
 
             base.OnModelCreating(modelBuilder);

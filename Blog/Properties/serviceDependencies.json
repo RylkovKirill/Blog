@@ -1,12 +1,12 @@
 {
   "dependencies": {
-    "mssql1": {
-      "type": "mssql",
-      "connectionId": "DefaultConnection"
+    "signalr1": {
+      "type": "signalr",
+      "connectionId": "Azure__SignalR__ConnectionString"
     },
-    "mssql2": {
+    "mssql3": {
       "type": "mssql",
-      "connectionId": "BlogContextConnection"
+      "connectionId": "ApplicationDbContextConnection"
     }
   }
 }

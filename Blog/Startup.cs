@@ -52,8 +52,8 @@ namespace Blog
                 IConfigurationSection googleAuthNSection =
                 Configuration.GetSection("Authentication:Google");
 
-                options.ClientId = "1045396079914-7080c3sfnvdca9te3g25tm2qdrvpd4nm.apps.googleusercontent.com";
-                options.ClientSecret = "sK30s03HpNK2FUUY45IIaWJY";
+                options.ClientId = "";
+                options.ClientSecret = "";
             });
         }
 
