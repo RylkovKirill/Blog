@@ -13,9 +13,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Logging;
-using Services.CategoryService;
+using Services.PostCategoryService;
 using Services.CommentService;
 using Services.PostService;
+using Services.ReportService;
+using Services.ReportCategoryService;
 
 namespace Blog.Controllers
 {
@@ -23,31 +25,35 @@ namespace Blog.Controllers
     {
         private readonly IPostService _postService;
         private readonly ICommentService _commentService;
-        private readonly ICategoryService _categoryService;
+        private readonly IPostCategoryService _categoryService;
+        private readonly IReportService _reportService;
+        private readonly IReportCategoryService _reportCategoryService;
         private readonly ImageService _image;
         private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IHubContext<CommentHub> _hubContext;
         private readonly ILogger<BlogController> _logger;
 
-        public BlogController(IPostService postService, ICommentService commentService, ICategoryService categoryService, ImageService image, IWebHostEnvironment webHostEnvironment, UserManager<ApplicationUser> userManager,  IHubContext<CommentHub> hubContext, ILogger<BlogController> logger)
+
+        public BlogController(IPostService postService, ICommentService commentService, IPostCategoryService categoryService, IReportService reportService, IReportCategoryService reportCategoryService, ImageService image, IWebHostEnvironment webHostEnvironment, UserManager<ApplicationUser> userManager, IHubContext<CommentHub> hubContext, ILogger<BlogController> logger)
         {
             _postService = postService;
             _commentService = commentService;
             _categoryService = categoryService;
+            _reportService = reportService;
+            _reportCategoryService = reportCategoryService;
             _image = image;
             _webHostEnvironment = webHostEnvironment;
             _userManager = userManager;
             _hubContext = hubContext;
             _logger = logger;
-
         }
 
         public async Task<IActionResult> Index()
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
 
-            if(user == null)
+            if (user == null)
             {
                 return NotFound();
             }
@@ -99,8 +105,6 @@ namespace Blog.Controllers
             return View(_postService.GetPostsByUser(user));
         }
 
-  
-
         public IActionResult Delete(Guid id)
         {
             _commentService.DeletePostComments(_postService.GetPost(id));
@@ -134,6 +138,19 @@ namespace Blog.Controllers
             var comments = _commentService.GetCommentsByPost(comment.Post);
             ViewBag.Comments = comments;
             await _hubContext.Clients.All.SendAsync("Notify", $" {content}", $" {_userManager.GetUserNameAsync(comment.User).Result}", $" {comment.PostedDate}");
+            return View("Details", _postService.GetPost(id));
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateReport(Guid id, Guid reportCategoryId)
+        {
+            Report report = new Report();
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            report.User = user;
+            report.Post = _postService.GetPost(id);
+            report.ReportCategory = _reportCategoryService.GetCategory(reportCategoryId);
+            _reportService.InsertReport(report);
             return View("Details", _postService.GetPost(id));
         }
     }

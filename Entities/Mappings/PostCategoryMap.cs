@@ -2,9 +2,9 @@
 
 namespace Entities.Mappings
 {
-    public class CategoryMap
+    public class PostCategoryMap
     {
-        public CategoryMap(EntityTypeBuilder<Category> entityTypeBuilder)
+        public PostCategoryMap(EntityTypeBuilder<PostCategory> entityTypeBuilder)
         {
             entityTypeBuilder.HasMany(c => c.Posts).WithOne(p => p.Category);
         }

@@ -14,9 +14,11 @@ using Microsoft.Extensions.Hosting;
 using Repositories;
 using Services.PostService;
 using Services.CommentService;
-using Services.CategoryService;
+using Services.PostCategoryService;
 using Blog.Service;
 using Blog.Hubs;
+using Services.ReportService;
+using Services.ReportCategoryService;
 
 namespace Blog
 {
@@ -37,8 +39,10 @@ namespace Blog
             services.AddSingleton<ImageService>();
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddTransient<IPostService, PostService>();
+            services.AddTransient<IPostCategoryService, PostCategoryService>();
             services.AddTransient<ICommentService, CommentService>();
-            services.AddTransient<ICategoryService, CategoryService>();
+            services.AddTransient<IReportService, ReportService>();
+            services.AddTransient<IReportCategoryService, ReportCategoryService>();
             services.AddTransient<Message>();
             services.AddControllersWithViews();
             services.AddRazorPages();
@@ -52,8 +56,8 @@ namespace Blog
                 IConfigurationSection googleAuthNSection =
                 Configuration.GetSection("Authentication:Google");
 
-                options.ClientId = "";
-                options.ClientSecret = "";
+                options.ClientId = "1045396079914-7080c3sfnvdca9te3g25tm2qdrvpd4nm.apps.googleusercontent.com";
+                options.ClientSecret = "sK30s03HpNK2FUUY45IIaWJY";
             });
         }
 

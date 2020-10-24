@@ -9,9 +9,9 @@ namespace Services.PostService
         Post GetPost(Guid id);
         IQueryable<Post> GetPosts();
         IQueryable<Post> GetPostsByUser(ApplicationUser user);
-        IQueryable<Post> GetPostsByCategory(Category category);
-        void InsertPost(Post user);
-        void UpdatePost(Post user);
+        IQueryable<Post> GetPostsByCategory(PostCategory category);
+        void InsertPost(Post post);
+        void UpdatePost(Post post);
         void DeletePost(Guid id);
     }
 }

@@ -6,9 +6,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Data\**" />
     <Compile Remove="ViewComponents\**" />
+    <Content Remove="Data\**" />
     <Content Remove="ViewComponents\**" />
+    <EmbeddedResource Remove="Data\**" />
     <EmbeddedResource Remove="ViewComponents\**" />
+    <None Remove="Data\**" />
     <None Remove="ViewComponents\**" />
   </ItemGroup>
 
@@ -36,6 +40,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Migrations\" />
     <Folder Include="wwwroot\images\" />
   </ItemGroup>
 

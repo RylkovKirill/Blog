@@ -22,7 +22,7 @@ namespace Blog.Tests
             var _postService = new Mock<IPostService>();
             _postService.Setup(p => p.GetPosts()).Returns(GetTestPosts());
             var _commentService = new Mock<ICommentService>();
-            var _categoryService = new Mock<ICategoryService>();
+            var _categoryService = new Mock<IPostCategoryService>();
             var _logger = new Mock<ILogger<HomeController>>();
 
             HomeController controller = new HomeController(_postService.Object, _commentService.Object, _categoryService.Object, _logger.Object);

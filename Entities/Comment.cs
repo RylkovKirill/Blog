@@ -8,7 +8,7 @@ namespace Entities
         [Display(Name = "Содержание")]
         public string Content { get; set; }
 
-        [Display(Name = "Дата Публикации")]
+        [Display(Name = "Дата публикации")]
         public DateTime PostedDate { get; set; } = DateTime.UtcNow;
 
         public string UserId { get; set; }

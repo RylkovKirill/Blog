@@ -7,46 +7,46 @@ namespace Services.PostService
 {
     public class PostService : IPostService
     {
-        private readonly IRepository<Post> repository;
+        private readonly IRepository<Post> _repository;
 
         public PostService(IRepository<Post> repository)
         {
-            this.repository = repository;
+            _repository = repository;
         }
 
         public Post GetPost(Guid id)
         {
-            return repository.Get(id);
+            return _repository.Get(id);
         }
 
         public IQueryable<Post> GetPosts()
         {
-            return repository.GetAll();
+            return _repository.GetAll();
         }
 
         public IQueryable<Post> GetPostsByUser(ApplicationUser user)
         {
-            return repository.GetAll().Where(p => p.User.Equals(user));
+            return _repository.GetAll().Where(p => p.User.Equals(user));
         }
 
-        public IQueryable<Post> GetPostsByCategory(Category category)
+        public IQueryable<Post> GetPostsByCategory(PostCategory category)
         {
-            return repository.GetAll().Where(p => p.Category.Equals(category));
+            return _repository.GetAll().Where(p => p.Category.Equals(category));
         }
 
         public void InsertPost(Post post)
         {
-            repository.Insert(post);
+            _repository.Insert(post);
         }
 
         public void UpdatePost(Post post)
         {
-            repository.Update(post);
+            _repository.Update(post);
         }
 
         public void DeletePost(Guid id)
         {
-            repository.Delete(GetPost(id));
+            _repository.Delete(GetPost(id));
         }
     }
 }

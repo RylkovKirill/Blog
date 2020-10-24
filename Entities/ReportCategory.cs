@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Text;
 
 namespace Entities
 {
-    public class Category : Base
+    public class ReportCategory : Base
     {
         [Required(ErrorMessage = "Название не может быть пустым")]
         [Display(Name = "Название")]
@@ -12,7 +14,7 @@ namespace Entities
         [Display(Name = "Описание")]
         public string Description { get; set; }
 
-        [Display(Name = "Список постов")]
-        public List<Post> Posts { get; set; }
+        [Display(Name = "Список жалоб")]
+        public List<Report> Reports { get; set; }
     }
 }

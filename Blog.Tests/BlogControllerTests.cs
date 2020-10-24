@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Moq;
-using Services.CategoryService;
+using Services.PostCategoryService;
 using Services.CommentService;
 using Services.PostService;
 using System;
@@ -66,7 +66,7 @@ namespace Blog.Tests
             var postService = new Mock<IPostService>();
             postService.Setup(p => p.GetPost(testId)).Returns(null as Post);
             var commentService = new Mock<ICommentService>();
-            var categoryService = new Mock<ICategoryService>();
+            var categoryService = new Mock<IPostCategoryService>();
             var image = new Mock<ImageService>();
             var webHostEnvironment = new Mock<IWebHostEnvironment>();
             var userManager = TestUserManager<ApplicationUser>();
@@ -87,7 +87,7 @@ namespace Blog.Tests
             var postService = new Mock<IPostService>();
             postService.Setup(p => p.GetPost(testId)).Returns(GetTestPosts().FirstOrDefault(p => p.Id == testId));
             var commentService = new Mock<ICommentService>();
-            var categoryService = new Mock<ICategoryService>();
+            var categoryService = new Mock<IPostCategoryService>();
             var image = new Mock<ImageService>();
             var webHostEnvironment = new Mock<IWebHostEnvironment>();
             var userManager = TestUserManager<ApplicationUser>();
@@ -113,7 +113,7 @@ namespace Blog.Tests
             var postService = new Mock<IPostService>();
             postService.Setup(p => p.GetPost(testId)).Returns(null as Post);
             var commentService = new Mock<ICommentService>();
-            var categoryService = new Mock<ICategoryService>();
+            var categoryService = new Mock<IPostCategoryService>();
             var image = new Mock<ImageService>();
             var webHostEnvironment = new Mock<IWebHostEnvironment>();
             var userManager = TestUserManager<ApplicationUser>();
@@ -134,7 +134,7 @@ namespace Blog.Tests
             var postService = new Mock<IPostService>();
             postService.Setup(p => p.GetPost(testId)).Returns(GetTestPosts().FirstOrDefault(p => p.Id == testId));
             var commentService = new Mock<ICommentService>();
-            var categoryService = new Mock<ICategoryService>();
+            var categoryService = new Mock<IPostCategoryService>();
             var image = new Mock<ImageService>();
             var webHostEnvironment = new Mock<IWebHostEnvironment>();
             var userManager = TestUserManager<ApplicationUser>();

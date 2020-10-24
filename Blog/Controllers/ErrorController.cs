@@ -30,11 +30,9 @@ namespace Blog.Controllers
         public IActionResult Exception()
         {
             var exeptionDetails = HttpContext.Features.Get<IExceptionHandlerPathFeature>();
-
-            ViewBag.ExceptionPath = exeptionDetails.Path;
-            ViewBag.ExceptionMessage = exeptionDetails.Error.Message;
-            ViewBag.Stacktrace = exeptionDetails.Error.StackTrace;
-
+            _logger.LogError($"{exeptionDetails.Path}");
+            _logger.LogError($"{exeptionDetails.Error.Message}");
+            _logger.LogError($"{exeptionDetails.Error.StackTrace}");
             return View();
         }
     }

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Repositories;
 
-namespace Blog.Data.Migrations
+namespace Blog.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     partial class ApplicationDbContextModelSnapshot : ModelSnapshot
@@ -94,77 +94,17 @@ namespace Blog.Data.Migrations
                         {
                             Id = "b809eea3-e39d-4721-b56e-7a19be0b34d4",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "",
+                            ConcurrencyStamp = "990ce400-557c-4712-913a-90bbf5c73758",
                             Email = "asp.net.core.blog@gmail.com",
-                            EmailConfirmed = true,
+                            EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "ASP.NET.CORE.BLOG@GMAIL.COM",
                             NormalizedUserName = "ASP.NET.CORE.BLOG@GMAIL.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEOEKElUzhOEW81I9h2pnWIwnGlHOvNXypzurxZGfMpXSO4G5Fnq4qIG1b703CpyhWA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEIJK6BnlAywVhm4xQZ6JvR6jA4To9shjx63KXdRJUr7dFxcrPDHE3wXS+IVx4hjPYA==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
                             UserName = "asp.net.core.blog@gmail.com"
-                        });
-                });
-
-            modelBuilder.Entity("Entities.Category", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Categories");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("4d134864-0453-486e-85c9-661674d9a261"),
-                            Name = "Дом и сад"
-                        },
-                        new
-                        {
-                            Id = new Guid("8800563e-843f-49cb-b8ed-c0bdb70341c0"),
-                            Name = "Еда и напитки"
-                        },
-                        new
-                        {
-                            Id = new Guid("5e578c08-ab04-484c-ac42-03c3272d0eb5"),
-                            Name = "Здоровье и фитнес"
-                        },
-                        new
-                        {
-                            Id = new Guid("c068f9d5-cc91-43f6-ae7b-47a5f3f6b466"),
-                            Name = "Наука и техника"
-                        },
-                        new
-                        {
-                            Id = new Guid("9443b6be-27fc-4b5b-80ae-6190deb3f497"),
-                            Name = "Новости и политика"
-                        },
-                        new
-                        {
-                            Id = new Guid("bb685dac-ab24-4ecd-a291-a0542c624170"),
-                            Name = "Развлечение"
-                        },
-                        new
-                        {
-                            Id = new Guid("a216c6f5-0be5-4d50-84ea-ee2fee208cfc"),
-                            Name = "Разное"
-                        },
-                        new
-                        {
-                            Id = new Guid("66b02aec-0ab5-4af8-a969-39ac6493f5ba"),
-                            Name = "Спорт"
                         });
                 });
 
@@ -233,6 +173,66 @@ namespace Blog.Data.Migrations
                     b.ToTable("Posts");
                 });
 
+            modelBuilder.Entity("Entities.PostCategory", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("PostCategories");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("e0124c8f-cd37-4093-b8d1-b62dfac7f2cb"),
+                            Name = "Дом и сад"
+                        },
+                        new
+                        {
+                            Id = new Guid("cab6fa8f-6467-4f1f-9267-af8d35d3a0a7"),
+                            Name = "Еда и напитки"
+                        },
+                        new
+                        {
+                            Id = new Guid("5177e626-a357-4722-af79-9a9efb43193e"),
+                            Name = "Здоровье и фитнес"
+                        },
+                        new
+                        {
+                            Id = new Guid("b9afdb0b-87f1-484a-886d-a66d591b6cfa"),
+                            Name = "Наука и техника"
+                        },
+                        new
+                        {
+                            Id = new Guid("d1ef5ca8-6510-4768-9207-b1aac15989fd"),
+                            Name = "Новости и политика"
+                        },
+                        new
+                        {
+                            Id = new Guid("e2fe0327-4d9a-4d6f-ba7c-4f58a107fd15"),
+                            Name = "Развлечение"
+                        },
+                        new
+                        {
+                            Id = new Guid("e6fd90a4-ffbc-498b-a3d8-646ae10784a9"),
+                            Name = "Разное"
+                        },
+                        new
+                        {
+                            Id = new Guid("2c1bd27d-1cf7-46bd-ad38-ae8b0199eedf"),
+                            Name = "Спорт"
+                        });
+                });
+
             modelBuilder.Entity("Entities.PostTag", b =>
                 {
                     b.Property<Guid>("PostId")
@@ -246,6 +246,92 @@ namespace Blog.Data.Migrations
                     b.HasIndex("TagId");
 
                     b.ToTable("PostTag");
+                });
+
+            modelBuilder.Entity("Entities.Report", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("PostId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ReportCategoryId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PostId");
+
+                    b.HasIndex("ReportCategoryId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Reports");
+                });
+
+            modelBuilder.Entity("Entities.ReportCategory", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ReportCategories");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("6c8b430f-99bf-460d-903e-198728353a72"),
+                            Name = "Контент сексуального характера"
+                        },
+                        new
+                        {
+                            Id = new Guid("0d50b5d6-2274-4f74-a478-7671242e1348"),
+                            Name = "Жестокие или отталкивающие сцены"
+                        },
+                        new
+                        {
+                            Id = new Guid("83ba1239-4ef7-44a7-ae91-c5c9d0e6c100"),
+                            Name = "Оскорбления или проявления нетерпимости"
+                        },
+                        new
+                        {
+                            Id = new Guid("06568472-51b4-4292-b7e0-a220b789c885"),
+                            Name = "Вредные или опасные действия"
+                        },
+                        new
+                        {
+                            Id = new Guid("520eeb61-256a-4edd-9476-5fbe69cc3f20"),
+                            Name = "Жестокое обращение с детьми"
+                        },
+                        new
+                        {
+                            Id = new Guid("516fff94-dfd1-4c94-bebd-9498048eac3d"),
+                            Name = "Нарушение моих прав"
+                        },
+                        new
+                        {
+                            Id = new Guid("bacc901a-c8fd-4f8c-b4f7-30e8a5b0d502"),
+                            Name = "Пропаганда терроризма"
+                        },
+                        new
+                        {
+                            Id = new Guid("7eca2608-2bf8-482b-a630-8e7eb2bc8724"),
+                            Name = "Спам или ложная информация"
+                        });
                 });
 
             modelBuilder.Entity("Entities.Tag", b =>
@@ -295,7 +381,7 @@ namespace Blog.Data.Migrations
                         new
                         {
                             Id = "e16895dd-7352-4cb4-b1b6-2a97f596e2ae",
-                            ConcurrencyStamp = "24cf080a-9b9a-40ef-abc5-6a63bc8c0bed",
+                            ConcurrencyStamp = "d336b7d1-eb42-4a19-a3ba-5275c9f69535",
                             Name = "admin",
                             NormalizedName = "ADMIN"
                         });
@@ -426,7 +512,7 @@ namespace Blog.Data.Migrations
 
             modelBuilder.Entity("Entities.Post", b =>
                 {
-                    b.HasOne("Entities.Category", "Category")
+                    b.HasOne("Entities.PostCategory", "Category")
                         .WithMany("Posts")
                         .HasForeignKey("CategoryId");
 
@@ -448,6 +534,25 @@ namespace Blog.Data.Migrations
                         .HasForeignKey("TagId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Entities.Report", b =>
+                {
+                    b.HasOne("Entities.Post", "Post")
+                        .WithMany("Reports")
+                        .HasForeignKey("PostId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Entities.ReportCategory", "ReportCategory")
+                        .WithMany("Reports")
+                        .HasForeignKey("ReportCategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Entities.ApplicationUser", "User")
+                        .WithMany("Reports")
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

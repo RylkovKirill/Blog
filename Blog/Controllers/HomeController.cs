@@ -8,7 +8,7 @@ using Microsoft.Extensions.Logging;
 using Blog.Models;
 using Services.PostService;
 using Services.CommentService;
-using Services.CategoryService;
+using Services.PostCategoryService;
 
 namespace Blog.Controllers
 {
@@ -16,10 +16,10 @@ namespace Blog.Controllers
     {
         private readonly IPostService _postService;
         private readonly ICommentService _commentService;
-        private readonly ICategoryService _categoryService;
+        private readonly IPostCategoryService _categoryService;
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(IPostService postService, ICommentService commentService, ICategoryService categoryService, ILogger<HomeController> logger)
+        public HomeController(IPostService postService, ICommentService commentService, IPostCategoryService categoryService, ILogger<HomeController> logger)
         {
             _postService = postService;
             _commentService = commentService;

@@ -9,6 +9,7 @@ namespace Entities.Mappings
         {
             entityTypeBuilder.HasOne(p => p.Category).WithMany(c => c.Posts);
             entityTypeBuilder.HasMany(p => p.Comments).WithOne(c => c.Post).OnDelete(DeleteBehavior.Cascade);
+            entityTypeBuilder.HasMany(u => u.Reports).WithOne(r => r.Post);
         }
     }
 }

@@ -5,17 +5,17 @@ using System.Threading.Tasks;
 using Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Services.CategoryService;
+using Services.PostCategoryService;
 
 namespace Blog.Areas.Admin.Controllers
 {
     [Area("Admin")]
     [Authorize(Roles = "admin")]
-    public class CategoriesController : Controller
+    public class PostCategoriesController : Controller
     {
-        private readonly ICategoryService _categoryService;
+        private readonly IPostCategoryService _categoryService;
 
-        public CategoriesController(ICategoryService categoryService)
+        public PostCategoriesController(IPostCategoryService categoryService)
         {
             _categoryService = categoryService;
         }
@@ -39,7 +39,7 @@ namespace Blog.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(Category category)
+        public IActionResult Create(PostCategory category)
         {
             _categoryService.UpdateCategory(category);
 
@@ -60,7 +60,7 @@ namespace Blog.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public IActionResult Edit(Category category)
+        public IActionResult Edit(PostCategory category)
         {
             _categoryService.UpdateCategory(category);
 
