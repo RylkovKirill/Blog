@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Microsoft.AspNetCore.Identity.UI.Services;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,25 +9,32 @@ using System.Threading.Tasks;
 
 namespace Blog.Service
 {
-    public class Message
+    internal class EmailSender : IEmailSender
     {
-        private readonly ILogger<Message> _logger;
+        private readonly ILogger<EmailSender> _logger;
 
-        public Message(ILogger<Message> logger)
+        public EmailSender(ILogger<EmailSender> logger)
         {
             _logger = logger;
         }
 
-        public void SendMessage(MailMessage message)
+        async Task IEmailSender.SendEmailAsync(string email, string subject, string htmlMessage)
         {
             try
             {
+                MailMessage message = new MailMessage();
+
+                message.From = new MailAddress("asp.net.core.blog@gmail.com", "Blog");
+                message.To.Add(email);
+                message.Subject = subject;
+                message.Body = htmlMessage;
+
                 using (SmtpClient smtpClient = new SmtpClient("smtp.gmail.com"))
                 {
                     smtpClient.Credentials = new NetworkCredential("asp.net.core.blog@gmail.com", "8qNecfEuVq");
                     smtpClient.Port = 587;
                     smtpClient.EnableSsl = true;
-                    smtpClient.Send(message);
+                    await smtpClient.SendMailAsync(message);
                     _logger.LogInformation("Сообщение отправлено");
                 }
             }
@@ -35,17 +43,5 @@ namespace Blog.Service
                 _logger.LogError(e.GetBaseException().Message);
             }
         }
-
-        /*public void SendMessage()
-        {
-            try
-            {
-
-            }
-            catch (Exception e)
-            {
-                logger.LogError(e.GetBaseException().Message);
-            }
-        }*/
     }
 }

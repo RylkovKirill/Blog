@@ -8,8 +8,8 @@
 <table class="table table-bordered">
     <thead>
         <tr>
-            <th scope="col">Жалобы</th>
-            <th scope="col">Посты</th>
+            <th scope="col">Жалоба</th>
+            <th scope="col">Пост</th>
             <th scope="col">Действия</th>
         </tr>
     </thead>
@@ -20,8 +20,8 @@
             <td>@reportCategoryService.GetCategory(item.ReportCategoryId).Name</td>
             <td>@postService.GetPost(item.PostId).Title</td>
                 <td>
-                    <a type="button" class="btn btn-primary" asp-controller="Categories" asp-action="Edit" asp-route-id="@item.Id">Изменить пост</a>
-                    <a type="button" class="btn btn-danger" asp-controller="Users" asp-action="Delete" asp-route-id="@item.Id">Удалить пост</a>
+                    <a type="button" class="btn btn-primary" asp-controller="Reports" asp-action="EditPost" asp-route-id="@item.PostId">Изменить пост</a>
+                    <a type="button" class="btn btn-danger" asp-controller="Reports" asp-action="DeletePost" asp-route-id="@item.PostId">Удалить пост</a>
                     <a type="button" class="btn btn-danger" asp-controller="Reports" asp-action="Delete" asp-route-id="@item.Id">Удалить жалобу</a>
                 </td>
             </tr>

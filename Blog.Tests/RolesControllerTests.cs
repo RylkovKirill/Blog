@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Moq;
-using Services.CategoryService;
+using Services.PostCategoryService;
 using Services.CommentService;
 using Services.PostService;
 using System;

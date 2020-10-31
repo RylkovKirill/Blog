@@ -3,7 +3,7 @@ using Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Moq;
-using Services.CategoryService;
+using Services.PostCategoryService;
 using Services.CommentService;
 using Services.PostService;
 using System;
@@ -31,7 +31,7 @@ namespace Blog.Tests
 
             var viewResult = Assert.IsType<ViewResult>(result);
             var model = Assert.IsAssignableFrom<IQueryable<Post>>(viewResult.Model);
-            Assert.Equal(GetTestPosts().Count(), model.Count()); ;
+            Assert.Equal(GetTestPosts().Count(), model.Count());
         }
 
         private IQueryable<Post> GetTestPosts()

@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Entities;
-using Entities.Mappings;
+using Repositories.Mappings;
 using System;
 using Microsoft.AspNetCore.Identity;
 
@@ -33,7 +33,6 @@ namespace Repositories
             new TagMap(modelBuilder.Entity<Tag>());
             new ReportMap(modelBuilder.Entity<Report>());
             new ReportCategoryMap(modelBuilder.Entity<ReportCategory>());
-
 
             modelBuilder.Entity<PostCategory>().HasData(new PostCategory { Id = Guid.Parse("e0124c8f-cd37-4093-b8d1-b62dfac7f2cb"), Name = "Дом и сад", });
             modelBuilder.Entity<PostCategory>().HasData(new PostCategory { Id = Guid.Parse("cab6fa8f-6467-4f1f-9267-af8d35d3a0a7"), Name = "Еда и напитки", });
@@ -83,7 +82,7 @@ namespace Repositories
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             string connection = "Server=(localdb)\\mssqllocaldb;Database=Blog_db;Trusted_Connection=True;MultipleActiveResultSets=true";
-            //string connection = "Data Source=tcp:blogdbserver.database.windows.net,1433;Initial Catalog=Blog_db;User Id=bsa@blogdbserver;Password=123Qwer+";
+            //string connection = "Data Source=tcp:blogdbserver.database.windows.net,1433;Initial Catalog=Blog_db;User Id=bsa@blogdbserver;Password=m8RwntY%ew";
             optionsBuilder.UseSqlServer(connection, (b => b.MigrationsAssembly("Blog")));
         }
     }

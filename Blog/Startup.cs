@@ -43,7 +43,6 @@ namespace Blog
             services.AddTransient<ICommentService, CommentService>();
             services.AddTransient<IReportService, ReportService>();
             services.AddTransient<IReportCategoryService, ReportCategoryService>();
-            services.AddTransient<Message>();
             services.AddControllersWithViews();
             services.AddRazorPages();
             services.AddSignalR(hubOptions =>

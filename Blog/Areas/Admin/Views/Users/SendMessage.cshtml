@@ -1,17 +1,15 @@
-﻿@model System.Net.Mail.MailMessage
-
-<form asp-action="SendMessage">
+﻿<form asp-action="SendMessage">
     <div class="form-group">
         @*<label>От</label>
         <input type="hidden" class="form-control" asp-for="From">
         <label>Кому</label>
         <input type="hidden" class="form-control" asp-for="To">*@
         <label>Тема</label>
-        <input class="form-control" asp-for="Subject">
+        <input class="form-control" name="subject">
     </div>
     <div class="form-group">
         <label>Сообщение</label>
-        <textarea class="form-control" asp-for="Body" rows="5"></textarea>
+        <textarea class="form-control" name="htmlMessage" rows="5"></textarea>
     </div>
     <button type="submit" class="btn btn-primary">Отправить</button>
 </form>

@@ -18,9 +18,11 @@ using Services.CommentService;
 using Services.PostService;
 using Services.ReportService;
 using Services.ReportCategoryService;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Blog.Controllers
 {
+    [Authorize]
     public class BlogController : Controller
     {
         private readonly IPostService _postService;
@@ -93,23 +95,17 @@ namespace Blog.Controllers
                     post.TitleImagePath = _image.Save(imageFile, this._webHostEnvironment);
                 }
                 _postService.UpdatePost(post);
-                return RedirectToAction(nameof(EditPosts));
+                return RedirectToAction(nameof(Index));
             }
             ViewBag.Categories = new SelectList(_categoryService.GetCategories(), "Id", "Name");
             return View(post);
-        }
-
-        public async Task<IActionResult> EditPosts()
-        {
-            var user = await _userManager.GetUserAsync(HttpContext.User);
-            return View(_postService.GetPostsByUser(user));
         }
 
         public IActionResult Delete(Guid id)
         {
             _commentService.DeletePostComments(_postService.GetPost(id));
             _postService.DeletePost(id);
-            return RedirectToAction(nameof(EditPosts));
+            return RedirectToAction(nameof(Index));
         }
 
         public IActionResult Details(Guid id)

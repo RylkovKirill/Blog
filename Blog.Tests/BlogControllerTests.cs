@@ -19,7 +19,8 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
-
+using Services.ReportService;
+using Services.ReportCategoryService;
 
 namespace Blog.Tests
 {
@@ -67,13 +68,16 @@ namespace Blog.Tests
             postService.Setup(p => p.GetPost(testId)).Returns(null as Post);
             var commentService = new Mock<ICommentService>();
             var categoryService = new Mock<IPostCategoryService>();
+            var reportService = new Mock<IReportService>();
+            var reportCategoryService = new Mock<IReportCategoryService>();
             var image = new Mock<ImageService>();
             var webHostEnvironment = new Mock<IWebHostEnvironment>();
             var userManager = TestUserManager<ApplicationUser>();
             var hubContext = new Mock<IHubContext<CommentHub>>();
             var logger = new Mock<ILogger<BlogController>>();
 
-            var controller = new BlogController(postService.Object, commentService.Object, categoryService.Object, image.Object, webHostEnvironment.Object, userManager, hubContext.Object, logger.Object);
+
+            var controller = new BlogController(postService.Object, commentService.Object, categoryService.Object, reportService.Object, reportCategoryService.Object, image.Object, webHostEnvironment.Object, userManager, hubContext.Object, logger.Object);
 
             var result = controller.Edit(testId);
 
@@ -88,13 +92,15 @@ namespace Blog.Tests
             postService.Setup(p => p.GetPost(testId)).Returns(GetTestPosts().FirstOrDefault(p => p.Id == testId));
             var commentService = new Mock<ICommentService>();
             var categoryService = new Mock<IPostCategoryService>();
+            var reportService = new Mock<IReportService>();
+            var reportCategoryService = new Mock<IReportCategoryService>();
             var image = new Mock<ImageService>();
             var webHostEnvironment = new Mock<IWebHostEnvironment>();
             var userManager = TestUserManager<ApplicationUser>();
             var hubContext = new Mock<IHubContext<CommentHub>>();
             var logger = new Mock<ILogger<BlogController>>();
 
-            var controller = new BlogController(postService.Object, commentService.Object, categoryService.Object, image.Object, webHostEnvironment.Object, userManager, hubContext.Object, logger.Object);
+            var controller = new BlogController(postService.Object, commentService.Object, categoryService.Object, reportService.Object, reportCategoryService.Object, image.Object, webHostEnvironment.Object, userManager, hubContext.Object, logger.Object);
 
             var result = controller.Edit(testId);
 
@@ -114,13 +120,15 @@ namespace Blog.Tests
             postService.Setup(p => p.GetPost(testId)).Returns(null as Post);
             var commentService = new Mock<ICommentService>();
             var categoryService = new Mock<IPostCategoryService>();
+            var reportService = new Mock<IReportService>();
+            var reportCategoryService = new Mock<IReportCategoryService>();
             var image = new Mock<ImageService>();
             var webHostEnvironment = new Mock<IWebHostEnvironment>();
             var userManager = TestUserManager<ApplicationUser>();
             var hubContext = new Mock<IHubContext<CommentHub>>();
             var logger = new Mock<ILogger<BlogController>>();
 
-            var controller = new BlogController(postService.Object, commentService.Object, categoryService.Object, image.Object, webHostEnvironment.Object, userManager, hubContext.Object, logger.Object);
+            var controller = new BlogController(postService.Object, commentService.Object, categoryService.Object, reportService.Object, reportCategoryService.Object, image.Object, webHostEnvironment.Object, userManager, hubContext.Object, logger.Object);
 
             var result = controller.Details(testId);
 
@@ -135,13 +143,15 @@ namespace Blog.Tests
             postService.Setup(p => p.GetPost(testId)).Returns(GetTestPosts().FirstOrDefault(p => p.Id == testId));
             var commentService = new Mock<ICommentService>();
             var categoryService = new Mock<IPostCategoryService>();
+            var reportService = new Mock<IReportService>();
+            var reportCategoryService = new Mock<IReportCategoryService>();
             var image = new Mock<ImageService>();
             var webHostEnvironment = new Mock<IWebHostEnvironment>();
             var userManager = TestUserManager<ApplicationUser>();
             var hubContext = new Mock<IHubContext<CommentHub>>();
             var logger = new Mock<ILogger<BlogController>>();
 
-            var controller = new BlogController(postService.Object, commentService.Object, categoryService.Object, image.Object, webHostEnvironment.Object, userManager, hubContext.Object, logger.Object);
+            var controller = new BlogController(postService.Object, commentService.Object, categoryService.Object, reportService.Object, reportCategoryService.Object, image.Object, webHostEnvironment.Object, userManager, hubContext.Object, logger.Object);
 
             var result = controller.Details(testId);
 

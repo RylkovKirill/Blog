@@ -8,6 +8,7 @@ using Blog.Service;
 using Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Blog.Areas.Admin.Controllers
@@ -18,11 +19,11 @@ namespace Blog.Areas.Admin.Controllers
     public class UsersController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;
-        private readonly Message _message;
-        public UsersController(UserManager<ApplicationUser> userManager, Message message)
+        private readonly IEmailSender _emailSender;
+        public UsersController(UserManager<ApplicationUser> userManager, IEmailSender emailSender)
         {
             _userManager = userManager;
-            _message = message;
+            _emailSender = emailSender;
         }
 
         public IActionResult Index()
@@ -58,17 +59,15 @@ namespace Blog.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> SendMessage(MailMessage model, Guid Id)
+        public async Task<IActionResult> SendMessage(Guid Id, string subject, string htmlMessage)
         {
             if (ModelState.IsValid)
             {
                 var user = await _userManager.FindByIdAsync(Id.ToString());
-                model.From = new MailAddress("asp.net.core.blog@gmail.com", "Blog");
-                model.To.Add(user.Email);
-                _message.SendMessage(model);
+                await _emailSender.SendEmailAsync(user.Email, subject, htmlMessage);
                 return RedirectToAction(nameof(UsersController.Index), nameof(UsersController).Replace("Controller", ""));
             }
-            return View(model);
+            return View();
         }
     }
 }

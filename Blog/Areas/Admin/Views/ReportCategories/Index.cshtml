@@ -1,4 +1,4 @@
-﻿@model IQueryable<PostCategory>
+﻿@model IQueryable<ReportCategory>
 @{
     ViewData["Title"] = "Категории";
 }
@@ -16,12 +16,12 @@
                 <tr>
                     <td>@item.Name</td>
                     <td>
-                        <a type="button" class="btn btn-primary" asp-controller="PostCategories" asp-action="Edit" asp-route-id="@item.Id">Изменить</a>
-                        <a type="button" class="btn btn-danger" asp-controller="PostCategories" asp-action="Delete" asp-route-id="@item.Id">Удалить</a>
+                        <a type="button" class="btn btn-primary" asp-controller="ReportCategories" asp-action="Edit" asp-route-id="@item.Id">Изменить</a>
+                        <a type="button" class="btn btn-danger" asp-controller="ReportCategories" asp-action="Delete" asp-route-id="@item.Id">Удалить</a>
                     </td>
                 </tr>
             }
         </tbody>
 </table>
 <br />
-<a type="button" class="btn btn-primary" asp-controller="PostCategories" asp-action="Create">Добавить категорию</a>
+<a type="button" class="btn btn-primary" asp-controller="ReportCategories" asp-action="Create">Добавить категорию</a>

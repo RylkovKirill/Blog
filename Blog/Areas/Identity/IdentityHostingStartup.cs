@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Net;
+using System.Net.Mail;
 using System.Threading.Tasks;
+using Blog.Service;
 using Entities;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -8,6 +11,7 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Repositories;
 
 [assembly: HostingStartup(typeof(Blog.Areas.Identity.IdentityHostingStartup))]
@@ -30,11 +34,5 @@ namespace Blog.Areas.Identity
         }
     }
 
-    internal class EmailSender : IEmailSender
-    {
-        Task IEmailSender.SendEmailAsync(string email, string subject, string htmlMessage)
-        {
-            throw new NotImplementedException();
-        }
-    }
+ 
 }
