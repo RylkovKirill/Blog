@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Mail;
 using System.Threading.Tasks;
@@ -22,12 +20,14 @@ namespace Blog.Service
         {
             try
             {
-                MailMessage message = new MailMessage();
+                MailMessage message = new MailMessage
+                {
+                    From = new MailAddress("asp.net.core.blog@gmail.com", "Blog"),
+                    Subject = subject,
+                    Body = htmlMessage
+                };
 
-                message.From = new MailAddress("asp.net.core.blog@gmail.com", "Blog");
                 message.To.Add(email);
-                message.Subject = subject;
-                message.Body = htmlMessage;
 
                 using (SmtpClient smtpClient = new SmtpClient("smtp.gmail.com"))
                 {
@@ -35,6 +35,7 @@ namespace Blog.Service
                     smtpClient.Port = 587;
                     smtpClient.EnableSsl = true;
                     await smtpClient.SendMailAsync(message);
+
                     _logger.LogInformation("Сообщение отправлено");
                 }
             }

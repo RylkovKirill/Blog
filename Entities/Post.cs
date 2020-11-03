@@ -15,7 +15,7 @@ namespace Entities
         public string Content { get; set; }
 
         [Display(Name = "Дата публикации")]
-        public DateTime PostedDate { get; set; } = DateTime.UtcNow;
+        public DateTime PostedDate { get; set; } = DateTime.Now;
 
         [Display(Name = "Титульное изображение")]
         public string TitleImagePath { get; set; }
@@ -32,10 +32,10 @@ namespace Entities
         [Display(Name = "Категория")]
         public PostCategory Category { get; set; }
 
-        [Display(Name = "Коментарии")]
+        [Display(Name = "Список комментариев")]
         public List<Comment> Comments { get; set; }
 
-        [Display(Name = "Теги")]
+        [Display(Name = "Список тегов")]
         public List<PostTag> Tags { get; set; }
 
         [Display(Name = "Список жалоб")]

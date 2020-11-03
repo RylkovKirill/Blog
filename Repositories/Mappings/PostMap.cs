@@ -9,7 +9,7 @@ namespace Repositories.Mappings
         public PostMap(EntityTypeBuilder<Post> entityTypeBuilder)
         {
             entityTypeBuilder.HasOne(p => p.Category).WithMany(c => c.Posts);
-            entityTypeBuilder.HasMany(p => p.Comments).WithOne(c => c.Post).OnDelete(DeleteBehavior.Cascade);
+            entityTypeBuilder.HasMany(p => p.Comments).WithOne(c => c.Post);
             entityTypeBuilder.HasMany(u => u.Reports).WithOne(r => r.Post);
         }
     }

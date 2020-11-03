@@ -231,7 +231,7 @@ namespace Blog.Migrations
                     Content = table.Column<string>(nullable: true),
                     PostedDate = table.Column<DateTime>(nullable: false),
                     UserId = table.Column<string>(nullable: true),
-                    PostId = table.Column<Guid>(nullable: true)
+                    PostId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -309,12 +309,12 @@ namespace Blog.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "e16895dd-7352-4cb4-b1b6-2a97f596e2ae", "d336b7d1-eb42-4a19-a3ba-5275c9f69535", "admin", "ADMIN" });
+                values: new object[] { "e16895dd-7352-4cb4-b1b6-2a97f596e2ae", "ac8eaa4e-5064-489b-9b39-0b54adb891b4", "admin", "ADMIN" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "Name", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "Surname", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "b809eea3-e39d-4721-b56e-7a19be0b34d4", 0, "990ce400-557c-4712-913a-90bbf5c73758", "asp.net.core.blog@gmail.com", false, false, null, null, "ASP.NET.CORE.BLOG@GMAIL.COM", "ASP.NET.CORE.BLOG@GMAIL.COM", "AQAAAAEAACcQAAAAEIJK6BnlAywVhm4xQZ6JvR6jA4To9shjx63KXdRJUr7dFxcrPDHE3wXS+IVx4hjPYA==", null, false, "", null, false, "asp.net.core.blog@gmail.com" });
+                values: new object[] { "b809eea3-e39d-4721-b56e-7a19be0b34d4", 0, "c7156050-87b5-4c02-8d9e-e4ce516339e8", "asp.net.core.blog@gmail.com", false, false, null, null, "ASP.NET.CORE.BLOG@GMAIL.COM", "ASP.NET.CORE.BLOG@GMAIL.COM", "AQAAAAEAACcQAAAAEP4hpgD6wSIe/jDmGiUl8oxxGqADKnwi7P+Hx129EZzOdrpJ/GyHsd3FE5RzMLm48Q==", null, false, "", null, false, "asp.net.core.blog@gmail.com" });
 
             migrationBuilder.InsertData(
                 table: "PostCategories",

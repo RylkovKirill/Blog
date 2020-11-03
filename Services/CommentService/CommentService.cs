@@ -31,7 +31,7 @@ namespace Services.CommentService
 
         public IQueryable<Comment> GetCommentsByPost(Post post)
         {
-            return repository.GetAll().Where(c => c.Post.Equals(post));
+            return repository.GetAll().Where(c => c.Post.Equals(post)).OrderByDescending(c=> c.PostedDate);
         }
 
         public void InsertComment(Comment comment)

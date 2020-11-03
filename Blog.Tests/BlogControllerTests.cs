@@ -73,7 +73,7 @@ namespace Blog.Tests
             var image = new Mock<ImageService>();
             var webHostEnvironment = new Mock<IWebHostEnvironment>();
             var userManager = TestUserManager<ApplicationUser>();
-            var hubContext = new Mock<IHubContext<CommentHub>>();
+            var hubContext = new Mock<IHubContext<CommentsHub>>();
             var logger = new Mock<ILogger<BlogController>>();
 
 
@@ -97,7 +97,7 @@ namespace Blog.Tests
             var image = new Mock<ImageService>();
             var webHostEnvironment = new Mock<IWebHostEnvironment>();
             var userManager = TestUserManager<ApplicationUser>();
-            var hubContext = new Mock<IHubContext<CommentHub>>();
+            var hubContext = new Mock<IHubContext<CommentsHub>>();
             var logger = new Mock<ILogger<BlogController>>();
 
             var controller = new BlogController(postService.Object, commentService.Object, categoryService.Object, reportService.Object, reportCategoryService.Object, image.Object, webHostEnvironment.Object, userManager, hubContext.Object, logger.Object);
@@ -125,12 +125,12 @@ namespace Blog.Tests
             var image = new Mock<ImageService>();
             var webHostEnvironment = new Mock<IWebHostEnvironment>();
             var userManager = TestUserManager<ApplicationUser>();
-            var hubContext = new Mock<IHubContext<CommentHub>>();
+            var hubContext = new Mock<IHubContext<CommentsHub>>();
             var logger = new Mock<ILogger<BlogController>>();
 
             var controller = new BlogController(postService.Object, commentService.Object, categoryService.Object, reportService.Object, reportCategoryService.Object, image.Object, webHostEnvironment.Object, userManager, hubContext.Object, logger.Object);
 
-            var result = controller.Details(testId);
+            var result = controller.DetailsAsync(testId);
 
             Assert.IsType<NotFoundResult>(result);
         }
@@ -148,12 +148,12 @@ namespace Blog.Tests
             var image = new Mock<ImageService>();
             var webHostEnvironment = new Mock<IWebHostEnvironment>();
             var userManager = TestUserManager<ApplicationUser>();
-            var hubContext = new Mock<IHubContext<CommentHub>>();
+            var hubContext = new Mock<IHubContext<CommentsHub>>();
             var logger = new Mock<ILogger<BlogController>>();
 
             var controller = new BlogController(postService.Object, commentService.Object, categoryService.Object, reportService.Object, reportCategoryService.Object, image.Object, webHostEnvironment.Object, userManager, hubContext.Object, logger.Object);
 
-            var result = controller.Details(testId);
+            var result = controller.DetailsAsync(testId);
 
             var viewResult = Assert.IsType<ViewResult>(result);
             var model = Assert.IsType<Post>(viewResult.ViewData.Model);

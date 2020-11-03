@@ -10,7 +10,7 @@ using Repositories;
 namespace Blog.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20201023211135_InitialCreate")]
+    [Migration("20201103121631_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -96,13 +96,13 @@ namespace Blog.Migrations
                         {
                             Id = "b809eea3-e39d-4721-b56e-7a19be0b34d4",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "990ce400-557c-4712-913a-90bbf5c73758",
+                            ConcurrencyStamp = "c7156050-87b5-4c02-8d9e-e4ce516339e8",
                             Email = "asp.net.core.blog@gmail.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "ASP.NET.CORE.BLOG@GMAIL.COM",
                             NormalizedUserName = "ASP.NET.CORE.BLOG@GMAIL.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEIJK6BnlAywVhm4xQZ6JvR6jA4To9shjx63KXdRJUr7dFxcrPDHE3wXS+IVx4hjPYA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEP4hpgD6wSIe/jDmGiUl8oxxGqADKnwi7P+Hx129EZzOdrpJ/GyHsd3FE5RzMLm48Q==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -119,7 +119,7 @@ namespace Blog.Migrations
                     b.Property<string>("Content")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("PostId")
+                    b.Property<Guid>("PostId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("PostedDate")
@@ -383,7 +383,7 @@ namespace Blog.Migrations
                         new
                         {
                             Id = "e16895dd-7352-4cb4-b1b6-2a97f596e2ae",
-                            ConcurrencyStamp = "d336b7d1-eb42-4a19-a3ba-5275c9f69535",
+                            ConcurrencyStamp = "ac8eaa4e-5064-489b-9b39-0b54adb891b4",
                             Name = "admin",
                             NormalizedName = "ADMIN"
                         });
@@ -505,7 +505,8 @@ namespace Blog.Migrations
                     b.HasOne("Entities.Post", "Post")
                         .WithMany("Comments")
                         .HasForeignKey("PostId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Entities.ApplicationUser", "User")
                         .WithMany("Comments")

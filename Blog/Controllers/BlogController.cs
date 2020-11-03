@@ -33,11 +33,10 @@ namespace Blog.Controllers
         private readonly ImageService _image;
         private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly UserManager<ApplicationUser> _userManager;
-        private readonly IHubContext<CommentHub> _hubContext;
         private readonly ILogger<BlogController> _logger;
 
 
-        public BlogController(IPostService postService, ICommentService commentService, IPostCategoryService categoryService, IReportService reportService, IReportCategoryService reportCategoryService, ImageService image, IWebHostEnvironment webHostEnvironment, UserManager<ApplicationUser> userManager, IHubContext<CommentHub> hubContext, ILogger<BlogController> logger)
+        public BlogController(IPostService postService, ICommentService commentService, IPostCategoryService categoryService, IReportService reportService, IReportCategoryService reportCategoryService, ImageService image, IWebHostEnvironment webHostEnvironment, UserManager<ApplicationUser> userManager, ILogger<BlogController> logger)
         {
             _postService = postService;
             _commentService = commentService;
@@ -47,7 +46,6 @@ namespace Blog.Controllers
             _image = image;
             _webHostEnvironment = webHostEnvironment;
             _userManager = userManager;
-            _hubContext = hubContext;
             _logger = logger;
         }
 
@@ -108,7 +106,7 @@ namespace Blog.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        public IActionResult Details(Guid id)
+        public IActionResult DetailsAsync(Guid id)
         {
             var post = _postService.GetPost(id);
 
@@ -116,25 +114,9 @@ namespace Blog.Controllers
             {
                 return NotFound();
             }
-
             var comments = _commentService.GetCommentsByPost(post);
             ViewBag.Comments = comments;
             return View(post);
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> AddComment(string content, Guid id)
-        {
-            Comment comment = new Comment();
-            var user = await _userManager.GetUserAsync(HttpContext.User);
-            comment.Post = _postService.GetPost(id);
-            comment.User = user;
-            comment.Content = content;
-            _commentService.InsertComment(comment);
-            var comments = _commentService.GetCommentsByPost(comment.Post);
-            ViewBag.Comments = comments;
-            await _hubContext.Clients.All.SendAsync("Notify", $" {content}", $" {_userManager.GetUserNameAsync(comment.User).Result}", $" {comment.PostedDate}");
-            return View("Details", _postService.GetPost(id));
         }
 
         [HttpPost]
