@@ -21,7 +21,6 @@ namespace Blog.Controllers
         public IActionResult Error(int code)
         {
             ViewBag.Code = code;
-            //_logger.LogError($"Error. Status code: {code}");
             return View();
         }
 

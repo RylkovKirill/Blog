@@ -7,9 +7,8 @@ const commentItems = ['<div class="card border-dark mb-3 w-50"><div class="card-
 
 var connection = new signalR.HubConnectionBuilder().withUrl("/comment").build();
 document.getElementById("send").disabled = true;
-
 connection.start().then(AddToGroup);
-document.getElementById("send").addEventListener("click", Send);
+document.getElementById("send").addEventListener("click", SendComment);
 connection.on("Send", AddComment);
 
 function AddComment(userName, content, postedDate)
@@ -25,7 +24,7 @@ function AddToGroup()
     connection.invoke("AddToGroup", postId)
 }
 
-function Send(event)
+function SendComment(event)
 {
     var postId = document.getElementById("postId").value;
     var content = document.getElementById("content").value;

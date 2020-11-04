@@ -34,9 +34,9 @@ namespace Services.PostService
             return _repository.GetAll().Where(p => p.Category.Equals(category));
         }
 
-        public void InsertPost(Post post)
+        public void AddPost(Post post)
         {
-            _repository.Insert(post);
+            _repository.Add(post);
         }
 
         public void UpdatePost(Post post)
@@ -44,9 +44,9 @@ namespace Services.PostService
             _repository.Update(post);
         }
 
-        public void DeletePost(Guid id)
+        public void RemovePost(Guid id)
         {
-            _repository.Delete(GetPost(id));
+            _repository.Remove(GetPost(id));
         }
     }
 }

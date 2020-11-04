@@ -70,7 +70,7 @@ namespace Blog.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult Delete(Guid id)
         {
-            _reportCategoryService.DeleteCategory(id);
+            _reportCategoryService.RemoveCategory(id);
 
             return RedirectToAction("Index");
         }

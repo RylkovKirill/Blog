@@ -1,9 +1,7 @@
 ﻿using Entities;
 using Repositories;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Services.ReportService
 {
@@ -36,9 +34,9 @@ namespace Services.ReportService
             return _repository.GetAll().Where(p => p.Post.Equals(post));
         }
 
-        public void InsertReport(Report report)
+        public void AddReport(Report report)
         {
-            _repository.Insert(report);
+            _repository.Add(report);
         }
 
         public void UpdateReport(Report report)
@@ -46,9 +44,9 @@ namespace Services.ReportService
             _repository.Update(report);
         }
 
-        public void DeleteReport(Guid id)
+        public void RemoveReport(Guid id)
         {
-            _repository.Delete(GetReport(id));
+            _repository.Remove(GetReport(id));
         }
     }
 }

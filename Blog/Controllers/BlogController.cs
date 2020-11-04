@@ -101,8 +101,7 @@ namespace Blog.Controllers
 
         public IActionResult Delete(Guid id)
         {
-            _commentService.DeletePostComments(_postService.GetPost(id));
-            _postService.DeletePost(id);
+            _postService.RemovePost(id);
             return RedirectToAction(nameof(Index));
         }
 
@@ -128,7 +127,7 @@ namespace Blog.Controllers
             report.User = user;
             report.Post = _postService.GetPost(id);
             report.ReportCategory = _reportCategoryService.GetCategory(reportCategoryId);
-            _reportService.InsertReport(report);
+            _reportService.AddReport(report);
             return View("Details", _postService.GetPost(id));
         }
     }

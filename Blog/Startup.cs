@@ -26,7 +26,8 @@ namespace Blog
     {
         public Startup(IConfiguration configuration)
         {
-            Configuration = configuration;
+            var configurationBuilder = new ConfigurationBuilder().AddJsonFile("adminsettings.json").AddJsonFile("emailsettings.json").AddConfiguration(configuration);
+            Configuration = configurationBuilder.Build();
         }
 
         public IConfiguration Configuration { get; }
@@ -36,6 +37,7 @@ namespace Blog
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("ApplicationDbContextConnection")));
+            services.AddTransient(serviceProvider => Configuration);
             services.AddSingleton<ImageService>();
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddTransient<IPostService, PostService>();
@@ -48,7 +50,7 @@ namespace Blog
             services.AddSignalR(hubOptions =>
             {
                 hubOptions.EnableDetailedErrors = true;
-                hubOptions.KeepAliveInterval = System.TimeSpan.FromMinutes(1);
+                hubOptions.KeepAliveInterval = TimeSpan.FromMinutes(1);
             });
             services.AddAuthentication().AddGoogle(options =>
             {

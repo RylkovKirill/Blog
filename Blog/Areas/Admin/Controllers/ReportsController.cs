@@ -45,7 +45,7 @@ namespace Blog.Areas.Admin.Controllers
 
         public IActionResult Delete(Guid id)
         {
-            _reportService.DeleteReport(id);
+            _reportService.RemoveReport(id);
             return RedirectToAction("Index");
         }
 
@@ -81,7 +81,7 @@ namespace Blog.Areas.Admin.Controllers
 
         public IActionResult DeletePost(Guid id)
         {
-            _postService.DeletePost(id);
+            _postService.RemovePost(id);
             return RedirectToAction(nameof(Index));
         }
     }

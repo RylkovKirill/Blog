@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Repositories
 {
@@ -9,9 +7,8 @@ namespace Repositories
     {
         T Get(Guid id);
         IQueryable<T> GetAll();
-        void Insert(T entity);
+        void Add(T entity);
         void Update(T entity);
-        void Delete(T entity);
         void Remove(T entity);
         void SaveChanges();
     }

@@ -8,8 +8,8 @@ namespace Services.PostCategoryService
     {
         PostCategory GetCategory(Guid id);
         IQueryable<PostCategory> GetCategories();
-        void InsertCategory(PostCategory category);
+        void AddCategory(PostCategory category);
         void UpdateCategory(PostCategory category);
-        void DeleteCategory(Guid id);
+        void RemoveCategory(Guid id);
     }
 }

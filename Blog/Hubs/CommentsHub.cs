@@ -18,12 +18,12 @@ namespace Blog.Hubs
             _userManager = userManager;
         }
 
-        public async Task AddToGroup(String groupName)
+        public async Task AddToGroup(string groupName)
         {
             await Groups.AddToGroupAsync(Context.ConnectionId, groupName);
         }
 
-        public async Task RemoveFromGroup(String groupName)
+        public async Task RemoveFromGroup(string groupName)
         {
             await Groups.RemoveFromGroupAsync(Context.ConnectionId, groupName);
         }
@@ -39,7 +39,7 @@ namespace Blog.Hubs
                 Content = content
             };
 
-            _commentService.InsertComment(comment);
+            _commentService.AddComment(comment);
 
             await Clients.Group(postId).SendAsync("Send", user.UserName, comment.Content, comment.PostedDate);
         }

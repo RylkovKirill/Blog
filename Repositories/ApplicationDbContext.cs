@@ -4,14 +4,18 @@ using Entities;
 using Repositories.Mappings;
 using System;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Configuration;
 
 namespace Repositories
 {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+        private readonly IConfiguration _configuration;
+
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options, IConfiguration configuration)
             : base(options)
         {
+            _configuration = configuration;
         }
 
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
@@ -62,11 +66,12 @@ namespace Repositories
             modelBuilder.Entity<ApplicationUser>().HasData(new ApplicationUser
             {
                 Id = "b809eea3-e39d-4721-b56e-7a19be0b34d4",
-                UserName = "asp.net.core.blog@gmail.com",
-                NormalizedUserName = "ASP.NET.CORE.BLOG@GMAIL.COM",
-                Email = "asp.net.core.blog@gmail.com",
-                NormalizedEmail = "ASP.NET.CORE.BLOG@GMAIL.COM",
-                PasswordHash = new PasswordHasher<ApplicationUser>().HashPassword(null, "m8RwntY%ew"),
+                UserName = _configuration["AdminSettings:UserName"],
+                NormalizedUserName = _configuration["AdminSettings:UserName"].ToUpper(),
+                Email = _configuration["AdminSettings:Email"],
+                NormalizedEmail = _configuration["AdminSettings:Email"].ToUpper(),
+                PasswordHash = new PasswordHasher<ApplicationUser>().HashPassword(null, _configuration["AdminSettings:Password"]),
+                EmailConfirmed = bool.Parse(_configuration["AdminSettings:EmailConfirmed"]),
                 SecurityStamp = string.Empty,
             });
 
@@ -81,9 +86,8 @@ namespace Repositories
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            string connection = "Server=(localdb)\\mssqllocaldb;Database=Blog_db;Trusted_Connection=True;MultipleActiveResultSets=true";
             //string connection = "Data Source=tcp:blogdbserver.database.windows.net,1433;Initial Catalog=Blog_db;User Id=bsa@blogdbserver;Password=m8RwntY%ew";
-            optionsBuilder.UseSqlServer(connection, (b => b.MigrationsAssembly("Blog")));
+            optionsBuilder.UseSqlServer(_configuration.GetConnectionString("ApplicationDbContextConnection"), b => b.MigrationsAssembly("Blog"));
         }
     }
 }

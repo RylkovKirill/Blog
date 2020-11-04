@@ -1,9 +1,7 @@
 ﻿using Entities;
 using Repositories;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Services.ReportCategoryService
 {
@@ -26,9 +24,9 @@ namespace Services.ReportCategoryService
             return _repository.GetAll();
         }
 
-        public void InsertCategory(ReportCategory category)
+        public void AddCategory(ReportCategory category)
         {
-            _repository.Insert(category);
+            _repository.Add(category);
         }
 
         public void UpdateCategory(ReportCategory category)
@@ -36,9 +34,9 @@ namespace Services.ReportCategoryService
             _repository.Update(category);
         }
 
-        public void DeleteCategory(Guid id)
+        public void RemoveCategory(Guid id)
         {
-            _repository.Delete(GetCategory(id));
+            _repository.Remove(GetCategory(id));
         }
     }
 }

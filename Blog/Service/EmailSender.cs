@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity.UI.Services;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Net;
@@ -9,10 +10,12 @@ namespace Blog.Service
 {
     internal class EmailSender : IEmailSender
     {
+        private readonly IConfiguration _configuration;
         private readonly ILogger<EmailSender> _logger;
 
-        public EmailSender(ILogger<EmailSender> logger)
+        public EmailSender(IConfiguration configuration, ILogger<EmailSender> logger)
         {
+            _configuration = configuration;
             _logger = logger;
         }
 
@@ -22,22 +25,21 @@ namespace Blog.Service
             {
                 MailMessage message = new MailMessage
                 {
-                    From = new MailAddress("asp.net.core.blog@gmail.com", "Blog"),
+                    From = new MailAddress(_configuration["EmailSettings:addres"], _configuration["EmailSettings:displayName"]),
                     Subject = subject,
                     Body = htmlMessage
                 };
-
                 message.To.Add(email);
 
-                using (SmtpClient smtpClient = new SmtpClient("smtp.gmail.com"))
+                using SmtpClient smtpClient = new SmtpClient("smtp.gmail.com")
                 {
-                    smtpClient.Credentials = new NetworkCredential("asp.net.core.blog@gmail.com", "8qNecfEuVq");
-                    smtpClient.Port = 587;
-                    smtpClient.EnableSsl = true;
-                    await smtpClient.SendMailAsync(message);
+                    Credentials = new NetworkCredential(_configuration["EmailSettings:userName"], _configuration["EmailSettings:password"]),
+                    Port = 587,
+                    EnableSsl = true
+                };
+                await smtpClient.SendMailAsync(message);
 
-                    _logger.LogInformation("Сообщение отправлено");
-                }
+                _logger.LogInformation("Сообщение отправлено");
             }
             catch (Exception e)
             {

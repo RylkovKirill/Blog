@@ -1,8 +1,6 @@
 ﻿using Entities;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Services.ReportService
 {
@@ -12,8 +10,8 @@ namespace Services.ReportService
         IQueryable<Report> GetReports();
         IQueryable<Report> GetReportsByUser(ApplicationUser user);
         IQueryable<Report> GetReportsByPost(Post post);
-        void InsertReport(Report report);
+        void AddReport(Report report);
         void UpdateReport(Report report);
-        void DeleteReport(Guid id);
+        void RemoveReport(Guid id);
     }
 }

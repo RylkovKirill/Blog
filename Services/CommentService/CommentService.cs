@@ -34,9 +34,9 @@ namespace Services.CommentService
             return repository.GetAll().Where(c => c.Post.Equals(post)).OrderByDescending(c=> c.PostedDate);
         }
 
-        public void InsertComment(Comment comment)
+        public void AddComment(Comment comment)
         {
-            repository.Insert(comment);
+            repository.Add(comment);
         }
 
         public void UpdateComment(Comment comment)
@@ -44,19 +44,9 @@ namespace Services.CommentService
             repository.Update(comment);
         }
 
-        public void DeleteComment(Guid id)
+        public void RemoveComment(Guid id)
         {
-            repository.Delete(GetComment(id));
-        }
-
-        public void DeletePostComments(Post post)
-        {
-            IQueryable<Comment> comments = GetCommentsByPost(post);
-            foreach (Comment comment in comments)
-            {
-                repository.Remove(comment);
-            }
-            repository.SaveChanges();
+            repository.Remove(GetComment(id));
         }
     }
 }

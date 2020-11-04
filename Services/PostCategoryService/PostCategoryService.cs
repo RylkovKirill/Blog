@@ -24,9 +24,9 @@ namespace Services.PostCategoryService
             return _repository.GetAll();
         }
 
-        public void InsertCategory(PostCategory category)
+        public void AddCategory(PostCategory category)
         {
-            _repository.Insert(category);
+            _repository.Add(category);
         }
 
         public void UpdateCategory(PostCategory category)
@@ -34,9 +34,9 @@ namespace Services.PostCategoryService
             _repository.Update(category);
         }
 
-        public void DeleteCategory(Guid id)
+        public void RemoveCategory(Guid id)
         {
-            _repository.Delete(GetCategory(id));
+            _repository.Remove(GetCategory(id));
         }
     }
 }

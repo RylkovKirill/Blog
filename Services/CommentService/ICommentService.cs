@@ -10,9 +10,8 @@ namespace Services.CommentService
         IQueryable<Comment> GetComments();
         IQueryable<Comment> GetCommentsByUser(ApplicationUser user);
         IQueryable<Comment> GetCommentsByPost(Post post);
-        void InsertComment(Comment user);
+        void AddComment(Comment user);
         void UpdateComment(Comment user);
-        void DeleteComment(Guid id);
-        void DeletePostComments(Post post);
+        void RemoveComment(Guid id);
     }
 }
