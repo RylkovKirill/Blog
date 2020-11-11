@@ -9,40 +9,81 @@ using Blog.Models;
 using Services.PostService;
 using Services.CommentService;
 using Services.PostCategoryService;
+using Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace Blog.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly IPostCategoryService _categoryService;
         private readonly IPostService _postService;
         private readonly ICommentService _commentService;
-        private readonly IPostCategoryService _categoryService;
+
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(IPostService postService, ICommentService commentService, IPostCategoryService categoryService, ILogger<HomeController> logger)
+        public HomeController(IPostCategoryService categoryService, IPostService postService, ICommentService commentService,  ILogger<HomeController> logger)
         {
+            _categoryService = categoryService;
             _postService = postService;
             _commentService = commentService;
-            _categoryService = categoryService;
+
             _logger = logger;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> IndexAsync(string name = null, int page = 1)
         {
             //throw new ArgumentException("Test Error");
-            return View(_postService.GetPosts());
-        }
+            ViewBag.Name = name;
+            int pageSize = 5;   // количество элементов на странице
 
-        public IActionResult Search(string name)
-        {
+            IQueryable<Post> source;
             if (name != null)
             {
-                return PartialView(_postService.GetPosts().Where(a => a.Title.Contains(name)));
+                source = (_postService.GetPosts().Where(a => a.Title.Contains(name)));
             }
             else
             {
-                return PartialView(_postService.GetPosts());
+                source = (_postService.GetPosts());
             }
+            var count = await source.CountAsync();
+            var items = await source.Skip((page - 1) * pageSize).Take(pageSize).ToListAsync();
+
+            PageViewModel pageViewModel = new PageViewModel(count, page, pageSize);
+            IndexViewModel viewModel = new IndexViewModel
+            {
+                PageViewModel = pageViewModel,
+                Posts = items
+            };
+            return View(viewModel);
+
+            //return View(_postService.GetPosts());
+        }
+
+        public async Task<IActionResult> SearchAsync(string name, int page = 1)
+        {
+            int pageSize = 5;   // количество элементов на странице
+            ViewBag.Name = name;
+            IQueryable<Post> source;
+
+            if (name != null)
+            {
+                source=(_postService.GetPosts().Where(a => a.Title.Contains(name)));
+            }
+            else
+            {
+                source = (_postService.GetPosts());
+            }
+            var count = await source.CountAsync();
+            var items = await source.Skip((page - 1) * pageSize).Take(pageSize).ToListAsync();
+
+            PageViewModel pageViewModel = new PageViewModel(count, page, pageSize);
+            IndexViewModel viewModel = new IndexViewModel
+            {
+                PageViewModel = pageViewModel,
+                Posts = items
+            };
+            return PartialView(viewModel);
         }
 
         public IActionResult NewPosts()

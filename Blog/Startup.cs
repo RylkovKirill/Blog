@@ -19,6 +19,7 @@ using Blog.Service;
 using Blog.Hubs;
 using Services.ReportService;
 using Services.ReportCategoryService;
+using Services.ReviewService;
 
 namespace Blog
 {
@@ -40,11 +41,14 @@ namespace Blog
             services.AddTransient(serviceProvider => Configuration);
             services.AddSingleton<ImageService>();
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
-            services.AddTransient<IPostService, PostService>();
             services.AddTransient<IPostCategoryService, PostCategoryService>();
+            services.AddTransient<IPostService, PostService>();
             services.AddTransient<ICommentService, CommentService>();
-            services.AddTransient<IReportService, ReportService>();
+            services.AddTransient<IReviewService, ReviewService>();
             services.AddTransient<IReportCategoryService, ReportCategoryService>();
+            services.AddTransient<IReportService, ReportService>();
+            services.AddControllers().AddNewtonsoftJson(options =>
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
             services.AddControllersWithViews();
             services.AddRazorPages();
             services.AddSignalR(hubOptions =>

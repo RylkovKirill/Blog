@@ -204,7 +204,7 @@ namespace Blog.Migrations
                     TitleImagePath = table.Column<string>(nullable: true),
                     ModifiedDate = table.Column<DateTime>(nullable: true),
                     UserId = table.Column<string>(nullable: true),
-                    CategoryId = table.Column<Guid>(nullable: true)
+                    CategoryId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -214,7 +214,7 @@ namespace Blog.Migrations
                         column: x => x.CategoryId,
                         principalTable: "PostCategories",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Posts_AspNetUsers_UserId",
                         column: x => x.UserId,
@@ -306,15 +306,41 @@ namespace Blog.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Reviews",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    Score = table.Column<int>(nullable: false),
+                    UserId = table.Column<string>(nullable: true),
+                    PostId = table.Column<Guid>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Reviews", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Reviews_Posts_PostId",
+                        column: x => x.PostId,
+                        principalTable: "Posts",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Reviews_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "e16895dd-7352-4cb4-b1b6-2a97f596e2ae", "ac8eaa4e-5064-489b-9b39-0b54adb891b4", "admin", "ADMIN" });
+                values: new object[] { "e16895dd-7352-4cb4-b1b6-2a97f596e2ae", "d323b4f6-2a17-40cc-acd2-2d7546884595", "admin", "ADMIN" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "Name", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "Surname", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "b809eea3-e39d-4721-b56e-7a19be0b34d4", 0, "c7156050-87b5-4c02-8d9e-e4ce516339e8", "asp.net.core.blog@gmail.com", false, false, null, null, "ASP.NET.CORE.BLOG@GMAIL.COM", "ASP.NET.CORE.BLOG@GMAIL.COM", "AQAAAAEAACcQAAAAEP4hpgD6wSIe/jDmGiUl8oxxGqADKnwi7P+Hx129EZzOdrpJ/GyHsd3FE5RzMLm48Q==", null, false, "", null, false, "asp.net.core.blog@gmail.com" });
+                values: new object[] { "b809eea3-e39d-4721-b56e-7a19be0b34d4", 0, "308ed498-acbb-4bee-86e9-cf5e36b69b2c", "asp.net.core.blog@gmail.com", true, false, null, null, "ASP.NET.CORE.BLOG@GMAIL.COM", "ASP.NET.CORE.BLOG@GMAIL.COM", "AQAAAAEAACcQAAAAELEdqmOjYIpNTVqKGXMsC4UztdZysvhpdxEN5Wb4e2LN/pQTVqCu66wnk7uQyyFDAA==", null, false, "", null, false, "asp.net.core.blog@gmail.com" });
 
             migrationBuilder.InsertData(
                 table: "PostCategories",
@@ -429,6 +455,16 @@ namespace Blog.Migrations
                 name: "IX_Reports_UserId",
                 table: "Reports",
                 column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Reviews_PostId",
+                table: "Reviews",
+                column: "PostId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Reviews_UserId",
+                table: "Reviews",
+                column: "UserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -458,16 +494,19 @@ namespace Blog.Migrations
                 name: "Reports");
 
             migrationBuilder.DropTable(
+                name: "Reviews");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "Tags");
 
             migrationBuilder.DropTable(
-                name: "Posts");
+                name: "ReportCategories");
 
             migrationBuilder.DropTable(
-                name: "ReportCategories");
+                name: "Posts");
 
             migrationBuilder.DropTable(
                 name: "PostCategories");

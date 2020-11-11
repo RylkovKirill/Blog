@@ -21,6 +21,9 @@ namespace Entities
         [Display(Name = "Список комментариев")]
         public List<Comment> Comments { get; set; }
 
+        [Display(Name = "Список обзоров")]
+        public List<Review> Reviews { get; set; }
+
         [Display(Name = "Список жалоб")]
         public List<Report> Reports { get; set; }
     }

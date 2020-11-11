@@ -10,7 +10,8 @@ namespace Repositories.Mappings
         {
             entityTypeBuilder.HasOne(p => p.Category).WithMany(c => c.Posts);
             entityTypeBuilder.HasMany(p => p.Comments).WithOne(c => c.Post);
-            entityTypeBuilder.HasMany(u => u.Reports).WithOne(r => r.Post);
+            entityTypeBuilder.HasMany(p => p.Reviews).WithOne(r => r.Post);
+            entityTypeBuilder.HasMany(p => p.Reports).WithOne(r => r.Post);
         }
     }
 }

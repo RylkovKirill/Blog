@@ -1,15 +1,15 @@
-﻿@model IQueryable<Post>
-
+﻿@model IndexViewModel
 @{ ViewData["Title"] = "Главная"; }
 
 <body>
     <div class="input-group mb-3">
-        <input type="text" class="form-control" name="name" id="search" placeholder="Ведите поисковой запрос" aria-label="Имя получателя" aria-describedby="basic-addon2">
+        <input type="text" class="form-control" name="name" id="search" placeholder="Ведите поисковой запрос" value="@ViewBag.Name" aria-describedby="basic-addon2">
     </div>
     <div id="results">
         <partial name="Search" />
     </div>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    @*<script src="~/js/search.js"></script>*@
     <script>
         $(document).ready(function () {
             $('#search').keyup(function (e) {
@@ -19,5 +19,6 @@
                 $('#results').load('@Url.Action("Search", "Home")?name='+name)
             });
         });
+
     </script>
 </body>

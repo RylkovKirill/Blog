@@ -10,7 +10,7 @@ using Repositories;
 namespace Blog.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20201103121631_InitialCreate")]
+    [Migration("20201111092448_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -96,13 +96,13 @@ namespace Blog.Migrations
                         {
                             Id = "b809eea3-e39d-4721-b56e-7a19be0b34d4",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "c7156050-87b5-4c02-8d9e-e4ce516339e8",
+                            ConcurrencyStamp = "308ed498-acbb-4bee-86e9-cf5e36b69b2c",
                             Email = "asp.net.core.blog@gmail.com",
-                            EmailConfirmed = false,
+                            EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ASP.NET.CORE.BLOG@GMAIL.COM",
                             NormalizedUserName = "ASP.NET.CORE.BLOG@GMAIL.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEP4hpgD6wSIe/jDmGiUl8oxxGqADKnwi7P+Hx129EZzOdrpJ/GyHsd3FE5RzMLm48Q==",
+                            PasswordHash = "AQAAAAEAACcQAAAAELEdqmOjYIpNTVqKGXMsC4UztdZysvhpdxEN5Wb4e2LN/pQTVqCu66wnk7uQyyFDAA==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -143,7 +143,7 @@ namespace Blog.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("CategoryId")
+                    b.Property<Guid>("CategoryId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Content")
@@ -336,6 +336,30 @@ namespace Blog.Migrations
                         });
                 });
 
+            modelBuilder.Entity("Entities.Review", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("PostId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Score")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PostId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Reviews");
+                });
+
             modelBuilder.Entity("Entities.Tag", b =>
                 {
                     b.Property<Guid>("Id")
@@ -383,7 +407,7 @@ namespace Blog.Migrations
                         new
                         {
                             Id = "e16895dd-7352-4cb4-b1b6-2a97f596e2ae",
-                            ConcurrencyStamp = "ac8eaa4e-5064-489b-9b39-0b54adb891b4",
+                            ConcurrencyStamp = "d323b4f6-2a17-40cc-acd2-2d7546884595",
                             Name = "admin",
                             NormalizedName = "ADMIN"
                         });
@@ -517,7 +541,9 @@ namespace Blog.Migrations
                 {
                     b.HasOne("Entities.PostCategory", "Category")
                         .WithMany("Posts")
-                        .HasForeignKey("CategoryId");
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Entities.ApplicationUser", "User")
                         .WithMany("Posts")
@@ -555,6 +581,19 @@ namespace Blog.Migrations
 
                     b.HasOne("Entities.ApplicationUser", "User")
                         .WithMany("Reports")
+                        .HasForeignKey("UserId");
+                });
+
+            modelBuilder.Entity("Entities.Review", b =>
+                {
+                    b.HasOne("Entities.Post", "Post")
+                        .WithMany("Reviews")
+                        .HasForeignKey("PostId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Entities.ApplicationUser", "User")
+                        .WithMany("Reviews")
                         .HasForeignKey("UserId");
                 });
 

@@ -26,12 +26,12 @@ namespace Services.ReportService
 
         public IQueryable<Report> GetReportsByUser(ApplicationUser user)
         {
-            return _repository.GetAll().Where(p => p.User.Equals(user));
+            return _repository.GetAll().Where(r => r.User.Equals(user));
         }
 
         public IQueryable<Report> GetReportsByPost(Post post)
         {
-            return _repository.GetAll().Where(p => p.Post.Equals(post));
+            return _repository.GetAll().Where(r => r.Post.Equals(post));
         }
 
         public void AddReport(Report report)

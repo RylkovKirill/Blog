@@ -24,8 +24,9 @@ namespace Repositories
         public DbSet<Post> Posts { get; set; }
         public DbSet<PostTag> PostTag { get; set; }
         public DbSet<Tag> Tags { get; set; }
-        public DbSet<Report> Reports { get; set; }
+        public DbSet<Review> Reviews { get; set; }
         public DbSet<ReportCategory> ReportCategories { get; set; }
+        public DbSet<Report> Reports { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -35,8 +36,9 @@ namespace Repositories
             new PostMap(modelBuilder.Entity<Post>());
             new PostTagMap(modelBuilder.Entity<PostTag>());
             new TagMap(modelBuilder.Entity<Tag>());
-            new ReportMap(modelBuilder.Entity<Report>());
+            new ReviewMap(modelBuilder.Entity<Review>());
             new ReportCategoryMap(modelBuilder.Entity<ReportCategory>());
+            new ReportMap(modelBuilder.Entity<Report>());
 
             modelBuilder.Entity<PostCategory>().HasData(new PostCategory { Id = Guid.Parse("e0124c8f-cd37-4093-b8d1-b62dfac7f2cb"), Name = "Дом и сад", });
             modelBuilder.Entity<PostCategory>().HasData(new PostCategory { Id = Guid.Parse("cab6fa8f-6467-4f1f-9267-af8d35d3a0a7"), Name = "Еда и напитки", });

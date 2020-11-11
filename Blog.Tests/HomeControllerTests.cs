@@ -27,7 +27,7 @@ namespace Blog.Tests
 
             HomeController controller = new HomeController(_postService.Object, _commentService.Object, _categoryService.Object, _logger.Object);
 
-            var result = controller.Index();
+            var result = controller.IndexAsync();
 
             var viewResult = Assert.IsType<ViewResult>(result);
             var model = Assert.IsAssignableFrom<IQueryable<Post>>(viewResult.Model);

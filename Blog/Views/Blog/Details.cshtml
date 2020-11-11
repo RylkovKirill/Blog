@@ -15,6 +15,7 @@
         }
         @Html.Raw(Model.Content)
     </div>
+     <partial name="RatingPartial" />
     <form>
         <input type="hidden" asp-for="@Model.Id" class="form-control" id="postId" />
         <div class="form-group">
@@ -41,6 +42,6 @@
             }
         }
     </div>
-    <script src="~/js/signalr/dist/browser/signalr.js"></script>
+    <script src="~/js/signalr/dist/browser/signalr.min.js"></script>
     <script src="~/js/sendComments.js"></script>
 </body>
