@@ -86,10 +86,11 @@ namespace Repositories
             base.OnModelCreating(modelBuilder);
         }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            //string connection = "Data Source=tcp:blogdbserver.database.windows.net,1433;Initial Catalog=Blog_db;User Id=bsa@blogdbserver;Password=m8RwntY%ew";
-            optionsBuilder.UseSqlServer(_configuration.GetConnectionString("ApplicationDbContextConnection"), b => b.MigrationsAssembly("Blog"));
-        }
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //{
+        //    //string connection = "Data Source=tcp:blogdbserver.database.windows.net,1433;Initial Catalog=Blog_db;User Id=bsa@blogdbserver;Password=m8RwntY%ew";
+        //    //optionsBuilder.UseSqlServer(connection, b => b.MigrationsAssembly("Blog"));
+        //    optionsBuilder.UseSqlServer(_configuration.GetConnectionString("ApplicationDbContextConnection"), b => b.MigrationsAssembly("Blog"));
+        //}
     }
 }

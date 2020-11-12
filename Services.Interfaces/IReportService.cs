@@ -2,7 +2,7 @@
 using System;
 using System.Linq;
 
-namespace Services.ReportService
+namespace Services
 {
     public interface IReportService
     {

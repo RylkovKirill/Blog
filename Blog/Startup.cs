@@ -12,14 +12,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Repositories;
-using Services.PostService;
-using Services.CommentService;
-using Services.PostCategoryService;
+using Services;
 using Blog.Service;
 using Blog.Hubs;
-using Services.ReportService;
-using Services.ReportCategoryService;
-using Services.ReviewService;
 
 namespace Blog
 {

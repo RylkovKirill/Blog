@@ -2,7 +2,7 @@
 using System;
 using System.Linq;
 
-namespace Services.PostCategoryService
+namespace Services
 {
     public interface IPostCategoryService
     {

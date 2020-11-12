@@ -6,9 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Blog.Models;
-using Services.PostService;
-using Services.CommentService;
-using Services.PostCategoryService;
+using Services;
 using Entities;
 using Microsoft.EntityFrameworkCore;
 

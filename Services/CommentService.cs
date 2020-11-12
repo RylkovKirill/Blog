@@ -3,50 +3,50 @@ using Repositories;
 using System;
 using System.Linq;
 
-namespace Services.CommentService
+namespace Services
 {
     public class CommentService : ICommentService
     {
-        private readonly IRepository<Comment> repository;
+        private readonly IRepository<Comment> _repository;
 
         public CommentService(IRepository<Comment> repository)
         {
-            this.repository = repository;
+            _repository = repository;
         }
 
         public Comment GetComment(Guid id)
         {
-            return repository.Get(id);
+            return _repository.Get(id);
         }
 
         public IQueryable<Comment> GetComments()
         {
-            return repository.GetAll();
+            return _repository.GetAll();
         }
 
         public IQueryable<Comment> GetCommentsByUser(ApplicationUser user)
         {
-            return repository.GetAll().Where(c => c.User.Equals(user));
+            return _repository.GetAll().Where(c => c.User.Equals(user));
         }
 
         public IQueryable<Comment> GetCommentsByPost(Post post)
         {
-            return repository.GetAll().Where(c => c.Post.Equals(post)).OrderByDescending(c=> c.PostedDate);
+            return _repository.GetAll().Where(c => c.Post.Equals(post)).OrderByDescending(c=> c.PostedDate);
         }
 
         public void AddComment(Comment comment)
         {
-            repository.Add(comment);
+            _repository.Add(comment);
         }
 
         public void UpdateComment(Comment comment)
         {
-            repository.Update(comment);
+            _repository.Update(comment);
         }
 
         public void RemoveComment(Guid id)
         {
-            repository.Remove(GetComment(id));
+            _repository.Remove(GetComment(id));
         }
     }
 }

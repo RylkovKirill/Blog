@@ -2,7 +2,7 @@
 using System;
 using System.Linq;
 
-namespace Services.PostService
+namespace Services
 {
     public interface IPostService
     {

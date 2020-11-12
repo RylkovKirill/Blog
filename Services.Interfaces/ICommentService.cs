@@ -2,7 +2,7 @@
 using System;
 using System.Linq;
 
-namespace Services.CommentService
+namespace Services
 {
     public interface ICommentService
     {

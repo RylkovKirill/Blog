@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Services.PostCategoryService;
+using Services;
 
 namespace Blog.Areas.Admin.Controllers
 {

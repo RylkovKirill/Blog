@@ -3,7 +3,7 @@ using Repositories;
 using System;
 using System.Linq;
 
-namespace Services.PostCategoryService
+namespace Services
 {
     public class PostCategoryService : IPostCategoryService
     {

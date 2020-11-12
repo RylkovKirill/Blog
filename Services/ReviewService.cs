@@ -3,7 +3,7 @@ using Repositories;
 using System;
 using System.Linq;
 
-namespace Services.ReviewService
+namespace Services
 {
     public class ReviewService : IReviewService
     {

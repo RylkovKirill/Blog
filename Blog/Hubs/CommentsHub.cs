@@ -1,7 +1,7 @@
 ﻿using Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.SignalR;
-using Services.CommentService;
+using Services;
 using System;
 using System.Threading.Tasks;
 

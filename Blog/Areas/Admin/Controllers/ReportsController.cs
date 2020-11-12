@@ -10,9 +10,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Services.PostCategoryService;
-using Services.PostService;
-using Services.ReportService;
+using Services;
 
 namespace Blog.Areas.Admin.Controllers
 {

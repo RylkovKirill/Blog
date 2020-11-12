@@ -8,13 +8,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
-using Services.PostCategoryService;
-using Services.CommentService;
-using Services.PostService;
-using Services.ReportService;
-using Services.ReportCategoryService;
 using Microsoft.AspNetCore.Authorization;
-using Services.ReviewService;
+using Services;
 
 namespace Blog.Controllers
 {
