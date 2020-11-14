@@ -25,7 +25,7 @@ namespace Services.Tests
         }
 
         [Fact]
-        public void GetReportCategoryTests()
+        public void GetCategoryTests()
         {
             var builder = new DbContextOptionsBuilder<ApplicationDbContext>().UseInMemoryDatabase(Guid.NewGuid().ToString());
             applicationDbContext = new ApplicationDbContext(builder.Options, _configuration);
@@ -40,7 +40,7 @@ namespace Services.Tests
         }
 
         [Fact]
-        public void GetReportsTests()
+        public void GetCategoriesTests()
         {
             var builder = new DbContextOptionsBuilder<ApplicationDbContext>().UseInMemoryDatabase(Guid.NewGuid().ToString());
             applicationDbContext = new ApplicationDbContext(builder.Options, _configuration);
@@ -57,7 +57,7 @@ namespace Services.Tests
         } 
 
         [Fact]
-        public void AddReportTests()
+        public void AddCategoryTests()
         {
             var builder = new DbContextOptionsBuilder<ApplicationDbContext>().UseInMemoryDatabase(Guid.NewGuid().ToString());
             applicationDbContext = new ApplicationDbContext(builder.Options, _configuration);
@@ -68,7 +68,7 @@ namespace Services.Tests
         }
 
         [Fact]
-        public void UpdateReportTests()
+        public void UpdateCategoryTests()
         {
             var builder = new DbContextOptionsBuilder<ApplicationDbContext>().UseInMemoryDatabase(Guid.NewGuid().ToString());
             applicationDbContext = new ApplicationDbContext(builder.Options, _configuration);
@@ -82,7 +82,7 @@ namespace Services.Tests
         }
 
         [Fact]
-        public void RemoveReportTests()
+        public void RemoveCategoryTests()
         {
             var builder = new DbContextOptionsBuilder<ApplicationDbContext>().UseInMemoryDatabase(Guid.NewGuid().ToString());
             applicationDbContext = new ApplicationDbContext(builder.Options, _configuration);

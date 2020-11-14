@@ -49,7 +49,7 @@ namespace Blog
             services.AddSignalR(hubOptions =>
             {
                 hubOptions.EnableDetailedErrors = true;
-                hubOptions.KeepAliveInterval = TimeSpan.FromMinutes(1);
+                hubOptions.KeepAliveInterval = TimeSpan.FromSeconds(15);
             });
             services.AddAuthentication().AddGoogle(options =>
             {
@@ -63,7 +63,6 @@ namespace Blog
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            //env.EnvironmentName = "Production";
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

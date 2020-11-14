@@ -63,14 +63,7 @@ namespace Services.Tests
             applicationDbContext = new ApplicationDbContext(builder.Options, _configuration);
             repository = new Repository<Review>(applicationDbContext);
             reviewService = new ReviewService(repository);
-            ApplicationUser user = new ApplicationUser()
-            {
-                Id = "85bb5251-8e6a-481c-801f-0ac4dc3e66a9",
-                UserName = "user",
-                Email = "email",
-                PasswordHash = new PasswordHasher<ApplicationUser>().HashPassword(null, "password"),
-            };
-            applicationDbContext.ApplicationUsers.Add(user);
+            var user = UserHelpers.AddUser(applicationDbContext);
             for (int i = 0; i < 10; i++)
             {
                 applicationDbContext.Reviews.Add(new Review() { Id = Guid.NewGuid(), User = user });

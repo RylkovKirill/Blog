@@ -17,15 +17,14 @@ namespace Blog.Controllers
         private readonly IPostCategoryService _categoryService;
         private readonly IPostService _postService;
         private readonly ICommentService _commentService;
-
         private readonly ILogger<HomeController> _logger;
+        private int pageSize = 5;
 
         public HomeController(IPostCategoryService categoryService, IPostService postService, ICommentService commentService,  ILogger<HomeController> logger)
         {
             _categoryService = categoryService;
             _postService = postService;
             _commentService = commentService;
-
             _logger = logger;
         }
 
@@ -33,7 +32,6 @@ namespace Blog.Controllers
         {
             //throw new ArgumentException("Test Error");
             ViewBag.Name = name;
-            int pageSize = 5;   // количество элементов на странице
 
             IQueryable<Post> source;
             if (name != null)
@@ -54,13 +52,10 @@ namespace Blog.Controllers
                 Posts = items
             };
             return View(viewModel);
-
-            //return View(_postService.GetPosts());
         }
 
         public async Task<IActionResult> SearchAsync(string name, int page = 1)
         {
-            int pageSize = 5;   // количество элементов на странице
             ViewBag.Name = name;
             IQueryable<Post> source;
 
@@ -84,10 +79,11 @@ namespace Blog.Controllers
             return PartialView(viewModel);
         }
 
-        public IActionResult NewPosts()
+        public IActionResult New()
         {
             return View("Index", _postService.GetPosts().Where(p => p.PostedDate >= DateTime.Now.AddDays(-7)));
         }
+
 
         public IActionResult Privacy()
         {

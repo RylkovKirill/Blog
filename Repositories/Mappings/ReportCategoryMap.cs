@@ -10,7 +10,7 @@ namespace Repositories.Mappings
     {
         public ReportCategoryMap(EntityTypeBuilder<ReportCategory> entityTypeBuilder)
         {
-            entityTypeBuilder.HasMany(rk => rk.Reports).WithOne(r => r.ReportCategory);
+            entityTypeBuilder.HasMany(rk => rk.Reports).WithOne(r => r.Category);
         }
     }
 }

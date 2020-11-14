@@ -12,6 +12,7 @@ namespace Blog.Models
         public string UserName { get; set; }
         public List<IdentityRole> Roles { get; set; }
         public List<string> UserRoles { get; set; }
+
         public RoleViewModel(string UserId, string UserName, List<IdentityRole> Roles, List<string> UserRoles)
         {
             this.UserId = UserId;

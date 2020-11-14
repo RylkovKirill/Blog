@@ -281,21 +281,21 @@ namespace Blog.Migrations
                     Id = table.Column<Guid>(nullable: false),
                     UserId = table.Column<string>(nullable: true),
                     PostId = table.Column<Guid>(nullable: false),
-                    ReportCategoryId = table.Column<Guid>(nullable: false)
+                    CategoryId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Reports", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Reports_Posts_PostId",
-                        column: x => x.PostId,
-                        principalTable: "Posts",
+                        name: "FK_Reports_ReportCategories_CategoryId",
+                        column: x => x.CategoryId,
+                        principalTable: "ReportCategories",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Reports_ReportCategories_ReportCategoryId",
-                        column: x => x.ReportCategoryId,
-                        principalTable: "ReportCategories",
+                        name: "FK_Reports_Posts_PostId",
+                        column: x => x.PostId,
+                        principalTable: "Posts",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -335,12 +335,12 @@ namespace Blog.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "e16895dd-7352-4cb4-b1b6-2a97f596e2ae", "d323b4f6-2a17-40cc-acd2-2d7546884595", "admin", "ADMIN" });
+                values: new object[] { "e16895dd-7352-4cb4-b1b6-2a97f596e2ae", "5e1fc7f0-92fd-4170-bcb9-434c29cee534", "admin", "ADMIN" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "Name", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "Surname", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "b809eea3-e39d-4721-b56e-7a19be0b34d4", 0, "308ed498-acbb-4bee-86e9-cf5e36b69b2c", "asp.net.core.blog@gmail.com", true, false, null, null, "ASP.NET.CORE.BLOG@GMAIL.COM", "ASP.NET.CORE.BLOG@GMAIL.COM", "AQAAAAEAACcQAAAAELEdqmOjYIpNTVqKGXMsC4UztdZysvhpdxEN5Wb4e2LN/pQTVqCu66wnk7uQyyFDAA==", null, false, "", null, false, "asp.net.core.blog@gmail.com" });
+                values: new object[] { "b809eea3-e39d-4721-b56e-7a19be0b34d4", 0, "7ab9d6bc-b7b2-4f79-9926-752ba6b425ef", "asp.net.core.blog@gmail.com", true, false, null, null, "ASP.NET.CORE.BLOG@GMAIL.COM", "ASP.NET.CORE.BLOG@GMAIL.COM", "AQAAAAEAACcQAAAAEDppxxnWylLZz7yadtASwUOG/wzGUvzsVstIwVza6zPAsDTu/stLukyCzd71Tu1H4A==", null, false, "", null, false, "asp.net.core.blog@gmail.com" });
 
             migrationBuilder.InsertData(
                 table: "PostCategories",
@@ -442,14 +442,14 @@ namespace Blog.Migrations
                 column: "TagId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Reports_CategoryId",
+                table: "Reports",
+                column: "CategoryId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Reports_PostId",
                 table: "Reports",
                 column: "PostId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Reports_ReportCategoryId",
-                table: "Reports",
-                column: "ReportCategoryId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Reports_UserId",

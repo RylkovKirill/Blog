@@ -20,9 +20,9 @@ namespace Entities
         public Post Post { get; set; }
 
         [Display(Name = "Id категории жалоб")]
-        public Guid ReportCategoryId { get; set; }
+        public Guid CategoryId { get; set; }
 
         [Display(Name = "Категория жалоб")]
-        public ReportCategory ReportCategory { get; set; }
+        public ReportCategory Category { get; set; }
     }
 }

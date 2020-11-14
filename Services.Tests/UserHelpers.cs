@@ -1,7 +1,7 @@
 ﻿using Entities;
 using Microsoft.AspNetCore.Identity;
 using Repositories;
-
+using System;
 
 namespace Services.Tests
 {
@@ -11,7 +11,7 @@ namespace Services.Tests
         {
             ApplicationUser user = new ApplicationUser()
             {
-                Id = "ba576c28-7530-4fec-871f-02d98b0cb4e5",
+                Id = Guid.NewGuid().ToString(),
                 UserName = "user",
                 Email = "email",
                 PasswordHash = new PasswordHasher<ApplicationUser>().HashPassword(null, "password"),

@@ -99,14 +99,17 @@ namespace Blog.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        public IActionResult DetailsAsync(Guid id)
+        public async Task<IActionResult> DetailsAsync(Guid id)
         {
             var post = _postService.GetPost(id);
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            var review = _reviewService.GetReview(user, post);
 
             if (post == null)
             {
                 return NotFound();
             }
+
             var comments = _commentService.GetCommentsByPost(post);
             ViewBag.Comments = comments;
             var reviews = _reviewService.GetReviewsByPost(post);
@@ -114,12 +117,35 @@ namespace Blog.Controllers
             var averageScore = _reviewService.GetReviewsAverageScore(reviews);
             ViewBag.ReviewCount = reviewCount;
             ViewBag.AverageScore = averageScore;
+            if (review == null)
+            {
+                ViewBag.Score = 0;
+            }
+            else
+            {
+                ViewBag.Score = review.Score;
+            }
+
             if (ViewBag.AverageScore == null)
             {
                 ViewBag.AverageScore = "У поста ещё нет рейтинга";
             }
             return View(post);
         }
+
+        //[HttpGet]
+        //public async Task<JsonResult> GetReview(Guid id)
+        //{
+        //    var post = _postService.GetPost(id);
+        //    var user = await _userManager.GetUserAsync(HttpContext.User);
+        //    var review = _reviewService.GetReview(user, post);
+
+        //    if (review == null)
+        //    {
+        //        return Json(new { review.Score });
+        //    }
+        //    return Json(new { review.Score });
+        //}
 
         [HttpPost]
         public async  Task<JsonResult> AddReview(Guid id, int score)
@@ -161,7 +187,7 @@ namespace Blog.Controllers
             {
                 User = user,
                 Post = _postService.GetPost(id),
-                ReportCategory = _reportCategoryService.GetCategory(reportCategoryId)
+                Category = _reportCategoryService.GetCategory(reportCategoryId)
             };
 
             _reportService.AddReport(report);

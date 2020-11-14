@@ -17,7 +17,7 @@
         @foreach (var item in Model)
         {
             <tr>
-            <td>@reportCategoryService.GetCategory(item.ReportCategoryId).Name</td>
+            <td>@reportCategoryService.GetCategory(item.CategoryId).Name</td>
             <td>@postService.GetPost(item.PostId).Title</td>
                 <td>
                     <a type="button" class="btn btn-primary" asp-controller="Reports" asp-action="EditPost" asp-route-id="@item.PostId">Изменить пост</a>

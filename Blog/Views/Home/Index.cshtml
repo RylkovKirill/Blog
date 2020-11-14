@@ -9,7 +9,6 @@
         <partial name="Search" />
     </div>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    @*<script src="~/js/search.js"></script>*@
     <script>
         $(document).ready(function () {
             $('#search').keyup(function (e) {
@@ -19,6 +18,5 @@
                 $('#results').load('@Url.Action("Search", "Home")?name='+name)
             });
         });
-
     </script>
 </body>

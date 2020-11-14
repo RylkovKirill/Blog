@@ -9,7 +9,7 @@ namespace Repositories.Mappings
         {
             entityTypeBuilder.HasOne(r => r.User).WithMany(u => u.Reports);
             entityTypeBuilder.HasOne(r => r.Post).WithMany(p => p.Reports);
-            entityTypeBuilder.HasOne(r => r.ReportCategory).WithMany(rk => rk.Reports);
+            entityTypeBuilder.HasOne(r => r.Category).WithMany(rk => rk.Reports);
         }
     }
 }

@@ -63,14 +63,7 @@ namespace Services.Tests
             applicationDbContext = new ApplicationDbContext(builder.Options, configuration);
             repository = new Repository<Report>(applicationDbContext);
             reportService = new ReportService(repository);
-            ApplicationUser user = new ApplicationUser()
-            {
-                Id = "4328f4c1-12b1-4a32-8ffa-3196477f556b",
-                UserName = "user",
-                Email = "email",
-                PasswordHash = new PasswordHasher<ApplicationUser>().HashPassword(null, "password"),
-            };
-            applicationDbContext.ApplicationUsers.Add(user);
+            var user = UserHelpers.AddUser(applicationDbContext);
             for (int i = 0; i < 10; i++)
             {
                 applicationDbContext.Reports.Add(new Report() { Id = Guid.NewGuid(), User = user });

@@ -10,7 +10,7 @@ using Repositories;
 namespace Blog.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20201111092448_InitialCreate")]
+    [Migration("20201112234428_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -96,13 +96,13 @@ namespace Blog.Migrations
                         {
                             Id = "b809eea3-e39d-4721-b56e-7a19be0b34d4",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "308ed498-acbb-4bee-86e9-cf5e36b69b2c",
+                            ConcurrencyStamp = "7ab9d6bc-b7b2-4f79-9926-752ba6b425ef",
                             Email = "asp.net.core.blog@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ASP.NET.CORE.BLOG@GMAIL.COM",
                             NormalizedUserName = "ASP.NET.CORE.BLOG@GMAIL.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAELEdqmOjYIpNTVqKGXMsC4UztdZysvhpdxEN5Wb4e2LN/pQTVqCu66wnk7uQyyFDAA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEDppxxnWylLZz7yadtASwUOG/wzGUvzsVstIwVza6zPAsDTu/stLukyCzd71Tu1H4A==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -256,10 +256,10 @@ namespace Blog.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("PostId")
+                    b.Property<Guid>("CategoryId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("ReportCategoryId")
+                    b.Property<Guid>("PostId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("UserId")
@@ -267,9 +267,9 @@ namespace Blog.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PostId");
+                    b.HasIndex("CategoryId");
 
-                    b.HasIndex("ReportCategoryId");
+                    b.HasIndex("PostId");
 
                     b.HasIndex("UserId");
 
@@ -407,7 +407,7 @@ namespace Blog.Migrations
                         new
                         {
                             Id = "e16895dd-7352-4cb4-b1b6-2a97f596e2ae",
-                            ConcurrencyStamp = "d323b4f6-2a17-40cc-acd2-2d7546884595",
+                            ConcurrencyStamp = "5e1fc7f0-92fd-4170-bcb9-434c29cee534",
                             Name = "admin",
                             NormalizedName = "ADMIN"
                         });
@@ -567,15 +567,15 @@ namespace Blog.Migrations
 
             modelBuilder.Entity("Entities.Report", b =>
                 {
-                    b.HasOne("Entities.Post", "Post")
+                    b.HasOne("Entities.ReportCategory", "Category")
                         .WithMany("Reports")
-                        .HasForeignKey("PostId")
+                        .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Entities.ReportCategory", "ReportCategory")
+                    b.HasOne("Entities.Post", "Post")
                         .WithMany("Reports")
-                        .HasForeignKey("ReportCategoryId")
+                        .HasForeignKey("PostId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

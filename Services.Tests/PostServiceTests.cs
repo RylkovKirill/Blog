@@ -66,14 +66,7 @@ namespace Services.Tests
             applicationDbContext = new ApplicationDbContext(builder.Options, _configuration);
             repository = new Repository<Post>(applicationDbContext);
             postService = new PostService(repository);
-            ApplicationUser user = new ApplicationUser()
-            {
-                Id = "f430f212-bbcf-4a06-8f5f-59a0341ae154",
-                UserName = "user",
-                Email = "email",
-                PasswordHash = new PasswordHasher<ApplicationUser>().HashPassword(null, "password"),
-            };
-            applicationDbContext.ApplicationUsers.Add(user);
+            var user = UserHelpers.AddUser(applicationDbContext);
             for (int i = 0; i < 10; i++)
             {
                 applicationDbContext.Posts.Add(new Post() { Id = Guid.NewGuid(), Title = "Title", Content = "Content", User = user });
