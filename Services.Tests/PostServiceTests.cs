@@ -145,5 +145,47 @@ namespace Services.Tests
             postService.RemovePost(Guid.Parse("d5da59f4-6cbf-4e36-ad86-70b8e66a872a"));
             Assert.Equal(0, applicationDbContext.Posts.Count(p => p.Title == "Title"));
         }
+
+        [Fact]
+        public void SortedByPostedDate()
+        {
+            var builder = new DbContextOptionsBuilder<ApplicationDbContext>().UseInMemoryDatabase(Guid.NewGuid().ToString());
+            applicationDbContext = new ApplicationDbContext(builder.Options, _configuration);
+            repository = new Repository<Post>(applicationDbContext);
+            postService = new PostService(repository);
+            for (int i = 0; i < 10; i++)
+            {
+                applicationDbContext.Posts.Add(new Post() { Id = Guid.NewGuid(), Title = "Title", Content = "Content", PostedDate = DateTime.Now + TimeSpan.FromMinutes(i) });
+            }
+            applicationDbContext.SaveChanges();
+            var posts = applicationDbContext.Posts.AsQueryable().Where(p => p.Title == "Title").ToArray().Select(p=>p.PostedDate);
+            for (int i = 0; i < posts.Count()-1; i++)
+            {
+                Assert.True(IsSorted(posts));
+            }
+        }
+
+        public static bool IsSorted<T>(IEnumerable<T> items, Comparer<T> comparer = null)
+        {
+            if (comparer == null) comparer = Comparer<T>.Default;
+            bool ascendingOrder = true; bool descendingOrder = true;
+
+            T last = items.First();
+            foreach (T current in items.Skip(1))
+            {
+                int diff = comparer.Compare(last, current);
+                if (diff > 0)
+                {
+                    ascendingOrder = false;
+                }
+                if (diff < 0)
+                {
+                    descendingOrder = false;
+                }
+                last = current;
+                if (!ascendingOrder && !descendingOrder) return false;
+            }
+            return (ascendingOrder || descendingOrder);
+        }
     }
 }

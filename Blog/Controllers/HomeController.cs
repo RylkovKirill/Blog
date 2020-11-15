@@ -17,33 +17,38 @@ namespace Blog.Controllers
         private readonly IPostCategoryService _categoryService;
         private readonly IPostService _postService;
         private readonly ICommentService _commentService;
+        private readonly IReviewService _reviewService;
         private readonly ILogger<HomeController> _logger;
         private int pageSize = 5;
 
-        public HomeController(IPostCategoryService categoryService, IPostService postService, ICommentService commentService,  ILogger<HomeController> logger)
+        public HomeController(IPostCategoryService categoryService, IPostService postService, ICommentService commentService, ILogger<HomeController> logger, IReviewService reviewService)
         {
             _categoryService = categoryService;
             _postService = postService;
             _commentService = commentService;
+            _reviewService = reviewService;
             _logger = logger;
         }
 
         public async Task<IActionResult> IndexAsync(string name = null, int page = 1)
         {
             //throw new ArgumentException("Test Error");
-            ViewBag.Name = name;
 
             IQueryable<Post> source;
+
+            ViewBag.Name = name;
+
             if (name != null)
             {
-                source = (_postService.GetPosts().Where(a => a.Title.Contains(name)));
+                source = _postService.GetPostsBySearchQuery(name);
             }
             else
             {
-                source = (_postService.GetPosts());
+                source = _postService.GetPosts();
             }
-            var count = await source.CountAsync();
-            var items = await source.Skip((page - 1) * pageSize).Take(pageSize).ToListAsync();
+
+            var count =await source.CountAsync();
+            var items =await source.Skip((page - 1) * pageSize).Take(pageSize).ToListAsync();
 
             PageViewModel pageViewModel = new PageViewModel(count, page, pageSize);
             IndexViewModel viewModel = new IndexViewModel
@@ -51,24 +56,29 @@ namespace Blog.Controllers
                 PageViewModel = pageViewModel,
                 Posts = items
             };
+
+
+
             return View(viewModel);
         }
 
-        public async Task<IActionResult> SearchAsync(string name, int page = 1)
+        public IActionResult Search(string name, int page = 1)
         {
-            ViewBag.Name = name;
             IQueryable<Post> source;
+
+            ViewBag.Name = name;
 
             if (name != null)
             {
-                source=(_postService.GetPosts().Where(a => a.Title.Contains(name)));
+                source = _postService.GetPostsBySearchQuery(name);
             }
             else
             {
                 source = (_postService.GetPosts());
             }
-            var count = await source.CountAsync();
-            var items = await source.Skip((page - 1) * pageSize).Take(pageSize).ToListAsync();
+
+            var count = source.Count();
+            var items = source.Skip((page - 1) * pageSize).Take(pageSize).ToList();
 
             PageViewModel pageViewModel = new PageViewModel(count, page, pageSize);
             IndexViewModel viewModel = new IndexViewModel
@@ -76,14 +86,28 @@ namespace Blog.Controllers
                 PageViewModel = pageViewModel,
                 Posts = items
             };
+
             return PartialView(viewModel);
         }
 
-        public IActionResult New()
+        public IActionResult SpecialIndex(string sortCategory)
         {
-            return View("Index", _postService.GetPosts().Where(p => p.PostedDate >= DateTime.Now.AddDays(-7)));
-        }
+            var source = _postService.GetPosts();
 
+            switch (sortCategory)
+            {
+                case "PostedDate": 
+                    source = _postService.SortedPostsByPostedDate(source).Take(20);
+                    ViewData["Title"] = "Новые";
+                    break;
+                case "AverageScore": 
+                    source = _reviewService.SortedPostsByScore(source).Take(20);
+                    ViewData["Title"] = "Популярные";
+                    break;
+            };
+
+            return View(source);
+        }
 
         public IActionResult Privacy()
         {

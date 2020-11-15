@@ -1,6 +1,7 @@
 ﻿using Entities;
 using Repositories;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Services
@@ -70,6 +71,16 @@ namespace Services
             {
                 return reviews.Sum(r => r.Score) / reviewCount;
             }
+        }
+
+        public IQueryable<Post> SortedPostsByScore(IQueryable<Post> posts)
+        {
+            return posts.AsEnumerable().Select(
+            (p, s) => new
+            {
+                post = p,
+                averagescore = _repository.GetAll().Where(r => r.Post.Equals(p)).Sum(r => r.Score)
+            }).OrderByDescending(p => p.averagescore).Select(p => p.post).AsQueryable();
         }
     }
 }

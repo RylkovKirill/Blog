@@ -4,10 +4,6 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Razor.TagHelpers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Blog.TagHelpers
 {
@@ -25,7 +21,7 @@ namespace Blog.TagHelpers
         public ViewContext ViewContext { get; set; }
         public PageViewModel PageModel { get; set; }
         public string PageAction { get; set; }
-        public string Name { get; set; }
+        public string SearchQuery { get; set; }
 
         public override void Process(TagHelperContext context, TagHelperOutput output)
         {
@@ -35,11 +31,11 @@ namespace Blog.TagHelpers
             TagBuilder tag = new TagBuilder("ul");
             tag.AddCssClass("pagination");
 
-            TagBuilder currentItem = CreateTag(PageModel.PageNumber, Name, urlHelper);
+            TagBuilder currentItem = CreateTag(PageModel.PageNumber, SearchQuery, urlHelper);
 
             if (PageModel.HasPreviousPage)
             {
-                TagBuilder prevItem = CreateTag(PageModel.PageNumber - 1, Name, urlHelper);
+                TagBuilder prevItem = CreateTag(PageModel.PageNumber - 1, SearchQuery, urlHelper);
                 tag.InnerHtml.AppendHtml(prevItem);
             }
 
@@ -47,13 +43,13 @@ namespace Blog.TagHelpers
 
             if (PageModel.HasNextPage)
             {
-                TagBuilder nextItem = CreateTag(PageModel.PageNumber + 1, Name, urlHelper);
+                TagBuilder nextItem = CreateTag(PageModel.PageNumber + 1, SearchQuery, urlHelper);
                 tag.InnerHtml.AppendHtml(nextItem);
             }
             output.Content.AppendHtml(tag);
         }
 
-        TagBuilder CreateTag(int pageNumber, string name, IUrlHelper urlHelper)
+        TagBuilder CreateTag(int pageNumber, string searchQuery, IUrlHelper urlHelper)
         {
             TagBuilder item = new TagBuilder("li");
             TagBuilder link = new TagBuilder("a");
@@ -63,7 +59,7 @@ namespace Blog.TagHelpers
             }
             else
             {
-                link.Attributes["href"] = urlHelper.Action(PageAction, new { name = name, page = pageNumber });
+                link.Attributes["href"] = urlHelper.Action(PageAction, new { name = searchQuery, page = pageNumber });
             }
             item.AddCssClass("page-item");
             link.AddCssClass("page-link");

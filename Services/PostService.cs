@@ -34,6 +34,11 @@ namespace Services
             return _repository.GetAll().Where(p => p.Category.Equals(category));
         }
 
+        public IQueryable<Post> GetPostsBySearchQuery(string searchQuery) 
+        {
+            return _repository.GetAll().Where(a => a.Title.Contains(searchQuery));
+        }
+
         public void AddPost(Post post)
         {
             _repository.Add(post);
@@ -47,6 +52,11 @@ namespace Services
         public void RemovePost(Guid id)
         {
             _repository.Remove(GetPost(id));
+        }
+
+        public IQueryable<Post> SortedPostsByPostedDate(IQueryable<Post> posts) 
+        {
+            return posts.OrderByDescending(s => s.PostedDate);
         }
     }
 }

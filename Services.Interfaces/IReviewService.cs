@@ -16,5 +16,6 @@ namespace Services
         void RemoveReview(Guid id);
         int GetReviewsCount(IQueryable<Review> reviews);
         double? GetReviewsAverageScore(IQueryable<Review> reviews);
+        IQueryable<Post> SortedPostsByScore(IQueryable<Post> posts);
     }
 }

@@ -133,20 +133,6 @@ namespace Blog.Controllers
             return View(post);
         }
 
-        //[HttpGet]
-        //public async Task<JsonResult> GetReview(Guid id)
-        //{
-        //    var post = _postService.GetPost(id);
-        //    var user = await _userManager.GetUserAsync(HttpContext.User);
-        //    var review = _reviewService.GetReview(user, post);
-
-        //    if (review == null)
-        //    {
-        //        return Json(new { review.Score });
-        //    }
-        //    return Json(new { review.Score });
-        //}
-
         [HttpPost]
         public async  Task<JsonResult> AddReview(Guid id, int score)
         {

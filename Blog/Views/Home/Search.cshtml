@@ -21,13 +21,12 @@
             {
                 <h5 class="card-title">@post.Title</h5>
             }
-            @*<p class="card-text">@Html.Raw(post.Content)</p>*@
             <p class="card-text"><small class="text-muted">@Html.Raw(post.PostedDate)</small></p>
             <a asp-area="" asp-controller="Blog" asp-action="Details" asp-route-id="@post.Id" class="btn btn-primary">Читать полностью</a>
         </div>
     </div>
 }
 <div>
-    <page-link  page-model="Model.PageViewModel" page-action="Index" name="@ViewBag.Name"></page-link>
+    <page-link  page-model="Model.PageViewModel" page-action="Index" search-query="@ViewBag.Name"></page-link>
 </div>
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
