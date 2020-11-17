@@ -100,13 +100,41 @@ namespace Blog.Controllers
                     source = _postService.SortedPostsByPostedDate(source).Take(20);
                     ViewData["Title"] = "Новые";
                     break;
-                case "AverageScore": 
+                case "Score": 
                     source = _reviewService.SortedPostsByScore(source).Take(20);
                     ViewData["Title"] = "Популярные";
                     break;
             };
 
-            return View(source);
+            return View(source.ToList());
+        }
+
+        public IActionResult IndexCategories()
+        {
+            var categories = _categoryService.GetCategories();
+            return View(categories.ToList());
+        }
+
+        public async Task<IActionResult> IndexByCategoryAsync(string id, int page = 1)
+        {
+            var posts = _postService.GetPostsByCategory(_categoryService.GetCategory(Guid.Parse(id)));
+
+            if (posts == null)
+            {
+                return NotFound();
+            }
+
+            var count = await posts.CountAsync();
+            var items = await posts.Skip((page - 1) * pageSize).Take(pageSize).ToListAsync();
+
+            PageViewModel pageViewModel = new PageViewModel(count, page, pageSize);
+            IndexViewModel viewModel = new IndexViewModel
+            {
+                PageViewModel = pageViewModel,
+                Posts = items
+            };
+
+            return View(viewModel);
         }
 
         public IActionResult Privacy()

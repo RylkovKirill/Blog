@@ -23,5 +23,14 @@ namespace Blog.Service
             }
             return path;
         }
+
+        public void Delete(string imagePath, IWebHostEnvironment webHostEnvironment)
+        {
+            string path = Path.Combine(webHostEnvironment.WebRootPath, _configuration["ImagePath"], imagePath);
+            if (File.Exists(path))
+            {
+                File.Delete(path);
+            }
+        }
     }
 }

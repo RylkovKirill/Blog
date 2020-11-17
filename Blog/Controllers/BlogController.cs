@@ -22,13 +22,13 @@ namespace Blog.Controllers
         private readonly IReviewService _reviewService;
         private readonly IReportCategoryService _reportCategoryService;
         private readonly IReportService _reportService;
-        private readonly ImageService _image;
+        private readonly ImageService _imageService;
         private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly ILogger<BlogController> _logger;
 
 
-        public BlogController(IPostCategoryService postCategoryService, IPostService postService, ICommentService commentService, IReviewService reviewService, IReportCategoryService reportCategoryService, IReportService reportService,  ImageService image, IWebHostEnvironment webHostEnvironment, UserManager<ApplicationUser> userManager, ILogger<BlogController> logger)
+        public BlogController(IPostCategoryService postCategoryService, IPostService postService, ICommentService commentService, IReviewService reviewService, IReportCategoryService reportCategoryService, IReportService reportService,  ImageService imageService, IWebHostEnvironment webHostEnvironment, UserManager<ApplicationUser> userManager, ILogger<BlogController> logger)
         {
             _postCategoryService = postCategoryService;
             _postService = postService;
@@ -36,7 +36,7 @@ namespace Blog.Controllers
             _reviewService = reviewService;
             _reportCategoryService = reportCategoryService;
             _reportService = reportService;
-            _image = image;
+            _imageService = imageService;
             _webHostEnvironment = webHostEnvironment;
             _userManager = userManager;
             _logger = logger;
@@ -84,7 +84,7 @@ namespace Blog.Controllers
 
                 if (imageFile != null)
                 {
-                    post.TitleImagePath = _image.Save(imageFile, this._webHostEnvironment);
+                    post.TitleImagePath = _imageService.Save(imageFile, this._webHostEnvironment);
                 }
                 _postService.UpdatePost(post);
                 return RedirectToAction(nameof(Index));
@@ -93,8 +93,12 @@ namespace Blog.Controllers
             return View(post);
         }
 
-        public IActionResult Delete(Guid id)
+        public IActionResult Delete(Guid id, string imagePath)
         {
+            if (imagePath != null)
+            {
+                _imageService.Delete(imagePath, _webHostEnvironment);
+            }
             _postService.RemovePost(id);
             return RedirectToAction(nameof(Index));
         }

@@ -1,0 +1,31 @@
+﻿@model List<PostCategory>
+@{
+    ViewData["Title"] = "Категории";
+}
+<h1 align="center">@ViewData["Title"]</h1>
+<br />
+<div id="carousel" class="carousel slide w-100 h-50" data-ride="carousel">
+    <div class="carousel-inner">
+        @foreach (PostCategory category in Model)
+        {   
+            <div class="carousel-item @(category == Model.First() ? "active" : null)" data-interval="10000">
+                <img src="~/images/categories/title-image.jpg" style="height: 500px;" class="d-block w-100" alt="...">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5>@category.Name</h5>
+                    <p>@category.Description</p>
+                    <a asp-area="" asp-controller="Home" asp-action="IndexByCategory" asp-route-id="@category.Id" class="btn btn-primary">Список постов</a>
+                </div>
+            </div>
+        }   
+    </div>         
+    <a class="carousel-control-prev" href="#carousel" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#carousel" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+    </a>
+</div>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/js/changeImagesColor.js"></script>

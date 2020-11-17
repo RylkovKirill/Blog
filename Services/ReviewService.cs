@@ -75,7 +75,7 @@ namespace Services
 
         public IQueryable<Post> SortedPostsByScore(IQueryable<Post> posts)
         {
-            return posts.AsEnumerable().Select(
+            return posts.ToList().Select(
             (p, s) => new
             {
                 post = p,
