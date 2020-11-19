@@ -59,6 +59,7 @@ namespace Blog
                 options.ClientId = "1045396079914-7080c3sfnvdca9te3g25tm2qdrvpd4nm.apps.googleusercontent.com";
                 options.ClientSecret = "sK30s03HpNK2FUUY45IIaWJY";
             });
+            services.ConfigureApplicationCookie(options => options.LoginPath = "/Identity/Account/Login");
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
