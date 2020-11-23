@@ -1,5 +1,6 @@
 ﻿@model Entities.Post
 @inject UserManager<ApplicationUser> userManager
+@inject TimeZoneService timeZoneService
 @{ 
     ViewData["Title"] = @Model.Title; 
 }
@@ -36,7 +37,7 @@
                     </div>
                     <div class="card-body">
                         <p class="card-text">@comment.Content</p>
-                        <p class="card-text text-right"><small class="text-muted">@comment.PostedDate</small></p>
+                        <p class="card-text text-right"><small class="text-muted">@timeZoneService.GetLocalDateTime(comment.PostedDate)</small></p>
                     </div>
                 </div>
             }

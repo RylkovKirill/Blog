@@ -36,6 +36,7 @@ namespace Blog
             services.AddTransient(serviceProvider => Configuration);
             services.AddSingleton<ImageService>();
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+            services.AddTransient<TimeZoneService>();
             services.AddTransient<IPostCategoryService, PostCategoryService>();
             services.AddTransient<IPostService, PostService>();
             services.AddTransient<ICommentService, CommentService>();

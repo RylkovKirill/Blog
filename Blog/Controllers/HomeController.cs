@@ -9,9 +9,11 @@ using Blog.Models;
 using Services;
 using Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Blog.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         private readonly IPostCategoryService _categoryService;
@@ -33,7 +35,6 @@ namespace Blog.Controllers
         public async Task<IActionResult> IndexAsync(string name = null, int page = 1)
         {
             //throw new ArgumentException("Test Error");
-
             IQueryable<Post> source;
 
             ViewBag.Name = name;

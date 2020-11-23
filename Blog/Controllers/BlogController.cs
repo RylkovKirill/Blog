@@ -45,7 +45,6 @@ namespace Blog.Controllers
         public async Task<IActionResult> Index()
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
-
             if (user == null)
             {
                 return NotFound();
