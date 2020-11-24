@@ -29,7 +29,7 @@ namespace Blog.Controllers
         private readonly ILogger<BlogController> _logger;
 
 
-        public BlogController(IPostCategoryService postCategoryService, IPostService postService, ICommentService commentService, IReviewService reviewService, IReportCategoryService reportCategoryService, IReportService reportService,  ImageService imageService,TimeZoneService timeZoneService, IWebHostEnvironment webHostEnvironment, UserManager<ApplicationUser> userManager, ILogger<BlogController> logger)
+        public BlogController(IPostCategoryService postCategoryService, IPostService postService, ICommentService commentService, IReviewService reviewService, IReportCategoryService reportCategoryService, IReportService reportService, ImageService imageService, TimeZoneService timeZoneService, IWebHostEnvironment webHostEnvironment, UserManager<ApplicationUser> userManager, ILogger<BlogController> logger)
         {
             _postCategoryService = postCategoryService;
             _postService = postService;
@@ -146,26 +146,22 @@ namespace Blog.Controllers
         }
 
         [HttpPost]
-        public async  Task<JsonResult> AddReview(Guid id, int score)
+        public async Task<JsonResult> AddReview(Guid id, int score)
         {
             var post = _postService.GetPost(id);
             var user = await _userManager.GetUserAsync(HttpContext.User);
             var reviews = _reviewService.GetReviewsByPost(post);
             var review = _reviewService.GetReview(user, post);
-            
-            if(review == null)
+
+            if (review == null)
             {
                 review = new Review
                 {
                     User = user,
                     Post = post,
-                    Score = score
                 };
             }
-            else
-            {
-                review.Score = score;
-            }
+            review.Score = score;
 
             _reviewService.UpdateReview(review);
 
@@ -180,14 +176,17 @@ namespace Blog.Controllers
         {
             var post = _postService.GetPost(id);
             var user = await _userManager.GetUserAsync(HttpContext.User);
-            var category = _reportCategoryService.GetCategory(reportCategoryId);
+            var report = _reportService.GetReport(user, post);
 
-            Report report = new Report
+            if (report == null)
             {
-                Post = post,
-                User = user,
-                Category = category
-            };
+                report = new Report
+                {
+                    Post = post,
+                    User = user,
+                };
+            }
+            report.CategoryId = reportCategoryId;
 
             _reportService.UpdateReport(report);
             return RedirectToAction("Details", new { id });

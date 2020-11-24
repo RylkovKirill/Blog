@@ -19,6 +19,11 @@ namespace Services
             return _repository.Get(id);
         }
 
+        public Report GetReport( ApplicationUser user, Post post)
+        {
+            return _repository.GetAll().Where(r => r.User.Equals(user)).Where(r => r.Post.Equals(post)).SingleOrDefault();
+        }
+
         public IQueryable<Report> GetReports()
         {
             return _repository.GetAll();
