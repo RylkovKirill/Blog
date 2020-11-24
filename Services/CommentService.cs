@@ -1,6 +1,7 @@
 ﻿using Entities;
 using Repositories;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Services
@@ -29,10 +30,15 @@ namespace Services
             return _repository.GetAll().Where(c => c.User.Equals(user));
         }
 
-        public IQueryable<Comment> GetCommentsByPost(Post post)
+        public IList<Comment> GetCommentsByPost(Post post)
         {
-            return _repository.GetAll().Where(c => c.Post.Equals(post)).OrderByDescending(c=> c.PostedDate);
+            return _repository.GetAll().Where(c => c.Post.Equals(post)).OrderByDescending(c => c.PostedDate).ToList();
         }
+
+        //public IQueryable<Comment> GetCommentsByPost(Post post)
+        //{
+        //    return _repository.GetAll().Where(c => c.Post.Equals(post)).OrderByDescending(c=> c.PostedDate);
+        //}
 
         public void AddComment(Comment comment)
         {

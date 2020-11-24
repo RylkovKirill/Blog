@@ -8,7 +8,7 @@ namespace Repositories.Mappings
         public ReviewMap(EntityTypeBuilder<Review> entityTypeBuilder)
         {
             entityTypeBuilder.HasOne(r => r.User).WithMany(u => u.Reviews);
-            entityTypeBuilder.HasOne(r => r.Post).WithMany(r => r.Reviews);
+            entityTypeBuilder.HasOne(r => r.Post).WithMany(p => p.Reviews);
         }
     }
 }

@@ -11,7 +11,7 @@ namespace Services
 
         public ReportCategoryService(IRepository<ReportCategory> repository)
         {
-            this._repository = repository;
+           _repository = repository;
         }
 
         public ReportCategory GetCategory(Guid id)

@@ -18,6 +18,17 @@ namespace Blog.Service
             _httpContext = httpContext;
         }
 
+        public DateTime GetUTCDateTime(DateTime dateTime)
+        {
+            if (_userOffset == null)
+            {
+                int offsetInMinutes = Convert.ToInt32(_httpContext.HttpContext.Request.Cookies["ClientTimeZone"]);
+                _userOffset = TimeSpan.FromMinutes(-offsetInMinutes);
+            }
+
+            return dateTime.Subtract(_userOffset.Value);
+        }
+
         public DateTime GetLocalDateTime(DateTime dateTime)
         {
             if (_userOffset == null)

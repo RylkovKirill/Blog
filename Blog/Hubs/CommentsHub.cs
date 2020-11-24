@@ -1,4 +1,5 @@
-﻿using Entities;
+﻿using Blog.Service;
+using Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.SignalR;
 using Services;
@@ -11,11 +12,13 @@ namespace Blog.Hubs
     {
         private readonly ICommentService _commentService;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly TimeZoneService _timeZoneService;
 
-        public CommentsHub(ICommentService commentService, UserManager<ApplicationUser> userManager)
+        public CommentsHub(ICommentService commentService, UserManager<ApplicationUser> userManager, TimeZoneService timeZoneService)
         {
             _commentService = commentService;
             _userManager = userManager;
+            _timeZoneService = timeZoneService;
         }
 
         public async Task AddToGroup(string groupName)
@@ -40,8 +43,8 @@ namespace Blog.Hubs
             };
 
             _commentService.AddComment(comment);
-
-            await Clients.Group(postId).SendAsync("Send", user.UserName, comment.Content, comment.PostedDate);
+            //var postedDate = _timeZoneService.GetLocalDateTime(comment.PostedDate).ToString("G");
+            await Clients.Group(postId).SendAsync("Send", user.UserName, comment.Content, comment.PostedDate.ToString("G"));
         }
     }
 }

@@ -23,12 +23,13 @@ namespace Blog.Controllers
         private readonly IReportCategoryService _reportCategoryService;
         private readonly IReportService _reportService;
         private readonly ImageService _imageService;
+        private readonly TimeZoneService _timeZoneService;
         private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly ILogger<BlogController> _logger;
 
 
-        public BlogController(IPostCategoryService postCategoryService, IPostService postService, ICommentService commentService, IReviewService reviewService, IReportCategoryService reportCategoryService, IReportService reportService,  ImageService imageService, IWebHostEnvironment webHostEnvironment, UserManager<ApplicationUser> userManager, ILogger<BlogController> logger)
+        public BlogController(IPostCategoryService postCategoryService, IPostService postService, ICommentService commentService, IReviewService reviewService, IReportCategoryService reportCategoryService, IReportService reportService,  ImageService imageService,TimeZoneService timeZoneService, IWebHostEnvironment webHostEnvironment, UserManager<ApplicationUser> userManager, ILogger<BlogController> logger)
         {
             _postCategoryService = postCategoryService;
             _postService = postService;
@@ -37,6 +38,7 @@ namespace Blog.Controllers
             _reportCategoryService = reportCategoryService;
             _reportService = reportService;
             _imageService = imageService;
+            _timeZoneService = timeZoneService;
             _webHostEnvironment = webHostEnvironment;
             _userManager = userManager;
             _logger = logger;
@@ -69,6 +71,7 @@ namespace Blog.Controllers
                     return NotFound();
                 }
             }
+            post.PostedDate = _timeZoneService.GetLocalDateTime(post.PostedDate);
             ViewBag.Categories = new SelectList(_postCategoryService.GetCategories(), "Id", "Name");
             return View(post);
         }
@@ -85,6 +88,7 @@ namespace Blog.Controllers
                 {
                     post.TitleImagePath = _imageService.Save(imageFile, this._webHostEnvironment);
                 }
+                post.PostedDate = _timeZoneService.GetUTCDateTime(post.PostedDate);
                 _postService.UpdatePost(post);
                 return RedirectToAction(nameof(Index));
             }
@@ -114,6 +118,11 @@ namespace Blog.Controllers
             }
 
             var comments = _commentService.GetCommentsByPost(post);
+            foreach (Comment comment in comments)
+            {
+                comment.User = await _userManager.FindByIdAsync(comment.UserId);
+            }
+
             ViewBag.Comments = comments;
             var reviews = _reviewService.GetReviewsByPost(post);
             var reviewCount = _reviewService.GetReviewsCount(reviews);
@@ -167,20 +176,21 @@ namespace Blog.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateReport(Guid id, Guid reportCategoryId)
         {
+            var post = _postService.GetPost(id);
             var user = await _userManager.GetUserAsync(HttpContext.User);
+            var category = _reportCategoryService.GetCategory(reportCategoryId);
 
             Report report = new Report
             {
+                Post = post,
                 User = user,
-                Post = _postService.GetPost(id),
-                Category = _reportCategoryService.GetCategory(reportCategoryId)
+                Category = category
             };
 
-            _reportService.AddReport(report);
-            return View("Details", _postService.GetPost(id));
+            _reportService.UpdateReport(report);
+            return RedirectToAction("Details", new { id });
         }
     }
 }
