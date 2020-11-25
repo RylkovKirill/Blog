@@ -29,7 +29,7 @@ namespace Services.Tests
             postCategoryService = new PostCategoryService(repository);
             applicationDbContext.PostCategories.Add(new PostCategory() { Id = Guid.Parse("44c8487f-6cd4-49c7-ae20-0af6f08e557d") });
             applicationDbContext.SaveChanges();
-            var postCategory = postCategoryService.GetCategory(Guid.Parse("44c8487f-6cd4-49c7-ae20-0af6f08e557d"));
+            var postCategory = postCategoryService.Get(Guid.Parse("44c8487f-6cd4-49c7-ae20-0af6f08e557d"));
             Assert.NotNull(postCategory);
             Assert.IsType<PostCategory>(postCategory);
             Assert.Equal(Guid.Parse("44c8487f-6cd4-49c7-ae20-0af6f08e557d"), postCategory.Id);
@@ -47,7 +47,7 @@ namespace Services.Tests
                 applicationDbContext.PostCategories.Add(new PostCategory() { Id = Guid.NewGuid() });
             }
             applicationDbContext.SaveChanges();
-            var postCategory = postCategoryService.GetCategories();
+            var postCategory = postCategoryService.GetAll();
             Assert.NotNull(postCategory);
             Assert.Equal(10, postCategory.Count());
         }
@@ -59,7 +59,7 @@ namespace Services.Tests
             applicationDbContext = new ApplicationDbContext(builder.Options, _configuration);
             repository = new Repository<PostCategory>(applicationDbContext);
             postCategoryService = new PostCategoryService(repository);
-            postCategoryService.AddCategory(new PostCategory() { Id = Guid.Parse("60a233e0-5fa1-4ee4-97aa-ddaa786d80fa") });
+            postCategoryService.Add(new PostCategory() { Id = Guid.Parse("60a233e0-5fa1-4ee4-97aa-ddaa786d80fa") });
             Assert.Equal(1, applicationDbContext.PostCategories.Count());
         }
 
@@ -70,10 +70,10 @@ namespace Services.Tests
             applicationDbContext = new ApplicationDbContext(builder.Options, _configuration);
             repository = new Repository<PostCategory>(applicationDbContext);
             postCategoryService = new PostCategoryService(repository);
-            postCategoryService.AddCategory(new PostCategory() { Id = Guid.Parse("117f991d-1f09-4a02-9880-e8fb1bdf287d") });
+            postCategoryService.Add(new PostCategory() { Id = Guid.Parse("117f991d-1f09-4a02-9880-e8fb1bdf287d") });
             applicationDbContext.SaveChanges();
             PostCategory postCategory = applicationDbContext.PostCategories.SingleOrDefault(s => s.Id == Guid.Parse("117f991d-1f09-4a02-9880-e8fb1bdf287d"));
-            postCategoryService.UpdateCategory(postCategory);
+            postCategoryService.Update(postCategory);
             Assert.Equal(1, applicationDbContext.PostCategories.Count());
         }
 
@@ -84,9 +84,9 @@ namespace Services.Tests
             applicationDbContext = new ApplicationDbContext(builder.Options, _configuration);
             repository = new Repository<PostCategory>(applicationDbContext);
             postCategoryService = new PostCategoryService(repository);
-            postCategoryService.AddCategory(new PostCategory() { Id = Guid.Parse("1717fcb1-f767-4652-ac64-7c265eafd571") });
+            postCategoryService.Add(new PostCategory() { Id = Guid.Parse("1717fcb1-f767-4652-ac64-7c265eafd571") });
             applicationDbContext.SaveChanges();
-            postCategoryService.RemoveCategory(Guid.Parse("1717fcb1-f767-4652-ac64-7c265eafd571"));
+            postCategoryService.Remove(Guid.Parse("1717fcb1-f767-4652-ac64-7c265eafd571"));
             Assert.Equal(0, applicationDbContext.PostCategories.Count());
         }
     }

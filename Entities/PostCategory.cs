@@ -12,6 +12,9 @@ namespace Entities
         [Display(Name = "Описание")]
         public string Description { get; set; }
 
+        [Display(Name = "Титульное изображение")]
+        public string TitleImagePath { get; set; }
+
         [Display(Name = "Список постов")]
         public List<Post> Posts { get; set; }
     }

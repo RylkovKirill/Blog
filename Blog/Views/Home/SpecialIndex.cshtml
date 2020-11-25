@@ -16,9 +16,9 @@
                 path = "1.jpeg";
             }
             <div class="carousel-item @(post == Model.First() ? "active" : null)" data-interval="10000">
-                <img src="~/images/@path" class="d-block w-100" alt="...">
+                <img src="~/images/posts/@path" class="d-block w-100" alt="...">
                 <div class="carousel-caption d-none d-md-block">
-                    <h5>@post.Title"</h5>
+                    <h5>@post.Title</h5>
                     <p>@timeZoneService.GetLocalDateTime(post.PostedDate)</p>
                     <a asp-area="" asp-controller="Blog" asp-action="Details" asp-route-id="@post.Id" class="btn btn-primary">Читать полностью</a>
                 </div>

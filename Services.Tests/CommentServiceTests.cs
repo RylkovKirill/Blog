@@ -34,7 +34,7 @@ namespace Services.Tests
             Guid id = Guid.NewGuid();
             applicationDbContext.Comments.Add(new Comment() { Id = id, Content = "Content"});
             applicationDbContext.SaveChanges();
-            var comment = commentService.GetComment(id);
+            var comment = commentService.Get(id);
             Assert.NotNull(comment);
             Assert.IsType<Comment>(comment);
             Assert.Equal(id, comment.Id);
@@ -53,7 +53,7 @@ namespace Services.Tests
                 applicationDbContext.Comments.Add(new Comment() { Id = Guid.NewGuid(), Content = "Content" });
             }
             applicationDbContext.SaveChanges();
-            var comments = commentService.GetComments();
+            var comments = commentService.GetAll();
             Assert.NotNull(comments);
             Assert.Equal(10, comments.Count());
         }
@@ -71,7 +71,7 @@ namespace Services.Tests
                 applicationDbContext.Comments.Add(new Comment() { Id = Guid.NewGuid(), Content = "Content", User = user });
             }
             applicationDbContext.SaveChanges();
-            var comments = commentService.GetCommentsByUser(user);
+            var comments = commentService.GetAll(user);
             Assert.NotNull(comments);
             Assert.Equal(10, comments.Count());
             for (int i = 0; i < comments.Count(); i++)
@@ -95,7 +95,7 @@ namespace Services.Tests
                 applicationDbContext.Comments.Add(new Comment() { Id = Guid.NewGuid(), Content = "Content", Post = post });
             }
             applicationDbContext.SaveChanges();
-            var comments = commentService.GetCommentsByPost(post);
+            var comments = commentService.GetAll(post);
             Assert.NotNull(comments);
             Assert.Equal(10, comments.Count());
             for (int i = 0; i < comments.Count(); i++)
@@ -111,7 +111,7 @@ namespace Services.Tests
             applicationDbContext = new ApplicationDbContext(builder.Options, _configuration);
             repository = new Repository<Comment>(applicationDbContext);
             commentService = new CommentService(repository);
-            commentService.AddComment(new Comment() { Id = Guid.NewGuid(), Content = "Content" });
+            commentService.Add(new Comment() { Id = Guid.NewGuid(), Content = "Content" });
             Assert.Equal(1, applicationDbContext.Comments.Count(p => p.Content == "Content"));
         }
 
@@ -127,7 +127,7 @@ namespace Services.Tests
             applicationDbContext.SaveChanges();
             Comment comment = applicationDbContext.Comments.SingleOrDefault(s => s.Id == id);
             comment.Content = "Update content";
-            commentService.UpdateComment(comment);
+            commentService.Update(comment);
             Assert.Equal(1, applicationDbContext.Comments.Count(p => p.Content == "Update content"));
         }
 
@@ -141,7 +141,7 @@ namespace Services.Tests
             Guid id = Guid.NewGuid();
             applicationDbContext.Comments.Add(new Comment() { Id = id, Content = "Content" });
             applicationDbContext.SaveChanges();
-            commentService.RemoveComment(id);
+            commentService.Remove(id);
             Assert.Equal(0, applicationDbContext.Comments.Count(p => p.Content == "Content"));
         }
     }

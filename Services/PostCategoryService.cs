@@ -14,29 +14,29 @@ namespace Services
             _repository = repository;
         }
 
-        public PostCategory GetCategory(Guid id)
+        public PostCategory Get(Guid id)
         {
             return _repository.Get(id);
         }
 
-        public IQueryable<PostCategory> GetCategories()
+        public IQueryable<PostCategory> GetAll()
         {
             return _repository.GetAll();
         }
 
-        public void AddCategory(PostCategory category)
+        public void Add(PostCategory category)
         {
             _repository.Add(category);
         }
 
-        public void UpdateCategory(PostCategory category)
+        public void Update(PostCategory category)
         {
             _repository.Update(category);
         }
 
-        public void RemoveCategory(Guid id)
+        public void Remove(Guid id)
         {
-            _repository.Remove(GetCategory(id));
+            _repository.Remove(Get(id));
         }
     }
 }

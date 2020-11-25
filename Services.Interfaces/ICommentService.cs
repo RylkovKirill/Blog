@@ -7,13 +7,12 @@ namespace Services
 {
     public interface ICommentService
     {
-        Comment GetComment(Guid id);
-        IQueryable<Comment> GetComments();
-        IQueryable<Comment> GetCommentsByUser(ApplicationUser user);
-        IList<Comment> GetCommentsByPost(Post post);
-        //IQueryable<Comment> GetCommentsByPost(Post post);
-        void AddComment(Comment user);
-        void UpdateComment(Comment user);
-        void RemoveComment(Guid id);
+        Comment Get(Guid id);
+        IQueryable<Comment> GetAll();
+        IQueryable<Comment> GetAll(ApplicationUser user);
+        IQueryable<Comment> GetAll(Post post);
+        void Add(Comment user);
+        void Update(Comment user);
+        void Remove(Guid id);
     }
 }

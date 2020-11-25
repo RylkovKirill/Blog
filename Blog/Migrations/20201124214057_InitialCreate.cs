@@ -54,7 +54,8 @@ namespace Blog.Migrations
                 {
                     Id = table.Column<Guid>(nullable: false),
                     Name = table.Column<string>(nullable: false),
-                    Description = table.Column<string>(nullable: true)
+                    Description = table.Column<string>(nullable: true),
+                    TitleImagePath = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -335,26 +336,26 @@ namespace Blog.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "e16895dd-7352-4cb4-b1b6-2a97f596e2ae", "5e1fc7f0-92fd-4170-bcb9-434c29cee534", "admin", "ADMIN" });
+                values: new object[] { "e16895dd-7352-4cb4-b1b6-2a97f596e2ae", "ba3d5292-c6c7-44d9-b678-e02eaee8f11d", "admin", "ADMIN" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "Name", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "Surname", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "b809eea3-e39d-4721-b56e-7a19be0b34d4", 0, "7ab9d6bc-b7b2-4f79-9926-752ba6b425ef", "asp.net.core.blog@gmail.com", true, false, null, null, "ASP.NET.CORE.BLOG@GMAIL.COM", "ASP.NET.CORE.BLOG@GMAIL.COM", "AQAAAAEAACcQAAAAEDppxxnWylLZz7yadtASwUOG/wzGUvzsVstIwVza6zPAsDTu/stLukyCzd71Tu1H4A==", null, false, "", null, false, "asp.net.core.blog@gmail.com" });
+                values: new object[] { "b809eea3-e39d-4721-b56e-7a19be0b34d4", 0, "45dc673c-2672-4d9b-810b-3ed5b45d5cf7", "asp.net.core.blog@gmail.com", true, false, null, null, "ASP.NET.CORE.BLOG@GMAIL.COM", "ASP.NET.CORE.BLOG@GMAIL.COM", "AQAAAAEAACcQAAAAEEq4FJ1qg+MvPXnHLtZlJiIx2fwij4hxO7F5/r2K/fvt9huPA/uIS1J+jRXTrGFXwA==", null, false, "", null, false, "asp.net.core.blog@gmail.com" });
 
             migrationBuilder.InsertData(
                 table: "PostCategories",
-                columns: new[] { "Id", "Description", "Name" },
+                columns: new[] { "Id", "Description", "Name", "TitleImagePath" },
                 values: new object[,]
                 {
-                    { new Guid("cab6fa8f-6467-4f1f-9267-af8d35d3a0a7"), null, "Еда и напитки" },
-                    { new Guid("5177e626-a357-4722-af79-9a9efb43193e"), null, "Здоровье и фитнес" },
-                    { new Guid("b9afdb0b-87f1-484a-886d-a66d591b6cfa"), null, "Наука и техника" },
-                    { new Guid("d1ef5ca8-6510-4768-9207-b1aac15989fd"), null, "Новости и политика" },
-                    { new Guid("e2fe0327-4d9a-4d6f-ba7c-4f58a107fd15"), null, "Развлечение" },
-                    { new Guid("e6fd90a4-ffbc-498b-a3d8-646ae10784a9"), null, "Разное" },
-                    { new Guid("e0124c8f-cd37-4093-b8d1-b62dfac7f2cb"), null, "Дом и сад" },
-                    { new Guid("2c1bd27d-1cf7-46bd-ad38-ae8b0199eedf"), null, "Спорт" }
+                    { new Guid("cab6fa8f-6467-4f1f-9267-af8d35d3a0a7"), null, "Еда и напитки", null },
+                    { new Guid("5177e626-a357-4722-af79-9a9efb43193e"), null, "Здоровье и фитнес", null },
+                    { new Guid("b9afdb0b-87f1-484a-886d-a66d591b6cfa"), null, "Наука и техника", null },
+                    { new Guid("d1ef5ca8-6510-4768-9207-b1aac15989fd"), null, "Новости и политика", null },
+                    { new Guid("e2fe0327-4d9a-4d6f-ba7c-4f58a107fd15"), null, "Развлечение", null },
+                    { new Guid("e6fd90a4-ffbc-498b-a3d8-646ae10784a9"), null, "Разное", null },
+                    { new Guid("e0124c8f-cd37-4093-b8d1-b62dfac7f2cb"), null, "Дом и сад", null },
+                    { new Guid("2c1bd27d-1cf7-46bd-ad38-ae8b0199eedf"), null, "Спорт", null }
                 });
 
             migrationBuilder.InsertData(

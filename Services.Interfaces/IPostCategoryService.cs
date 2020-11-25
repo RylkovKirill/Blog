@@ -6,10 +6,10 @@ namespace Services
 {
     public interface IPostCategoryService
     {
-        PostCategory GetCategory(Guid id);
-        IQueryable<PostCategory> GetCategories();
-        void AddCategory(PostCategory category);
-        void UpdateCategory(PostCategory category);
-        void RemoveCategory(Guid id);
+        PostCategory Get(Guid id);
+        IQueryable<PostCategory> GetAll();
+        void Add(PostCategory category);
+        void Update(PostCategory category);
+        void Remove(Guid id);
     }
 }

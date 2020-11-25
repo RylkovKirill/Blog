@@ -6,13 +6,13 @@ namespace Services
 {
     public interface IReportService
     {
-        Report GetReport(Guid id);
-        Report GetReport(ApplicationUser user, Post post);
-        IQueryable<Report> GetReports();
-        IQueryable<Report> GetReportsByUser(ApplicationUser user);
-        IQueryable<Report> GetReportsByPost(Post post);
-        void AddReport(Report report);
-        void UpdateReport(Report report);
-        void RemoveReport(Guid id);
+        Report Get(Guid id);
+        Report Get(ApplicationUser user, Post post);
+        IQueryable<Report> GetAll();
+        IQueryable<Report> GetAll(ApplicationUser user);
+        IQueryable<Report> GetAll(Post post);
+        void Add(Report report);
+        void Update(Report report);
+        void Remove(Guid id);
     }
 }

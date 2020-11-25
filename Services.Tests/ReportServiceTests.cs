@@ -33,7 +33,7 @@ namespace Services.Tests
             reportService = new ReportService(repository);
             applicationDbContext.Reports.Add(new Report() { Id = Guid.Parse("401a67e1-e241-456e-b8d9-def83405bdbc") });
             applicationDbContext.SaveChanges();
-            var report = reportService.GetReport(Guid.Parse("401a67e1-e241-456e-b8d9-def83405bdbc"));
+            var report = reportService.Get(Guid.Parse("401a67e1-e241-456e-b8d9-def83405bdbc"));
             Assert.NotNull(report);
             Assert.IsType<Report>(report);
             Assert.Equal(Guid.Parse("401a67e1-e241-456e-b8d9-def83405bdbc"), report.Id);
@@ -51,7 +51,7 @@ namespace Services.Tests
                 applicationDbContext.Reports.Add(new Report() { Id = Guid.NewGuid() });
             }
             applicationDbContext.SaveChanges();
-            var reports = reportService.GetReports();
+            var reports = reportService.GetAll();
             Assert.NotNull(reports);
             Assert.Equal(10, reports.Count());
         }
@@ -69,7 +69,7 @@ namespace Services.Tests
                 applicationDbContext.Reports.Add(new Report() { Id = Guid.NewGuid(), User = user });
             }
             applicationDbContext.SaveChanges();
-            var reports = reportService.GetReportsByUser(user);
+            var reports = reportService.GetAll(user);
             Assert.NotNull(reports);
             Assert.Equal(10, reports.Count());
             for (int i = 0; i < reports.Count(); i++)
@@ -92,7 +92,7 @@ namespace Services.Tests
                 applicationDbContext.Reports.Add(new Report() { Id = Guid.NewGuid(), Post = post });
             }
             applicationDbContext.SaveChanges();
-            var reports = reportService.GetReportsByPost(post);
+            var reports = reportService.GetAll(post);
             Assert.NotNull(reports);
             Assert.Equal(10, reports.Count());
             for (int i = 0; i < reports.Count(); i++)
@@ -108,7 +108,7 @@ namespace Services.Tests
             applicationDbContext = new ApplicationDbContext(builder.Options, configuration);
             repository = new Repository<Report>(applicationDbContext);
             reportService = new ReportService(repository);
-            reportService.AddReport(new Report() { Id = Guid.Parse("1b7b7549-9338-43dc-a1a1-de9b9a40bf60") });
+            reportService.Add(new Report() { Id = Guid.Parse("1b7b7549-9338-43dc-a1a1-de9b9a40bf60") });
             Assert.Equal(1, applicationDbContext.Reports.Count());
         }
 
@@ -119,10 +119,10 @@ namespace Services.Tests
             applicationDbContext = new ApplicationDbContext(builder.Options, configuration);
             repository = new Repository<Report>(applicationDbContext);
             reportService = new ReportService(repository);
-            reportService.AddReport(new Report() { Id = Guid.Parse("5df72e56-a5af-4fcb-8151-5d7812640dc8") });
+            reportService.Add(new Report() { Id = Guid.Parse("5df72e56-a5af-4fcb-8151-5d7812640dc8") });
             applicationDbContext.SaveChanges();
             Report reports = applicationDbContext.Reports.SingleOrDefault(s => s.Id == Guid.Parse("5df72e56-a5af-4fcb-8151-5d7812640dc8"));
-            reportService.UpdateReport(reports);
+            reportService.Update(reports);
             Assert.Equal(1, applicationDbContext.Reports.Count());
         }
 
@@ -133,9 +133,9 @@ namespace Services.Tests
             applicationDbContext = new ApplicationDbContext(builder.Options, configuration);
             repository = new Repository<Report>(applicationDbContext);
             reportService = new ReportService(repository);
-            reportService.AddReport(new Report() { Id = Guid.Parse("22e34370-ee6f-415c-a177-159e87a2b4d8") });
+            reportService.Add(new Report() { Id = Guid.Parse("22e34370-ee6f-415c-a177-159e87a2b4d8") });
             applicationDbContext.SaveChanges();
-            reportService.RemoveReport(Guid.Parse("22e34370-ee6f-415c-a177-159e87a2b4d8"));
+            reportService.Remove(Guid.Parse("22e34370-ee6f-415c-a177-159e87a2b4d8"));
             Assert.Equal(0, applicationDbContext.Reports.Count());
         }
     }

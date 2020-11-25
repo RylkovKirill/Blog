@@ -16,7 +16,7 @@ namespace Entities
         public string Content { get; set; }
 
         [Display(Name = "Дата публикации")]
-        public DateTime PostedDate { get; set; } = DateTime.Now;
+        public DateTime PostedDate { get; set; } = DateTime.UtcNow;
 
         [Display(Name = "Титульное изображение")]
         public string TitleImagePath { get; set; }

@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Extensions.Configuration;
 using Services;
 
 namespace Blog.Areas.Admin.Controllers
@@ -24,9 +25,10 @@ namespace Blog.Areas.Admin.Controllers
         private readonly ImageService _image;
         private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IConfiguration _configuration;
 
 
-        public ReportsController(IReportService reportService, IPostService postService, IPostCategoryService postCategoryService, ImageService image, IWebHostEnvironment webHostEnvironment, UserManager<ApplicationUser> userManager)
+        public ReportsController(IReportService reportService, IPostService postService, IPostCategoryService postCategoryService, ImageService image, IWebHostEnvironment webHostEnvironment, UserManager<ApplicationUser> userManager, IConfiguration configuration)
         {
             _reportService = reportService;
             _postService = postService;
@@ -34,29 +36,30 @@ namespace Blog.Areas.Admin.Controllers
             _image = image;
             _webHostEnvironment = webHostEnvironment;
             _userManager = userManager;
+            _configuration =configuration;
         }
 
         public IActionResult Index()
         {
-            return View(_reportService.GetReports());
+            return View(_reportService.GetAll().ToList());
         }
 
         public IActionResult Delete(Guid id)
         {
-            _reportService.RemoveReport(id);
+            _reportService.Remove(id);
             return RedirectToAction("Index");
         }
 
         public IActionResult EditPost(Guid id)
         {
-            var post = _postService.GetPost(id);
+            var post = _postService.Get(id);
 
             if (post == null)
             {
                 return NotFound();
             }
 
-            ViewBag.Categories = new SelectList(_postCategoryService.GetCategories(), "Id", "Name");
+            ViewBag.Categories = new SelectList(_postCategoryService.GetAll(), "Id", "Name");
 
             return View(post);
         }
@@ -68,18 +71,18 @@ namespace Blog.Areas.Admin.Controllers
             {
                 if (imageFile != null)
                 {
-                    post.TitleImagePath = _image.Save(imageFile, this._webHostEnvironment);
+                    post.TitleImagePath = _image.Save(imageFile, this._webHostEnvironment, _configuration["ImagePath:Post"]);
                 }
-                _postService.UpdatePost(post);
+                _postService.Update(post);
                 return RedirectToAction(nameof(Index));
             }
-            ViewBag.Categories = new SelectList(_postCategoryService.GetCategories(), "Id", "Name");
+            ViewBag.Categories = new SelectList(_postCategoryService.GetAll(), "Id", "Name");
             return View(post);
         }
 
         public IActionResult DeletePost(Guid id)
         {
-            _postService.RemovePost(id);
+            _postService.Remove(id);
             return RedirectToAction(nameof(Index));
         }
     }

@@ -14,44 +14,44 @@ namespace Services
             _repository = repository;
         }
 
-        public Report GetReport(Guid id)
+        public Report Get(Guid id)
         {
             return _repository.Get(id);
         }
 
-        public Report GetReport( ApplicationUser user, Post post)
+        public Report Get( ApplicationUser user, Post post)
         {
             return _repository.GetAll().Where(r => r.User.Equals(user)).Where(r => r.Post.Equals(post)).SingleOrDefault();
         }
 
-        public IQueryable<Report> GetReports()
+        public IQueryable<Report> GetAll()
         {
             return _repository.GetAll();
         }
 
-        public IQueryable<Report> GetReportsByUser(ApplicationUser user)
+        public IQueryable<Report> GetAll(ApplicationUser user)
         {
             return _repository.GetAll().Where(r => r.User.Equals(user));
         }
 
-        public IQueryable<Report> GetReportsByPost(Post post)
+        public IQueryable<Report> GetAll(Post post)
         {
             return _repository.GetAll().Where(r => r.Post.Equals(post));
         }
 
-        public void AddReport(Report report)
+        public void Add(Report report)
         {
             _repository.Add(report);
         }
 
-        public void UpdateReport(Report report)
+        public void Update(Report report)
         {
             _repository.Update(report);
         }
 
-        public void RemoveReport(Guid id)
+        public void Remove(Guid id)
         {
-            _repository.Remove(GetReport(id));
+            _repository.Remove(Get(id));
         }
     }
 }

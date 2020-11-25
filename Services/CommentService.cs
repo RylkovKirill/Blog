@@ -15,44 +15,39 @@ namespace Services
             _repository = repository;
         }
 
-        public Comment GetComment(Guid id)
+        public Comment Get(Guid id)
         {
             return _repository.Get(id);
         }
 
-        public IQueryable<Comment> GetComments()
+        public IQueryable<Comment> GetAll()
         {
             return _repository.GetAll();
         }
 
-        public IQueryable<Comment> GetCommentsByUser(ApplicationUser user)
+        public IQueryable<Comment> GetAll(ApplicationUser user)
         {
             return _repository.GetAll().Where(c => c.User.Equals(user));
         }
 
-        public IList<Comment> GetCommentsByPost(Post post)
+        public IQueryable<Comment> GetAll(Post post)
         {
-            return _repository.GetAll().Where(c => c.Post.Equals(post)).OrderByDescending(c => c.PostedDate).ToList();
+            return _repository.GetAll().Where(c => c.Post.Equals(post)).OrderByDescending(c => c.PostedDate);
         }
 
-        //public IQueryable<Comment> GetCommentsByPost(Post post)
-        //{
-        //    return _repository.GetAll().Where(c => c.Post.Equals(post)).OrderByDescending(c=> c.PostedDate);
-        //}
-
-        public void AddComment(Comment comment)
+        public void Add(Comment comment)
         {
             _repository.Add(comment);
         }
 
-        public void UpdateComment(Comment comment)
+        public void Update(Comment comment)
         {
             _repository.Update(comment);
         }
 
-        public void RemoveComment(Guid id)
+        public void Remove(Guid id)
         {
-            _repository.Remove(GetComment(id));
+            _repository.Remove(Get(id));
         }
     }
 }

@@ -17,7 +17,7 @@
                     <td>@item.Name</td>
                     <td>
                         <a type="button" class="btn btn-primary" asp-controller="PostCategories" asp-action="Edit" asp-route-id="@item.Id">Изменить</a>
-                        <a type="button" class="btn btn-danger" asp-controller="PostCategories" asp-action="Delete" asp-route-id="@item.Id">Удалить</a>
+                        <a type="button" class="btn btn-danger" asp-controller="PostCategories" asp-action="Delete" asp-route-id="@item.Id" asp-route-imagePath="@item.TitleImagePath">Удалить</a>
                     </td>
                 </tr>
             }

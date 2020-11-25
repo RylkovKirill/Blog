@@ -21,7 +21,7 @@ namespace Blog.Areas.Admin.Controllers
 
         public IActionResult Index()
         {
-            var categories = _reportCategoryService.GetCategories();
+            var categories = _reportCategoryService.GetAll();
 
             if (categories == null)
             {
@@ -40,7 +40,7 @@ namespace Blog.Areas.Admin.Controllers
         [HttpPost]
         public IActionResult Create(ReportCategory category)
         {
-            _reportCategoryService.UpdateCategory(category);
+            _reportCategoryService.Update(category);
 
             return RedirectToAction("Index");
         }
@@ -48,7 +48,7 @@ namespace Blog.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult Edit(Guid id)
         {
-            var category = _reportCategoryService.GetCategory(id);
+            var category = _reportCategoryService.Get(id);
 
             if (category == null)
             {
@@ -61,7 +61,7 @@ namespace Blog.Areas.Admin.Controllers
         [HttpPost]
         public IActionResult Edit(ReportCategory category)
         {
-            _reportCategoryService.UpdateCategory(category);
+            _reportCategoryService.Update(category);
 
             return RedirectToAction("Index");
         }
@@ -69,7 +69,7 @@ namespace Blog.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult Delete(Guid id)
         {
-            _reportCategoryService.RemoveCategory(id);
+            _reportCategoryService.Remove(id);
 
             return RedirectToAction("Index");
         }

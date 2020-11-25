@@ -20,7 +20,7 @@
                         path = "1.jpeg";
                     }*@
                     <div class="card m-1" style="max-height: 18rem; max-width: 35rem; min-height: 18rem; min-width: 35rem">
-                        <img class="card-img-top" src="~/images/@path" alt="Card image cap">
+                        <img class="card-img-top" src="~/images/posts/@path" alt="Card image cap">
                         <div class="card-body">
                             <h5 class="card-title">@post.Title</h5>
                             <p class="card-text"><small class="text-muted">@Html.Raw(timeZoneService.GetLocalDateTime(post.PostedDate))</small></p>

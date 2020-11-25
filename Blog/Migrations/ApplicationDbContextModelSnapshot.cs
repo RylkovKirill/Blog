@@ -15,7 +15,7 @@ namespace Blog.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.8")
+                .HasAnnotation("ProductVersion", "3.1.10")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -94,13 +94,13 @@ namespace Blog.Migrations
                         {
                             Id = "b809eea3-e39d-4721-b56e-7a19be0b34d4",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "7ab9d6bc-b7b2-4f79-9926-752ba6b425ef",
+                            ConcurrencyStamp = "45dc673c-2672-4d9b-810b-3ed5b45d5cf7",
                             Email = "asp.net.core.blog@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ASP.NET.CORE.BLOG@GMAIL.COM",
                             NormalizedUserName = "ASP.NET.CORE.BLOG@GMAIL.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEDppxxnWylLZz7yadtASwUOG/wzGUvzsVstIwVza6zPAsDTu/stLukyCzd71Tu1H4A==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEEq4FJ1qg+MvPXnHLtZlJiIx2fwij4hxO7F5/r2K/fvt9huPA/uIS1J+jRXTrGFXwA==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -184,6 +184,9 @@ namespace Blog.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TitleImagePath")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -405,7 +408,7 @@ namespace Blog.Migrations
                         new
                         {
                             Id = "e16895dd-7352-4cb4-b1b6-2a97f596e2ae",
-                            ConcurrencyStamp = "5e1fc7f0-92fd-4170-bcb9-434c29cee534",
+                            ConcurrencyStamp = "ba3d5292-c6c7-44d9-b678-e02eaee8f11d",
                             Name = "admin",
                             NormalizedName = "ADMIN"
                         });

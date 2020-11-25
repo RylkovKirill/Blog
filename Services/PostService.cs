@@ -14,47 +14,52 @@ namespace Services
             _repository = repository;
         }
 
-        public Post GetPost(Guid id)
+        public Post Get(Guid id)
         {
             return _repository.Get(id);
         }
 
-        public IQueryable<Post> GetPosts()
+        public IQueryable<Post> GetAll()
         {
             return _repository.GetAll();
         }
 
-        public IQueryable<Post> GetPostsByUser(ApplicationUser user)
+        public IQueryable<Post> GetAll(ApplicationUser user)
         {
             return _repository.GetAll().Where(p => p.User.Equals(user));
         }
 
-        public IQueryable<Post> GetPostsByCategory(PostCategory category)
+        public IQueryable<Post> GetAll(PostCategory category)
         {
             return _repository.GetAll().Where(p => p.Category.Equals(category));
         }
 
-        public IQueryable<Post> GetPostsBySearchQuery(string searchQuery) 
+        public IQueryable<Post> GetAll(string searchQuery)
         {
             return _repository.GetAll().Where(a => a.Title.Contains(searchQuery));
         }
 
-        public void AddPost(Post post)
+        public void Add(Post post)
         {
             _repository.Add(post);
         }
 
-        public void UpdatePost(Post post)
+        public void Update(Post post)
         {
             _repository.Update(post);
         }
 
-        public void RemovePost(Guid id)
+        public void Remove(Guid id)
         {
-            _repository.Remove(GetPost(id));
+            _repository.Remove(Get(id));
         }
 
-        public IQueryable<Post> SortedPostsByPostedDate(IQueryable<Post> posts) 
+        public IQueryable<Post> FilterByPostedDate(IQueryable<Post> posts)
+        {
+            return posts.Where(p => p.PostedDate <= DateTime.UtcNow);
+        }
+
+        public IQueryable<Post> SortedByPostedDate(IQueryable<Post> posts)
         {
             return posts.OrderByDescending(s => s.PostedDate);
         }

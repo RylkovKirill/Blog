@@ -34,7 +34,7 @@ namespace Services.Tests
             postService = new PostService(repository);
             applicationDbContext.Posts.Add(new Post() { Id = Guid.Parse("b3d92b9c-89a6-4f28-90de-87a4c9abda53"), Title = "Title", Content = "Content" });
             applicationDbContext.SaveChanges();
-            var post = postService.GetPost(Guid.Parse("b3d92b9c-89a6-4f28-90de-87a4c9abda53"));
+            var post = postService.Get(Guid.Parse("b3d92b9c-89a6-4f28-90de-87a4c9abda53"));
             Assert.NotNull(post);
             Assert.IsType<Post>(post);
             Assert.Equal(Guid.Parse("b3d92b9c-89a6-4f28-90de-87a4c9abda53"), post.Id);
@@ -54,7 +54,7 @@ namespace Services.Tests
                 applicationDbContext.Posts.Add(new Post() { Id = Guid.NewGuid(), Title = "Title", Content = "Content" });
             }
             applicationDbContext.SaveChanges();
-            var posts = postService.GetPosts();
+            var posts = postService.GetAll();
             Assert.NotNull(posts);
             Assert.Equal(10, posts.Count());
         }
@@ -72,7 +72,7 @@ namespace Services.Tests
                 applicationDbContext.Posts.Add(new Post() { Id = Guid.NewGuid(), Title = "Title", Content = "Content", User = user });
             }
             applicationDbContext.SaveChanges();
-            var posts = postService.GetPostsByUser(user);
+            var posts = postService.GetAll(user);
             Assert.NotNull(posts);
             Assert.Equal(10, posts.Count());
             for (int i = 0; i < posts.Count(); i++)
@@ -95,7 +95,7 @@ namespace Services.Tests
                 applicationDbContext.Posts.Add(new Post() { Id = Guid.NewGuid(), Title = "Title", Content = "Content", Category = category });
             }
             applicationDbContext.SaveChanges();
-            var posts = postService.GetPostsByCategory(category);
+            var posts = postService.GetAll(category);
             Assert.NotNull(posts);
             Assert.Equal(10, posts.Count());
             for(int i = 0; i < posts.Count(); i++)
@@ -111,7 +111,7 @@ namespace Services.Tests
             applicationDbContext = new ApplicationDbContext(builder.Options, _configuration);
             repository = new Repository<Post>(applicationDbContext);
             postService = new PostService(repository);
-            postService.AddPost(new Post() { Id = Guid.Parse("efd081d5-dcc5-4e70-9ac0-d26a5b9aa293"), Title = "Title", Content = "Content" });
+            postService.Add(new Post() { Id = Guid.Parse("efd081d5-dcc5-4e70-9ac0-d26a5b9aa293"), Title = "Title", Content = "Content" });
             Assert.Equal(1, applicationDbContext.Posts.Count(p => p.Title == "Title"));
         }
 
@@ -127,7 +127,7 @@ namespace Services.Tests
             Post post = applicationDbContext.Posts.SingleOrDefault(s => s.Id == Guid.Parse("aed4a0f0-ef37-4d7d-a463-757acb5e7147"));
             post.Title = "Update title";
             post.Content = "Update content";
-            postService.UpdatePost(post);
+            postService.Update(post);
             Assert.Equal(1, applicationDbContext.Posts.Count(p => p.Title == "Update title"));
             Assert.Equal("Update title", post.Title);
             Assert.Equal("Update content", post.Content);
@@ -142,7 +142,7 @@ namespace Services.Tests
             postService = new PostService(repository);
             applicationDbContext.Posts.Add(new Post() { Id = Guid.Parse("d5da59f4-6cbf-4e36-ad86-70b8e66a872a"), Title = "Title", Content = "Content" });
             applicationDbContext.SaveChanges();
-            postService.RemovePost(Guid.Parse("d5da59f4-6cbf-4e36-ad86-70b8e66a872a"));
+            postService.Remove(Guid.Parse("d5da59f4-6cbf-4e36-ad86-70b8e66a872a"));
             Assert.Equal(0, applicationDbContext.Posts.Count(p => p.Title == "Title"));
         }
 

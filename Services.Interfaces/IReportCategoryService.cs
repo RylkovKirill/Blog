@@ -6,10 +6,10 @@ namespace Services
 {
     public interface IReportCategoryService
     {
-        ReportCategory GetCategory(Guid id);
-        IQueryable<ReportCategory> GetCategories();
-        void AddCategory(ReportCategory category);
-        void UpdateCategory(ReportCategory category);
-        void RemoveCategory(Guid id);
+        ReportCategory Get(Guid id);
+        IQueryable<ReportCategory> GetAll();
+        void Add(ReportCategory category);
+        void Update(ReportCategory category);
+        void Remove(Guid id);
     }
 }

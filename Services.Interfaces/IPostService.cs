@@ -6,14 +6,15 @@ namespace Services
 {
     public interface IPostService
     {
-        Post GetPost(Guid id);
-        IQueryable<Post> GetPosts();
-        IQueryable<Post> GetPostsByUser(ApplicationUser user);
-        IQueryable<Post> GetPostsByCategory(PostCategory category);
-        IQueryable<Post> GetPostsBySearchQuery(string searchQuery);
-        void AddPost(Post post);
-        void UpdatePost(Post post);
-        void RemovePost(Guid id);
-        IQueryable<Post> SortedPostsByPostedDate(IQueryable<Post> posts);
+        Post Get(Guid id);
+        IQueryable<Post> GetAll();
+        IQueryable<Post> GetAll(ApplicationUser user);
+        IQueryable<Post> GetAll(PostCategory category);
+        IQueryable<Post> GetAll(string searchQuery);
+        void Add(Post post);
+        void Update(Post post);
+        void Remove(Guid id);
+        IQueryable<Post> FilterByPostedDate(IQueryable<Post> posts);
+        IQueryable<Post> SortedByPostedDate(IQueryable<Post> posts);
     }
 }

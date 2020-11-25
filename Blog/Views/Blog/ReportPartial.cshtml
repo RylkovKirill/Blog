@@ -14,7 +14,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    @foreach (ReportCategory reportCategory in _reportCategoryService.GetCategories())
+                    @foreach (ReportCategory reportCategory in _reportCategoryService.GetAll())
                     {
                         <div class="form-group">
                             <label>@reportCategory.Name</label>

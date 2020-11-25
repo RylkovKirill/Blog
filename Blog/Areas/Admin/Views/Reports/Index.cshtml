@@ -1,4 +1,4 @@
-﻿@model IQueryable<Report>
+﻿@model IList<Report>
 @inject IPostService postService
 @inject IReportCategoryService reportCategoryService
 @{
@@ -17,8 +17,8 @@
         @foreach (var item in Model)
         {
             <tr>
-            <td>@reportCategoryService.GetCategory(item.CategoryId).Name</td>
-            <td>@postService.GetPost(item.PostId).Title</td>
+            <td>@reportCategoryService.Get(item.CategoryId).Name</td>
+            <td>@postService.Get(item.PostId).Title</td>
                 <td>
                     <a type="button" class="btn btn-primary" asp-controller="Reports" asp-action="EditPost" asp-route-id="@item.PostId">Изменить пост</a>
                     <a type="button" class="btn btn-danger" asp-controller="Reports" asp-action="DeletePost" asp-route-id="@item.PostId">Удалить пост</a>

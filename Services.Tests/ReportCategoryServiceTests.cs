@@ -33,7 +33,7 @@ namespace Services.Tests
             reportCategoryService = new ReportCategoryService(repository);
             applicationDbContext.ReportCategories.Add(new ReportCategory() { Id = Guid.Parse("6441e6a4-db3b-4701-b1d5-d5ab9f1c6793") });
             applicationDbContext.SaveChanges();
-            var reportCategory = reportCategoryService.GetCategory(Guid.Parse("6441e6a4-db3b-4701-b1d5-d5ab9f1c6793"));
+            var reportCategory = reportCategoryService.Get(Guid.Parse("6441e6a4-db3b-4701-b1d5-d5ab9f1c6793"));
             Assert.NotNull(reportCategory);
             Assert.IsType<ReportCategory>(reportCategory);
             Assert.Equal(Guid.Parse("6441e6a4-db3b-4701-b1d5-d5ab9f1c6793"), reportCategory.Id);
@@ -51,7 +51,7 @@ namespace Services.Tests
                 applicationDbContext.ReportCategories.Add(new ReportCategory() { Id = Guid.NewGuid() });
             }
             applicationDbContext.SaveChanges();
-            var reportCategories = reportCategoryService.GetCategories();
+            var reportCategories = reportCategoryService.GetAll();
             Assert.NotNull(reportCategories);
             Assert.Equal(10, reportCategories.Count());
         } 
@@ -63,7 +63,7 @@ namespace Services.Tests
             applicationDbContext = new ApplicationDbContext(builder.Options, _configuration);
             repository = new Repository<ReportCategory>(applicationDbContext);
             reportCategoryService = new ReportCategoryService(repository);
-            reportCategoryService.AddCategory(new ReportCategory() { Id = Guid.Parse("791ea5ae-a4c6-4f20-8b8f-f3c150fb62ec") });
+            reportCategoryService.Add(new ReportCategory() { Id = Guid.Parse("791ea5ae-a4c6-4f20-8b8f-f3c150fb62ec") });
             Assert.Equal(1, applicationDbContext.ReportCategories.Count());
         }
 
@@ -74,10 +74,10 @@ namespace Services.Tests
             applicationDbContext = new ApplicationDbContext(builder.Options, _configuration);
             repository = new Repository<ReportCategory>(applicationDbContext);
             reportCategoryService = new ReportCategoryService(repository);
-            reportCategoryService.AddCategory(new ReportCategory() { Id = Guid.Parse("2eb1d729-8d4c-4a94-90b6-ed9dfbd0bc76") });
+            reportCategoryService.Add(new ReportCategory() { Id = Guid.Parse("2eb1d729-8d4c-4a94-90b6-ed9dfbd0bc76") });
             applicationDbContext.SaveChanges();
             ReportCategory reports = applicationDbContext.ReportCategories.SingleOrDefault(s => s.Id == Guid.Parse("2eb1d729-8d4c-4a94-90b6-ed9dfbd0bc76"));
-            reportCategoryService.UpdateCategory(reports);
+            reportCategoryService.Update(reports);
             Assert.Equal(1, applicationDbContext.ReportCategories.Count());
         }
 
@@ -88,9 +88,9 @@ namespace Services.Tests
             applicationDbContext = new ApplicationDbContext(builder.Options, _configuration);
             repository = new Repository<ReportCategory>(applicationDbContext);
             reportCategoryService = new ReportCategoryService(repository);
-            reportCategoryService.AddCategory(new ReportCategory() { Id = Guid.Parse("2d531f40-d0c2-474f-ab60-9cfcb07a999d") });
+            reportCategoryService.Add(new ReportCategory() { Id = Guid.Parse("2d531f40-d0c2-474f-ab60-9cfcb07a999d") });
             applicationDbContext.SaveChanges();
-            reportCategoryService.RemoveCategory(Guid.Parse("2d531f40-d0c2-474f-ab60-9cfcb07a999d"));
+            reportCategoryService.Remove(Guid.Parse("2d531f40-d0c2-474f-ab60-9cfcb07a999d"));
             Assert.Equal(0, applicationDbContext.ReportCategories.Count());
         }
     }

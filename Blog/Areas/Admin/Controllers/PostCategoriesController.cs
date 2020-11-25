@@ -2,9 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Blog.Service;
 using Entities;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Services;
 
 namespace Blog.Areas.Admin.Controllers
@@ -14,15 +18,22 @@ namespace Blog.Areas.Admin.Controllers
     public class PostCategoriesController : Controller
     {
         private readonly IPostCategoryService _categoryService;
+        private readonly ImageService _imageService;
+        private readonly IConfiguration _configuration;
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public PostCategoriesController(IPostCategoryService categoryService)
+
+        public PostCategoriesController(IPostCategoryService categoryService, ImageService imageService, IConfiguration configuration, IWebHostEnvironment webHostEnvironment)
         {
             _categoryService = categoryService;
+            _imageService = imageService;
+            _configuration = configuration;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         public IActionResult Index()
         {
-            var categories = _categoryService.GetCategories();
+            var categories = _categoryService.GetAll();
 
             if (categories == null)
             {
@@ -35,21 +46,31 @@ namespace Blog.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            return View();
+            var postCategory = new PostCategory();
+            return View(postCategory);
         }
 
         [HttpPost]
-        public IActionResult Create(PostCategory category)
+        public IActionResult Create(PostCategory category, IFormFile imageFile)
         {
-            _categoryService.UpdateCategory(category);
+            if (ModelState.IsValid)
+            {
+                if (imageFile != null)
+                {
+                    category.TitleImagePath = _imageService.Save(imageFile, this._webHostEnvironment, _configuration["ImagePath:PostCategory"]);
+                }
+                _categoryService.Update(category);
 
-            return RedirectToAction("Index");
+                return RedirectToAction("Index");
+            }
+
+            return View(category);
         }
 
         [HttpGet]
         public IActionResult Edit(Guid id)
         {
-            var category = _categoryService.GetCategory(id);
+            var category = _categoryService.Get(id);
 
             if (category == null)
             {
@@ -60,17 +81,30 @@ namespace Blog.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public IActionResult Edit(PostCategory category)
+        public IActionResult Edit(PostCategory category, IFormFile imageFile)
         {
-            _categoryService.UpdateCategory(category);
+            if (ModelState.IsValid)
+            {
+                if (imageFile != null)
+                {
+                    category.TitleImagePath = _imageService.Save(imageFile, this._webHostEnvironment, _configuration["ImagePath:PostCategory"]);
+                }
+                _categoryService.Update(category);
 
-            return RedirectToAction("Index");
+                return RedirectToAction("Index");
+            }
+
+            return View(category);
         }
 
         [HttpGet]
-        public IActionResult Delete(Guid id)
+        public IActionResult Delete(Guid id, string imagePath)
         {
-            _categoryService.RemoveCategory(id);
+            if (imagePath != null)
+            {
+                _imageService.Delete(imagePath, _webHostEnvironment, _configuration["ImagePath:PostCategory"]);
+            }
+            _categoryService.Remove(id);
 
             return RedirectToAction("Index");
         }

@@ -10,6 +10,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Authorization;
 using Services;
+using Microsoft.Extensions.Configuration;
+using System.Linq;
 
 namespace Blog.Controllers
 {
@@ -27,9 +29,10 @@ namespace Blog.Controllers
         private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly ILogger<BlogController> _logger;
+        private readonly IConfiguration _configuration;
 
 
-        public BlogController(IPostCategoryService postCategoryService, IPostService postService, ICommentService commentService, IReviewService reviewService, IReportCategoryService reportCategoryService, IReportService reportService, ImageService imageService, TimeZoneService timeZoneService, IWebHostEnvironment webHostEnvironment, UserManager<ApplicationUser> userManager, ILogger<BlogController> logger)
+        public BlogController(IPostCategoryService postCategoryService, IPostService postService, ICommentService commentService, IReviewService reviewService, IReportCategoryService reportCategoryService, IReportService reportService, ImageService imageService, TimeZoneService timeZoneService, IWebHostEnvironment webHostEnvironment, UserManager<ApplicationUser> userManager, ILogger<BlogController> logger, IConfiguration configuration)
         {
             _postCategoryService = postCategoryService;
             _postService = postService;
@@ -42,6 +45,7 @@ namespace Blog.Controllers
             _webHostEnvironment = webHostEnvironment;
             _userManager = userManager;
             _logger = logger;
+            _configuration = configuration;
         }
 
         public async Task<IActionResult> Index()
@@ -52,7 +56,7 @@ namespace Blog.Controllers
                 return NotFound();
             }
 
-            return View(_postService.GetPostsByUser(user));
+            return View(_postService.GetAll(user));
         }
 
         [HttpGet]
@@ -65,14 +69,14 @@ namespace Blog.Controllers
             }
             else
             {
-                post = _postService.GetPost(id);
+                post = _postService.Get(id);
                 if (post == null)
                 {
                     return NotFound();
                 }
             }
             post.PostedDate = _timeZoneService.GetLocalDateTime(post.PostedDate);
-            ViewBag.Categories = new SelectList(_postCategoryService.GetCategories(), "Id", "Name");
+            ViewBag.Categories = new SelectList(_postCategoryService.GetAll(), "Id", "Name");
             return View(post);
         }
 
@@ -86,13 +90,13 @@ namespace Blog.Controllers
 
                 if (imageFile != null)
                 {
-                    post.TitleImagePath = _imageService.Save(imageFile, this._webHostEnvironment);
+                    post.TitleImagePath = _imageService.Save(imageFile, this._webHostEnvironment, _configuration["ImagePath:Post"]);
                 }
                 post.PostedDate = _timeZoneService.GetUTCDateTime(post.PostedDate);
-                _postService.UpdatePost(post);
+                _postService.Update(post);
                 return RedirectToAction(nameof(Index));
             }
-            ViewBag.Categories = new SelectList(_postCategoryService.GetCategories(), "Id", "Name");
+            ViewBag.Categories = new SelectList(_postCategoryService.GetAll(), "Id", "Name");
             return View(post);
         }
 
@@ -100,31 +104,31 @@ namespace Blog.Controllers
         {
             if (imagePath != null)
             {
-                _imageService.Delete(imagePath, _webHostEnvironment);
+                _imageService.Delete(imagePath, _webHostEnvironment, _configuration["ImagePath:Post"]);
             }
-            _postService.RemovePost(id);
+            _postService.Remove(id);
             return RedirectToAction(nameof(Index));
         }
 
         public async Task<IActionResult> DetailsAsync(Guid id)
         {
-            var post = _postService.GetPost(id);
+            var post = _postService.Get(id);
             var user = await _userManager.GetUserAsync(HttpContext.User);
-            var review = _reviewService.GetReview(user, post);
+            var review = _reviewService.Get(user, post);
 
             if (post == null)
             {
                 return NotFound();
             }
 
-            var comments = _commentService.GetCommentsByPost(post);
+            var comments = _commentService.GetAll(post).ToList();
             foreach (Comment comment in comments)
             {
                 comment.User = await _userManager.FindByIdAsync(comment.UserId);
             }
 
             ViewBag.Comments = comments;
-            var reviews = _reviewService.GetReviewsByPost(post);
+            var reviews = _reviewService.GetAll(post);
             var reviewCount = _reviewService.GetReviewsCount(reviews);
             var averageScore = _reviewService.GetReviewsAverageScore(reviews);
             ViewBag.ReviewCount = reviewCount;
@@ -148,10 +152,10 @@ namespace Blog.Controllers
         [HttpPost]
         public async Task<JsonResult> AddReview(Guid id, int score)
         {
-            var post = _postService.GetPost(id);
+            var post = _postService.Get(id);
             var user = await _userManager.GetUserAsync(HttpContext.User);
-            var reviews = _reviewService.GetReviewsByPost(post);
-            var review = _reviewService.GetReview(user, post);
+            var reviews = _reviewService.GetAll(post);
+            var review = _reviewService.Get(user, post);
 
             if (review == null)
             {
@@ -163,7 +167,7 @@ namespace Blog.Controllers
             }
             review.Score = score;
 
-            _reviewService.UpdateReview(review);
+            _reviewService.Update(review);
 
             int reviewCount = _reviewService.GetReviewsCount(reviews);
             double? averageScore = _reviewService.GetReviewsAverageScore(reviews);
@@ -174,9 +178,9 @@ namespace Blog.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateReport(Guid id, Guid reportCategoryId)
         {
-            var post = _postService.GetPost(id);
+            var post = _postService.Get(id);
             var user = await _userManager.GetUserAsync(HttpContext.User);
-            var report = _reportService.GetReport(user, post);
+            var report = _reportService.Get(user, post);
 
             if (report == null)
             {
@@ -188,7 +192,7 @@ namespace Blog.Controllers
             }
             report.CategoryId = reportCategoryId;
 
-            _reportService.UpdateReport(report);
+            _reportService.Update(report);
             return RedirectToAction("Details", new { id });
         }
     }

@@ -33,7 +33,7 @@ namespace Services.Tests
             reviewService = new ReviewService(repository);
             applicationDbContext.Reviews.Add(new Review() { Id = Guid.Parse("0602e418-69c8-499c-94af-0466139fc504") });
             applicationDbContext.SaveChanges();
-            var review = reviewService.GetReview(Guid.Parse("0602e418-69c8-499c-94af-0466139fc504"));
+            var review = reviewService.Get(Guid.Parse("0602e418-69c8-499c-94af-0466139fc504"));
             Assert.NotNull(review);
             Assert.IsType<Review>(review);
             Assert.Equal(Guid.Parse("0602e418-69c8-499c-94af-0466139fc504"), review.Id);
@@ -51,7 +51,7 @@ namespace Services.Tests
                 applicationDbContext.Reviews.Add(new Review() { Id = Guid.NewGuid() });
             }
             applicationDbContext.SaveChanges();
-            var review = reviewService.GetReviews();
+            var review = reviewService.GetAll();
             Assert.NotNull(review);
             Assert.Equal(10, review.Count());
         }
@@ -69,7 +69,7 @@ namespace Services.Tests
                 applicationDbContext.Reviews.Add(new Review() { Id = Guid.NewGuid(), User = user });
             }
             applicationDbContext.SaveChanges();
-            var reports = reviewService.GetReviewsByUser(user);
+            var reports = reviewService.GetAll(user);
             Assert.NotNull(reports);
             Assert.Equal(10, reports.Count());
             for (int i = 0; i < reports.Count(); i++)
@@ -92,7 +92,7 @@ namespace Services.Tests
                 applicationDbContext.Reviews.Add(new Review() { Id = Guid.NewGuid(), Post = post });
             }
             applicationDbContext.SaveChanges();
-            var reports = reviewService.GetReviewsByPost(post);
+            var reports = reviewService.GetAll(post);
             Assert.NotNull(reports);
             Assert.Equal(10, reports.Count());
             for (int i = 0; i < reports.Count(); i++)
@@ -108,7 +108,7 @@ namespace Services.Tests
             applicationDbContext = new ApplicationDbContext(builder.Options, _configuration);
             repository = new Repository<Review>(applicationDbContext);
             reviewService = new ReviewService(repository);
-            reviewService.AddReview(new Review() { Id = Guid.Parse("1b7b7549-9338-43dc-a1a1-de9b9a40bf60") });
+            reviewService.Add(new Review() { Id = Guid.Parse("1b7b7549-9338-43dc-a1a1-de9b9a40bf60") });
             Assert.Equal(1, applicationDbContext.Reviews.Count());
         }
 
@@ -119,10 +119,10 @@ namespace Services.Tests
             applicationDbContext = new ApplicationDbContext(builder.Options, _configuration);
             repository = new Repository<Review>(applicationDbContext);
             reviewService = new ReviewService(repository);
-            reviewService.AddReview(new Review() { Id = Guid.Parse("5df72e56-a5af-4fcb-8151-5d7812640dc8") });
+            reviewService.Add(new Review() { Id = Guid.Parse("5df72e56-a5af-4fcb-8151-5d7812640dc8") });
             applicationDbContext.SaveChanges();
             Review reports = applicationDbContext.Reviews.SingleOrDefault(s => s.Id == Guid.Parse("5df72e56-a5af-4fcb-8151-5d7812640dc8"));
-            reviewService.UpdateReview(reports);
+            reviewService.Update(reports);
             Assert.Equal(1, applicationDbContext.Reviews.Count());
         }
 
@@ -133,9 +133,9 @@ namespace Services.Tests
             applicationDbContext = new ApplicationDbContext(builder.Options, _configuration);
             repository = new Repository<Review>(applicationDbContext);
             reviewService = new ReviewService(repository);
-            reviewService.AddReview(new Review() { Id = Guid.Parse("22e34370-ee6f-415c-a177-159e87a2b4d8") });
+            reviewService.Add(new Review() { Id = Guid.Parse("22e34370-ee6f-415c-a177-159e87a2b4d8") });
             applicationDbContext.SaveChanges();
-            reviewService.RemoveReview(Guid.Parse("22e34370-ee6f-415c-a177-159e87a2b4d8"));
+            reviewService.Remove(Guid.Parse("22e34370-ee6f-415c-a177-159e87a2b4d8"));
             Assert.Equal(0, applicationDbContext.Reports.Count());
         }
 

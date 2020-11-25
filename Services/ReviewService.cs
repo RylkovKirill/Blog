@@ -15,44 +15,44 @@ namespace Services
             _repository = repository;
         }
 
-        public Review GetReview(Guid id)
+        public Review Get(Guid id)
         {
             return _repository.Get(id);
         }
 
-        public Review GetReview(ApplicationUser user, Post post)
+        public Review Get(ApplicationUser user, Post post)
         {
             return _repository.GetAll().Where(r => r.User.Equals(user) && r.Post.Equals(post)).SingleOrDefault();
         }
 
-        public IQueryable<Review> GetReviews()
+        public IQueryable<Review> GetAll()
         {
             return _repository.GetAll();
         }
 
-        public IQueryable<Review> GetReviewsByUser(ApplicationUser user)
+        public IQueryable<Review> GetAll(ApplicationUser user)
         {
             return _repository.GetAll().Where(r => r.User.Equals(user));
         }
 
-        public IQueryable<Review> GetReviewsByPost(Post post)
+        public IQueryable<Review> GetAll(Post post)
         {
             return _repository.GetAll().Where(r => r.Post.Equals(post));
         }
 
-        public void AddReview(Review review)
+        public void Add(Review review)
         {
             _repository.Add(review);
         }
 
-        public void UpdateReview(Review review)
+        public void Update(Review review)
         {
             _repository.Update(review);
         }
 
-        public void RemoveReview(Guid id)
+        public void Remove(Guid id)
         {
-            _repository.Remove(GetReview(id));
+            _repository.Remove(Get(id));
         }
 
         public int GetReviewsCount(IQueryable<Review> reviews)
@@ -73,7 +73,7 @@ namespace Services
             }
         }
 
-        public IQueryable<Post> SortedPostsByScore(IQueryable<Post> posts)
+        public IQueryable<Post> SortedByScore(IQueryable<Post> posts)
         {
             return posts.ToList().Select(
             (p, s) => new

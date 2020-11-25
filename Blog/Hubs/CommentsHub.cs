@@ -42,7 +42,7 @@ namespace Blog.Hubs
                 Content = content
             };
 
-            _commentService.AddComment(comment);
+            _commentService.Add(comment);
             //var postedDate = _timeZoneService.GetLocalDateTime(comment.PostedDate).ToString("G");
             await Clients.Group(postId).SendAsync("Send", user.UserName, comment.Content, comment.PostedDate.ToString("G"));
         }

@@ -6,16 +6,16 @@ namespace Services
 {
     public interface IReviewService
     {
-        Review GetReview(Guid id);
-        Review GetReview(ApplicationUser user, Post post);
-        IQueryable<Review> GetReviews();
-        IQueryable<Review> GetReviewsByUser(ApplicationUser user);
-        IQueryable<Review> GetReviewsByPost(Post post);
-        void AddReview(Review review);
-        void UpdateReview(Review review);
-        void RemoveReview(Guid id);
+        Review Get(Guid id);
+        Review Get(ApplicationUser user, Post post);
+        IQueryable<Review> GetAll();
+        IQueryable<Review> GetAll(ApplicationUser user);
+        IQueryable<Review> GetAll(Post post);
+        void Add(Review review);
+        void Update(Review review);
+        void Remove(Guid id);
         int GetReviewsCount(IQueryable<Review> reviews);
         double? GetReviewsAverageScore(IQueryable<Review> reviews);
-        IQueryable<Post> SortedPostsByScore(IQueryable<Post> posts);
+        IQueryable<Post> SortedByScore(IQueryable<Post> posts);
     }
 }

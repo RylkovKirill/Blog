@@ -3,7 +3,7 @@
     ViewData["Title"] = "Добавить категорию";
 }
 <h1>@ViewData["Title"]</h1>
-<form asp-action="Create" method="post">
+<form asp-action="Create" method="post" enctype="multipart/form-data">
     <div class="form-group">
         <label asp-for="Name"></label>
         <input asp-for="Name" class="form-control" />
@@ -13,6 +13,13 @@
         <label asp-for="Description"></label>
         <input asp-for="Description" class="form-control" />
         <span asp-validation-for="Description"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="TitleImagePath"></label>
+        <input type="file" name="imageFile" id="imageFile" class="form-control-file">
+        <div>
+            <span class="card-img"><img src="~/images/categories/@Model.TitleImagePath" /></span>
+        </div>
     </div>
     <div class="form-group">
         <button type="submit" class="btn btn-primary">Сохранить</button>

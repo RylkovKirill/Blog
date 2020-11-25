@@ -41,11 +41,11 @@ namespace Blog.Controllers
 
             if (name != null)
             {
-                source = _postService.GetPostsBySearchQuery(name);
+                source = _postService.FilterByPostedDate(_postService.GetAll(name));
             }
             else
             {
-                source = _postService.GetPosts();
+                source = _postService.FilterByPostedDate(_postService.GetAll());
             }
 
             var count =await source.CountAsync();
@@ -71,11 +71,11 @@ namespace Blog.Controllers
 
             if (name != null)
             {
-                source = _postService.GetPostsBySearchQuery(name);
+                source = _postService.FilterByPostedDate(_postService.GetAll(name));
             }
             else
             {
-                source = (_postService.GetPosts());
+                source = _postService.FilterByPostedDate(_postService.GetAll());
             }
 
             var count = source.Count();
@@ -93,16 +93,16 @@ namespace Blog.Controllers
 
         public IActionResult SpecialIndex(string sortCategory)
         {
-            var source = _postService.GetPosts();
+            var source = _postService.FilterByPostedDate(_postService.GetAll());
 
             switch (sortCategory)
             {
                 case "PostedDate": 
-                    source = _postService.SortedPostsByPostedDate(source).Take(20);
+                    source = _postService.SortedByPostedDate(source).Take(20);
                     ViewData["Title"] = "Новые";
                     break;
                 case "Score": 
-                    source = _reviewService.SortedPostsByScore(source).Take(20);
+                    source = _reviewService.SortedByScore(source).Take(20);
                     ViewData["Title"] = "Популярные";
                     break;
             };
@@ -112,13 +112,13 @@ namespace Blog.Controllers
 
         public IActionResult IndexCategories()
         {
-            var categories = _categoryService.GetCategories();
+            var categories = _categoryService.GetAll();
             return View(categories.ToList());
         }
 
         public async Task<IActionResult> IndexByCategoryAsync(string id, int page = 1)
         {
-            var posts = _postService.GetPostsByCategory(_categoryService.GetCategory(Guid.Parse(id)));
+            var posts = _postService.FilterByPostedDate(_postService.GetAll(_categoryService.Get(Guid.Parse(id))));
 
             if (posts == null)
             {
