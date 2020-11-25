@@ -14,6 +14,9 @@ namespace Entities
         [Display(Name = "Описание")]
         public string Description { get; set; }
 
+        [Display(Name = "Дата создания")]
+        public DateTime CreatedDate { get; set; } = DateTime.UtcNow;
+
         [Display(Name = "Список жалоб")]
         public List<Report> Reports { get; set; }
     }

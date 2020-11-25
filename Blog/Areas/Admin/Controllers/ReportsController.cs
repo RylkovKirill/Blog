@@ -36,7 +36,7 @@ namespace Blog.Areas.Admin.Controllers
             _image = image;
             _webHostEnvironment = webHostEnvironment;
             _userManager = userManager;
-            _configuration =configuration;
+            _configuration = configuration;
         }
 
         public IActionResult Index()
@@ -71,7 +71,7 @@ namespace Blog.Areas.Admin.Controllers
             {
                 if (imageFile != null)
                 {
-                    post.TitleImagePath = _image.Save(imageFile, this._webHostEnvironment, _configuration["ImagePath:Post"]);
+                    post.TitleImagePath = _image.Save(imageFile, this._webHostEnvironment, _configuration["ImagePath:Post"], post.UserId + "-" + post.PostedDate.ToString("dd-MM-yyyy-hh-mm-ss"));
                 }
                 _postService.Update(post);
                 return RedirectToAction(nameof(Index));

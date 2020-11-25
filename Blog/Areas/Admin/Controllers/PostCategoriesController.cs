@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Blog.Service;
 using Entities;
@@ -46,8 +47,11 @@ namespace Blog.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            var postCategory = new PostCategory();
-            return View(postCategory);
+            var category = new PostCategory()
+            {
+                Id = Guid.NewGuid()
+            };
+            return View(category);
         }
 
         [HttpPost]
@@ -57,7 +61,7 @@ namespace Blog.Areas.Admin.Controllers
             {
                 if (imageFile != null)
                 {
-                    category.TitleImagePath = _imageService.Save(imageFile, this._webHostEnvironment, _configuration["ImagePath:PostCategory"]);
+                    category.TitleImagePath = _imageService.Save(imageFile, _webHostEnvironment, _configuration["ImagePath:PostCategory"], category.CreatedDate.ToString("dd-MM-yyyy-hh-mm-ss"));
                 }
                 _categoryService.Update(category);
 
@@ -87,7 +91,7 @@ namespace Blog.Areas.Admin.Controllers
             {
                 if (imageFile != null)
                 {
-                    category.TitleImagePath = _imageService.Save(imageFile, this._webHostEnvironment, _configuration["ImagePath:PostCategory"]);
+                    category.TitleImagePath = _imageService.Save(imageFile, _webHostEnvironment, _configuration["ImagePath:PostCategory"], category.CreatedDate.ToString("dd-MM-yyyy-hh-mm-ss"));
                 }
                 _categoryService.Update(category);
 

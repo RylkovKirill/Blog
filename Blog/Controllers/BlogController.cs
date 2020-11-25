@@ -84,13 +84,15 @@ namespace Blog.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Post post, IFormFile imageFile)
         {
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+
             if (ModelState.IsValid)
             {
-                post.User = await _userManager.GetUserAsync(HttpContext.User);
+                post.UserId = user.Id;
 
                 if (imageFile != null)
                 {
-                    post.TitleImagePath = _imageService.Save(imageFile, this._webHostEnvironment, _configuration["ImagePath:Post"]);
+                    post.TitleImagePath = _imageService.Save(imageFile, this._webHostEnvironment, _configuration["ImagePath:Post"], post.UserId + "-" + post.PostedDate.ToString("dd-MM-yyyy-hh-mm-ss"));
                 }
                 post.PostedDate = _timeZoneService.GetUTCDateTime(post.PostedDate);
                 _postService.Update(post);

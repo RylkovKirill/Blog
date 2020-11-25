@@ -8,8 +8,17 @@
     <div class="carousel-inner">
         @foreach (PostCategory category in Model)
         {   
+            var path = "";
+            @if (category.TitleImagePath != null)
+            {
+                path = category.TitleImagePath;
+            }
+            else
+            {
+                path = "no-title-image.jpg";
+            }
             <div class="carousel-item @(category == Model.First() ? "active" : null)" data-interval="10000">
-                <img src="~/images/categories/title-image.jpg" style="height: 500px;" class="d-block w-100" alt="...">
+                <img src="~/images/categories/@path" style="height: 500px;" class="d-block w-100" alt="...">
                 <div class="carousel-caption d-none d-md-block">
                     <h5>@category.Name</h5>
                     <p>@category.Description</p>
@@ -28,4 +37,4 @@
     </a>
 </div>
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
-<script src="~/js/changeImagesColor.js"></script>
+@*<script src="~/js/changeImagesColor.js"></script>*@

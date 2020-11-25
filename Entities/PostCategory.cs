@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Entities
@@ -11,6 +12,9 @@ namespace Entities
 
         [Display(Name = "Описание")]
         public string Description { get; set; }
+
+        [Display(Name = "Дата создания")]
+        public DateTime CreatedDate { get; set; } = DateTime.UtcNow;
 
         [Display(Name = "Титульное изображение")]
         public string TitleImagePath { get; set; }
