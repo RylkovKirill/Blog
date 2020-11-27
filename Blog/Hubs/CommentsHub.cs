@@ -3,6 +3,7 @@ using Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.SignalR;
 using Services;
+using Services.Interfaces;
 using System;
 using System.Threading.Tasks;
 
@@ -44,7 +45,7 @@ namespace Blog.Hubs
 
             _commentService.Add(comment);
             //var postedDate = _timeZoneService.GetLocalDateTime(comment.PostedDate).ToString("G");
-            await Clients.Group(postId).SendAsync("Send", user.UserName, comment.Content, comment.PostedDate.ToString("G"));
+            await Clients.Group(postId).SendAsync("Send", user.UserName, comment.Content, comment.PostedDate.Subtract(new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)).TotalMilliseconds);
         }
     }
 }

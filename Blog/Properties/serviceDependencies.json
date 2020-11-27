@@ -4,7 +4,7 @@
       "type": "signalr",
       "connectionId": "Azure__SignalR__ConnectionString"
     },
-    "mssql3": {
+    "mssql1": {
       "type": "mssql",
       "connectionId": "ApplicationDbContextConnection"
     }

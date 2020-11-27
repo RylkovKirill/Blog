@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Repositories;
 
 namespace Blog.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201126155618_AddUserProfilePhotoPath")]
+    partial class AddUserProfilePhotoPath
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -70,9 +72,6 @@ namespace Blog.Migrations
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Sex")
-                        .HasColumnType("int");
-
                     b.Property<string>("Surname")
                         .HasColumnType("nvarchar(max)");
 
@@ -100,40 +99,18 @@ namespace Blog.Migrations
                         {
                             Id = "b809eea3-e39d-4721-b56e-7a19be0b34d4",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "0a3dc4c9-5a2c-480e-b442-4c017d0ea898",
+                            ConcurrencyStamp = "5b7e1b20-4ad9-4d03-8032-fe33bf0deb8a",
                             Email = "asp.net.core.blog@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ASP.NET.CORE.BLOG@GMAIL.COM",
                             NormalizedUserName = "ASP.NET.CORE.BLOG@GMAIL.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEOfAVRkwAGv5Y0UaNGncZB48Z9A8t3IEVBrbtqWaxO618ej3PW4saZXciKpoh8O9zw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAELdmeEadZouxg6MVPDQr9VgdqPlYavEB4qS/FkHaU+rRifyWxE42lyCiUmtCzqM59w==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
-                            Sex = 0,
                             TwoFactorEnabled = false,
                             UserName = "asp.net.core.blog@gmail.com"
                         });
-                });
-
-            modelBuilder.Entity("Entities.Chat", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("FirstUserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("SecondUserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("FirstUserId");
-
-                    b.HasIndex("SecondUserId");
-
-                    b.ToTable("Chats");
                 });
 
             modelBuilder.Entity("Entities.Comment", b =>
@@ -161,33 +138,6 @@ namespace Blog.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Comments");
-                });
-
-            modelBuilder.Entity("Entities.Message", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("ChatId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Content")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("PostedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ChatId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Messages");
                 });
 
             modelBuilder.Entity("Entities.Post", b =>
@@ -255,49 +205,49 @@ namespace Blog.Migrations
                         new
                         {
                             Id = new Guid("e0124c8f-cd37-4093-b8d1-b62dfac7f2cb"),
-                            CreatedDate = new DateTime(2020, 11, 27, 13, 39, 1, 544, DateTimeKind.Utc).AddTicks(3655),
+                            CreatedDate = new DateTime(2020, 11, 26, 15, 56, 17, 505, DateTimeKind.Utc).AddTicks(9310),
                             Name = "Дом и сад"
                         },
                         new
                         {
                             Id = new Guid("cab6fa8f-6467-4f1f-9267-af8d35d3a0a7"),
-                            CreatedDate = new DateTime(2020, 11, 27, 13, 39, 1, 546, DateTimeKind.Utc).AddTicks(1942),
+                            CreatedDate = new DateTime(2020, 11, 26, 15, 56, 17, 507, DateTimeKind.Utc).AddTicks(5675),
                             Name = "Еда и напитки"
                         },
                         new
                         {
                             Id = new Guid("5177e626-a357-4722-af79-9a9efb43193e"),
-                            CreatedDate = new DateTime(2020, 11, 27, 13, 39, 1, 546, DateTimeKind.Utc).AddTicks(2164),
+                            CreatedDate = new DateTime(2020, 11, 26, 15, 56, 17, 507, DateTimeKind.Utc).AddTicks(5848),
                             Name = "Здоровье и фитнес"
                         },
                         new
                         {
                             Id = new Guid("b9afdb0b-87f1-484a-886d-a66d591b6cfa"),
-                            CreatedDate = new DateTime(2020, 11, 27, 13, 39, 1, 546, DateTimeKind.Utc).AddTicks(2200),
+                            CreatedDate = new DateTime(2020, 11, 26, 15, 56, 17, 507, DateTimeKind.Utc).AddTicks(5877),
                             Name = "Наука и техника"
                         },
                         new
                         {
                             Id = new Guid("d1ef5ca8-6510-4768-9207-b1aac15989fd"),
-                            CreatedDate = new DateTime(2020, 11, 27, 13, 39, 1, 546, DateTimeKind.Utc).AddTicks(2228),
+                            CreatedDate = new DateTime(2020, 11, 26, 15, 56, 17, 507, DateTimeKind.Utc).AddTicks(5899),
                             Name = "Новости и политика"
                         },
                         new
                         {
                             Id = new Guid("e2fe0327-4d9a-4d6f-ba7c-4f58a107fd15"),
-                            CreatedDate = new DateTime(2020, 11, 27, 13, 39, 1, 546, DateTimeKind.Utc).AddTicks(2264),
+                            CreatedDate = new DateTime(2020, 11, 26, 15, 56, 17, 507, DateTimeKind.Utc).AddTicks(5928),
                             Name = "Развлечение"
                         },
                         new
                         {
                             Id = new Guid("e6fd90a4-ffbc-498b-a3d8-646ae10784a9"),
-                            CreatedDate = new DateTime(2020, 11, 27, 13, 39, 1, 546, DateTimeKind.Utc).AddTicks(2290),
+                            CreatedDate = new DateTime(2020, 11, 26, 15, 56, 17, 507, DateTimeKind.Utc).AddTicks(5952),
                             Name = "Разное"
                         },
                         new
                         {
                             Id = new Guid("2c1bd27d-1cf7-46bd-ad38-ae8b0199eedf"),
-                            CreatedDate = new DateTime(2020, 11, 27, 13, 39, 1, 546, DateTimeKind.Utc).AddTicks(2318),
+                            CreatedDate = new DateTime(2020, 11, 26, 15, 56, 17, 507, DateTimeKind.Utc).AddTicks(5974),
                             Name = "Спорт"
                         });
                 });
@@ -367,75 +317,51 @@ namespace Blog.Migrations
                         new
                         {
                             Id = new Guid("6c8b430f-99bf-460d-903e-198728353a72"),
-                            CreatedDate = new DateTime(2020, 11, 27, 13, 39, 1, 546, DateTimeKind.Utc).AddTicks(3376),
+                            CreatedDate = new DateTime(2020, 11, 26, 15, 56, 17, 507, DateTimeKind.Utc).AddTicks(6925),
                             Name = "Контент сексуального характера"
                         },
                         new
                         {
                             Id = new Guid("0d50b5d6-2274-4f74-a478-7671242e1348"),
-                            CreatedDate = new DateTime(2020, 11, 27, 13, 39, 1, 546, DateTimeKind.Utc).AddTicks(4366),
+                            CreatedDate = new DateTime(2020, 11, 26, 15, 56, 17, 507, DateTimeKind.Utc).AddTicks(7948),
                             Name = "Жестокие или отталкивающие сцены"
                         },
                         new
                         {
                             Id = new Guid("83ba1239-4ef7-44a7-ae91-c5c9d0e6c100"),
-                            CreatedDate = new DateTime(2020, 11, 27, 13, 39, 1, 546, DateTimeKind.Utc).AddTicks(4421),
+                            CreatedDate = new DateTime(2020, 11, 26, 15, 56, 17, 507, DateTimeKind.Utc).AddTicks(7998),
                             Name = "Оскорбления или проявления нетерпимости"
                         },
                         new
                         {
                             Id = new Guid("06568472-51b4-4292-b7e0-a220b789c885"),
-                            CreatedDate = new DateTime(2020, 11, 27, 13, 39, 1, 546, DateTimeKind.Utc).AddTicks(4449),
+                            CreatedDate = new DateTime(2020, 11, 26, 15, 56, 17, 507, DateTimeKind.Utc).AddTicks(8024),
                             Name = "Вредные или опасные действия"
                         },
                         new
                         {
                             Id = new Guid("520eeb61-256a-4edd-9476-5fbe69cc3f20"),
-                            CreatedDate = new DateTime(2020, 11, 27, 13, 39, 1, 546, DateTimeKind.Utc).AddTicks(4475),
+                            CreatedDate = new DateTime(2020, 11, 26, 15, 56, 17, 507, DateTimeKind.Utc).AddTicks(8049),
                             Name = "Жестокое обращение с детьми"
                         },
                         new
                         {
                             Id = new Guid("516fff94-dfd1-4c94-bebd-9498048eac3d"),
-                            CreatedDate = new DateTime(2020, 11, 27, 13, 39, 1, 546, DateTimeKind.Utc).AddTicks(4505),
+                            CreatedDate = new DateTime(2020, 11, 26, 15, 56, 17, 507, DateTimeKind.Utc).AddTicks(8078),
                             Name = "Нарушение моих прав"
                         },
                         new
                         {
                             Id = new Guid("bacc901a-c8fd-4f8c-b4f7-30e8a5b0d502"),
-                            CreatedDate = new DateTime(2020, 11, 27, 13, 39, 1, 546, DateTimeKind.Utc).AddTicks(4532),
+                            CreatedDate = new DateTime(2020, 11, 26, 15, 56, 17, 507, DateTimeKind.Utc).AddTicks(8103),
                             Name = "Пропаганда терроризма"
                         },
                         new
                         {
                             Id = new Guid("7eca2608-2bf8-482b-a630-8e7eb2bc8724"),
-                            CreatedDate = new DateTime(2020, 11, 27, 13, 39, 1, 546, DateTimeKind.Utc).AddTicks(4581),
+                            CreatedDate = new DateTime(2020, 11, 26, 15, 56, 17, 507, DateTimeKind.Utc).AddTicks(8127),
                             Name = "Спам или ложная информация"
                         });
-                });
-
-            modelBuilder.Entity("Entities.Request", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("RequestStatus")
-                        .HasColumnType("int");
-
-                    b.Property<string>("UserReceiverId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("UserSenderId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserReceiverId");
-
-                    b.HasIndex("UserSenderId");
-
-                    b.ToTable("Requests");
                 });
 
             modelBuilder.Entity("Entities.Review", b =>
@@ -509,7 +435,7 @@ namespace Blog.Migrations
                         new
                         {
                             Id = "e16895dd-7352-4cb4-b1b6-2a97f596e2ae",
-                            ConcurrencyStamp = "09f8978d-5d91-44cf-9005-4bece652f42e",
+                            ConcurrencyStamp = "ee9b4a88-40d2-4d65-948c-ff5c45dfc9b3",
                             Name = "admin",
                             NormalizedName = "ADMIN"
                         });
@@ -626,17 +552,6 @@ namespace Blog.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("Entities.Chat", b =>
-                {
-                    b.HasOne("Entities.ApplicationUser", "FirstUser")
-                        .WithMany()
-                        .HasForeignKey("FirstUserId");
-
-                    b.HasOne("Entities.ApplicationUser", "SecondUser")
-                        .WithMany()
-                        .HasForeignKey("SecondUserId");
-                });
-
             modelBuilder.Entity("Entities.Comment", b =>
                 {
                     b.HasOne("Entities.Post", "Post")
@@ -647,19 +562,6 @@ namespace Blog.Migrations
 
                     b.HasOne("Entities.ApplicationUser", "User")
                         .WithMany("Comments")
-                        .HasForeignKey("UserId");
-                });
-
-            modelBuilder.Entity("Entities.Message", b =>
-                {
-                    b.HasOne("Entities.Chat", "Chat")
-                        .WithMany("Messages")
-                        .HasForeignKey("ChatId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Entities.ApplicationUser", "User")
-                        .WithMany("Messages")
                         .HasForeignKey("UserId");
                 });
 
@@ -708,17 +610,6 @@ namespace Blog.Migrations
                     b.HasOne("Entities.ApplicationUser", "User")
                         .WithMany("Reports")
                         .HasForeignKey("UserId");
-                });
-
-            modelBuilder.Entity("Entities.Request", b =>
-                {
-                    b.HasOne("Entities.ApplicationUser", "UserReceiver")
-                        .WithMany("IncomingRequests")
-                        .HasForeignKey("UserReceiverId");
-
-                    b.HasOne("Entities.ApplicationUser", "UserSender")
-                        .WithMany("OutgoingRequests")
-                        .HasForeignKey("UserSenderId");
                 });
 
             modelBuilder.Entity("Entities.Review", b =>

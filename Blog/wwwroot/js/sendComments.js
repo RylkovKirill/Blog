@@ -11,21 +11,23 @@ connection.start().then(AddToGroup);
 document.getElementById("send").addEventListener("click", SendComment);
 connection.on("Send", AddComment);
 
-function AddComment(userName, content, postedDate)
-{
-    var comments = document.getElementById("comments")
-    comments.insertAdjacentHTML("afterbegin", commentItems[0] + userName + commentItems[1] + content + commentItems[2] + postedDate + commentItems[3]);
+function AddComment(userName, content, postedDate) {
+    var clientTimeZoneOffset = new Date().getTimezoneOffset();
+
+    var options = { year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: true };
+    var date = new Date(postedDate - clientTimeZoneOffset).toLocaleString('en-US', options).replace(",","");
+    var comments = document.getElementById("comments");
+    comments.insertAdjacentHTML("afterbegin", commentItems[0] + userName + commentItems[1] + content + commentItems[2] + date + commentItems[3]);
 }
 
-function AddToGroup()
-{
+
+function AddToGroup() {
     document.getElementById("send").disabled = false;
     var postId = document.getElementById("postId").value;
     connection.invoke("AddToGroup", postId)
 }
 
-function SendComment(event)
-{
+function SendComment(event) {
     var postId = document.getElementById("postId").value;
     var content = document.getElementById("content").value;
     connection.invoke("SendComment", postId, content)

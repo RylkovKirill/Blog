@@ -33,9 +33,6 @@ namespace Blog.Controllers
             _logger.LogError($"{exeptionDetails.Path}");
             _logger.LogError($"{exeptionDetails.Error.Message}");
             _logger.LogError($"{exeptionDetails.Error.StackTrace}");
-            ViewBag.Path = exeptionDetails.Path;
-            ViewBag.Message = exeptionDetails.Error.Message;
-            ViewBag.StackTrace = exeptionDetails.Error.StackTrace;
             return View();
         }
     }

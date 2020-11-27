@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations.Schema;
+using Entities.Enum;
 using Microsoft.AspNetCore.Identity;
 
 namespace Entities
@@ -15,6 +14,12 @@ namespace Entities
         [Display(Name = "Фамилия")]
         public string Surname { get; set; }
 
+        [Display(Name = "Пол")]
+        public Sex Sex { get; set; }
+
+        [Display(Name = "Фотография")]
+        public string ProfilePhotoPath { get; set; }
+
         [Display(Name = "Список постов")]
         public List<Post> Posts { get; set; }
 
@@ -26,5 +31,27 @@ namespace Entities
 
         [Display(Name = "Список жалоб")]
         public List<Report> Reports { get; set; }
+
+        [Display(Name = "Список исходящих запросов")]
+        public List<Request> OutgoingRequests { get; set; }
+
+        [Display(Name = "Список входящих запросов")]
+        public List<Request> IncomingRequests { get; set; }
+
+        [Display(Name = "Список сообщений")]
+        public List<Message> Messages { get; set; }
+
+        //[NotMapped]
+        //[Display(Name = "Список друзей")]
+        //public List<ApplicationUser> Friends { get; set; }
+
+        //[Display(Name = "Список чатов")]
+        //public List<Chat> Chats { get; set; }
+
+        //[Display(Name = "Список исходящих сообщений")]
+        //public List<Message> OutgoingMessages { get; set; }
+
+        //[Display(Name = "Список входящих сообщений")]
+        //public List<Message> IncomingMessages { get; set; }
     }
 }

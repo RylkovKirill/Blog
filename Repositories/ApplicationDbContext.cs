@@ -20,11 +20,14 @@ namespace Repositories
 
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
         public DbSet<Post> Posts { get; set; }
+        public DbSet<Chat> Chats { get; set; }
         public DbSet<Comment> Comments { get; set; }
+        public DbSet<Message> Messages { get; set; }
         public DbSet<PostCategory> PostCategories { get; set; }
         public DbSet<PostTag> PostTag { get; set; }
         public DbSet<Report> Reports { get; set; }
         public DbSet<ReportCategory> ReportCategories { get; set; }
+        public DbSet<Request> Requests { get; set; }
         public DbSet<Review> Reviews { get; set; }
         public DbSet<Tag> Tags { get; set; }
 
@@ -32,11 +35,14 @@ namespace Repositories
         {
             new ApplicationUserMap(modelBuilder.Entity<ApplicationUser>());
             new PostMap(modelBuilder.Entity<Post>());
+            new ChatMap(modelBuilder.Entity<Chat>());
             new CommentMap(modelBuilder.Entity<Comment>());
+            new MessageMap(modelBuilder.Entity<Message>());
             new PostCategoryMap(modelBuilder.Entity<PostCategory>());
             new PostTagMap(modelBuilder.Entity<PostTag>());
             new ReportMap(modelBuilder.Entity<Report>());
             new ReportCategoryMap(modelBuilder.Entity<ReportCategory>());
+            new RequestMap(modelBuilder.Entity<Request>());
             new ReviewMap(modelBuilder.Entity<Review>());
             new TagMap(modelBuilder.Entity<Tag>());
 
@@ -86,11 +92,11 @@ namespace Repositories
             base.OnModelCreating(modelBuilder);
         }
 
-        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        //{
-        //    //string connection = "Data Source=tcp:blogdbserver.database.windows.net,1433;Initial Catalog=Blog_db;User Id=bsa@blogdbserver;Password=m8RwntY%ew";
-        //    //optionsBuilder.UseSqlServer(connection, b => b.MigrationsAssembly("Blog"));
-        //    optionsBuilder.UseSqlServer(_configuration.GetConnectionString("ApplicationDbContextConnection"), b => b.MigrationsAssembly("Blog"));
-        //}
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            //string connection = "Data Source=tcp:blogdbserver.database.windows.net,1433;Initial Catalog=Blog_db;User Id=bsa@blogdbserver;Password=m8RwntY%ew";
+            //optionsBuilder.UseSqlServer(connection, b => b.MigrationsAssembly("Blog"));
+            optionsBuilder.UseSqlServer(_configuration.GetConnectionString("ApplicationDbContextConnection"), b => b.MigrationsAssembly("Blog"));
+        }
     }
 }

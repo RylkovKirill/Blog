@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Configuration;
 using Services;
+using Services.Interfaces;
 
 namespace Blog.Areas.Admin.Controllers
 {

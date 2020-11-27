@@ -3,10 +3,14 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using Blog.Service;
 using Entities;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.Extensions.Configuration;
 
 namespace Blog.Areas.Identity.Pages.Account.Manage
 {
@@ -14,16 +18,29 @@ namespace Blog.Areas.Identity.Pages.Account.Manage
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly ImageService _imageService;
+        private readonly IWebHostEnvironment _webHostEnvironment;
+        private readonly IConfiguration _configuration;
 
         public IndexModel(
             UserManager<ApplicationUser> userManager,
-            SignInManager<ApplicationUser> signInManager)
+            SignInManager<ApplicationUser> signInManager,
+            ImageService imageService,
+            IWebHostEnvironment webHostEnvironment,
+            IConfiguration configuration)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _imageService = imageService;
+            _webHostEnvironment = webHostEnvironment;
+            _configuration = configuration;
         }
 
         public string Username { get; set; }
+
+        [Phone]
+        [Display(Name = "Profile Photo")]
+        public string ProfilePhotoPath { get; set; }
 
         [TempData]
         public string StatusMessage { get; set; }
@@ -44,7 +61,8 @@ namespace Blog.Areas.Identity.Pages.Account.Manage
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
 
             Username = userName;
-
+            ProfilePhotoPath = user.ProfilePhotoPath;
+            
             Input = new InputModel
             {
                 PhoneNumber = phoneNumber
@@ -63,7 +81,7 @@ namespace Blog.Areas.Identity.Pages.Account.Manage
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(IFormFile imageFile)
         {
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
@@ -75,6 +93,12 @@ namespace Blog.Areas.Identity.Pages.Account.Manage
             {
                 await LoadAsync(user);
                 return Page();
+            }
+
+            if (imageFile != null)
+            {
+                user.ProfilePhotoPath = _imageService.Save(imageFile, this._webHostEnvironment, _configuration["ImagePath:UserProfilePhoto"], user.Id);
+                await _userManager.UpdateAsync(user);
             }
 
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);

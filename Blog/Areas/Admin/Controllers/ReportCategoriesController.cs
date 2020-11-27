@@ -6,6 +6,8 @@ using Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Services ;
+using Services.Interfaces;
+
 namespace Blog.Areas.Admin.Controllers
 {
     [Area("Admin")]

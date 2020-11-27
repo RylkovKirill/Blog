@@ -1,0 +1,53 @@
+﻿@model RequestViewModel
+<head>
+    <title>@ViewData["Title"] - Заявки</title>
+</head>
+<body>
+    <div>
+        <b>Входящие</b>
+    </div>
+    <table class="table">
+        <tbody>
+            @foreach (var item in Model.IncomingRequests)
+            {
+                @*var path = item.ProfilePhotoPath;
+                @if (path == null)
+                {
+                    path = "no-profile-image-m.svg";
+                }*@
+                <tr>
+                    @*<td><img class="rounded-circle" style="height:5rem; width:5rem" src="~/images/profiles/@path" data-holder-rendered="true"></td>*@
+                    <td>@item.UserSenderId</td>
+                    <td>
+                        <a type="button" class="btn btn-primary" asp-controller="UserRelationship" asp-action="ChangeRequestStatus" asp-route-requestId="@item.Id" asp-route-confirmed="@true">Принять</a>
+                        <a type="button" class="btn btn-primary" asp-controller="UserRelationship" asp-action="ChangeRequestStatus" asp-route-requestId="@item.Id" asp-route-confirmed="@false">Отклонить</a>
+                    </td>
+                </tr>            
+             }
+        </tbody>
+    </table>
+    <div>
+        <b>Исходящие</b>
+    </div>
+    <table class="table">
+        <thead>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.OutgoingRequests)
+            {
+                @*var path = item.ProfilePhotoPath;
+                @if (path == null)
+                {
+                    path = "no-profile-image-m.svg";
+                }*@
+                <tr>
+                    @*<td><img class="rounded-circle" style="height:5rem; width:5rem" src="~/images/profiles/@path" data-holder-rendered="true"></td>*@
+                    <td>@item.UserSenderId</td>
+                    <td>
+                        <a type="button" class="btn btn-primary" asp-controller="UserRelationship"  asp-action="ChangeRequestStatus" asp-route-requestId="@item.Id" asp-route-confirmed="@false">Отменить</a>
+                    </td>
+                </tr>            
+             }
+        </tbody>
+    </table>
+</body>

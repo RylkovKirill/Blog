@@ -15,6 +15,7 @@ using Repositories;
 using Services;
 using Blog.Service;
 using Blog.Hubs;
+using Services.Interfaces;
 
 namespace Blog
 {
@@ -43,6 +44,7 @@ namespace Blog
             services.AddTransient<IReviewService, ReviewService>();
             services.AddTransient<IReportCategoryService, ReportCategoryService>();
             services.AddTransient<IReportService, ReportService>();
+            services.AddTransient<IRequestService, RequestService>();
             services.AddControllers().AddNewtonsoftJson(options =>
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
             services.AddControllersWithViews();

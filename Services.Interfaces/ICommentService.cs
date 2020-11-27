@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Services
+namespace Services.Interfaces
 {
     public interface ICommentService
     {

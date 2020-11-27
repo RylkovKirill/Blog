@@ -4,7 +4,7 @@
   "parameters": {
     "resourceGroupName": {
       "type": "string",
-      "defaultValue": "BlogResourceGroup",
+      "defaultValue": "Blog20201126120821ResourceGroup",
       "metadata": {
         "_parameterType": "resourceGroup",
         "description": "Имя группы ресурсов для ресурса. Рекомендуется поместить ресурсы в одну группу ресурсов для более удобного отслеживания."
@@ -36,7 +36,7 @@
     },
     {
       "type": "Microsoft.Resources/deployments",
-      "name": "[concat(parameters('resourceGroupName'), 'Deployment', uniqueString(concat('Blog_db', subscription().subscriptionId)))]",
+      "name": "[concat(parameters('resourceGroupName'), 'Deployment', uniqueString(concat('Blogservice', subscription().subscriptionId)))]",
       "resourceGroup": "[parameters('resourceGroupName')]",
       "apiVersion": "2019-10-01",
       "dependsOn": [
@@ -49,26 +49,16 @@
           "contentVersion": "1.0.0.0",
           "resources": [
             {
-              "kind": "v12.0",
-              "location": "[parameters('resourceLocation')]",
-              "name": "blogdbserver",
-              "type": "Microsoft.Sql/servers",
-              "apiVersion": "2017-10-01-preview"
-            },
-            {
               "sku": {
-                "name": "Standard",
-                "tier": "Standard",
-                "capacity": 10
+                "name": "Free_F1",
+                "tier": "Free",
+                "size": "F1",
+                "capacity": 1
               },
-              "kind": "v12.0,user",
               "location": "[parameters('resourceLocation')]",
-              "name": "blogdbserver/Blog_db",
-              "type": "Microsoft.Sql/servers/databases",
-              "apiVersion": "2017-10-01-preview",
-              "dependsOn": [
-                "blogdbserver"
-              ]
+              "name": "Blogservice",
+              "type": "Microsoft.SignalRService/SignalR",
+              "apiVersion": "2018-10-01"
             }
           ]
         }
@@ -76,6 +66,6 @@
     }
   ],
   "metadata": {
-    "_dependencyType": "mssql.azure"
+    "_dependencyType": "signalr.azure"
   }
 }

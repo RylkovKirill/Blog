@@ -10,6 +10,7 @@ using Services;
 using Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
+using Services.Interfaces;
 
 namespace Blog.Controllers
 {

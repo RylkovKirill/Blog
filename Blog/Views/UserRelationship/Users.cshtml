@@ -1,0 +1,46 @@
+﻿@model IQueryable<ApplicationUser>
+<head>
+    <title>@ViewData["Title"] - Пользователи</title>
+</head>
+<body>
+    <table class="table">
+        <thead>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                var path = item.ProfilePhotoPath;
+                @if (path == null)
+                {
+                    path = "no-profile-image-m.svg";
+                }
+                <tr>
+                    <td><img class="rounded-circle" style="height:5rem; width:5rem" src="~/images/profiles/@path" data-holder-rendered="true"></td>
+                    <td>@item.Email</td>
+                    <td>
+                        <a type="button" class="btn btn-primary" asp-controller="UserRelationship" asp-action="AddToFriends" asp-route-userId="@item.Id">Добавить в друзья</a>
+                        <a type="button" class="btn btn-primary" asp-controller="UserRelationship" asp-action="SendMessage" asp-route-userId="@item.Id">Написать сообщение</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</body>
+@*<style>
+    .btn {
+        background-color: transparent; /* Blue background */
+        border: none; /* Remove borders */
+        color: royalblue; /* White text */
+        padding: 12px 16px; /* Some padding */
+        font-size: 16px; /* Set a font size */
+        cursor: pointer; /* Mouse pointer on hover */
+    }
+
+        /* Darker background on mouse-over */
+        .btn:hover {
+            background-color: transparent;
+            color: blue;
+        }
+</style>*@
+
+

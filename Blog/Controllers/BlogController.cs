@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Authorization;
 using Services;
 using Microsoft.Extensions.Configuration;
 using System.Linq;
+using Services.Interfaces;
 
 namespace Blog.Controllers
 {
