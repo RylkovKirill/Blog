@@ -1,2 +1,2 @@
 # Blog
-https://blog20201029202431.azurewebsites.net/
+https://blog20201126120821.azurewebsites.net/
