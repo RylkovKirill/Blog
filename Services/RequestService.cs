@@ -23,6 +23,11 @@ namespace Services
             return _repository.Get(id);
         }
 
+        public Request Get(ApplicationUser user1, ApplicationUser user2)
+        {
+            return _repository.GetAll().Where((r => (r.UserSender == user1 && r.UserReceiver == user2) || (r.UserSender == user2 && r.UserReceiver == user1))).SingleOrDefault();
+        }
+
         public IQueryable<Request> GetAll()
         {
             return _repository.GetAll();
@@ -60,12 +65,17 @@ namespace Services
             _repository.Remove(Get(id));
         }
 
-        public IQueryable<ApplicationUser>  GetUserFriends(ApplicationUser user)
+        public IQueryable<ApplicationUser> GetUserFriends(ApplicationUser user)
         {
             return _repository.GetAll().Where(r => r.UserSender.Equals(user) && r.RequestStatus == RequestStatus.CONFIRMED)
-                .Select(r=>r.UserReceiver)
+                .Select(r => r.UserReceiver)
                 .Union(_repository.GetAll().Where(r => r.UserReceiver.Equals(user) && r.RequestStatus == RequestStatus.CONFIRMED)
-                .Select(r => r.UserSender));   
+                .Select(r => r.UserSender));
+        }
+
+        public bool UserInFriendsList(IQueryable<ApplicationUser> friends, ApplicationUser user)
+        {
+            return friends.Contains(user);
         }
     }
 }

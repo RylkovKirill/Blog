@@ -15,23 +15,43 @@ namespace Blog.Controllers
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IRequestService _requestService;
+        private readonly IChatService _chatService;
+        private readonly IMessageService _messageService;
 
-        public UserRelationshipController(UserManager<ApplicationUser> userManager, IRequestService requestService)
+        public UserRelationshipController(UserManager<ApplicationUser> userManager, IRequestService requestService, IChatService chatService, IMessageService messageService)
         {
             _userManager = userManager;
             _requestService = requestService;
+            _chatService = chatService;
+            _messageService = messageService;
         }
 
         public async Task<IActionResult> FriendsAsync()
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
-            var friends = _requestService.GetUserFriends(user);
-            return View(friends);
+            var friends = _requestService.GetUserFriends(user).ToList();
+            List<Request> requests = new List<Request>();
+            foreach (var friend in friends)
+            {
+                requests.Add(_requestService.Get(user, friend));
+            }
+            var friendsViewModel = new FriendsViewModel()
+            {
+                Friends = friends,
+                Requests = requests
+
+            };
+            return View(friendsViewModel);
         }
 
-        public IActionResult Users()
+        public async Task<IActionResult> UsersAsync()
         {
-            var users = _userManager.Users;
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            var users = new UsersViewModel()
+            {
+                Users = _userManager.Users.Where(u => u != user).ToList(),
+                Friends = _requestService.GetUserFriends(user).ToList()
+            };
             return View(users);
         }
 
@@ -72,10 +92,22 @@ namespace Blog.Controllers
             return RedirectToAction("Requests");
         }
 
-        public IActionResult SendMessage()
+        public async Task<IActionResult> ChatAsync(string userId)
         {
-            var users = _userManager.Users;
-            return View(users);
+            var user1 = await _userManager.GetUserAsync(HttpContext.User);
+            var user2 = _userManager.FindByIdAsync(userId).Result;
+            var chat = _chatService.Get(user1, user2);
+            if(chat == default)
+            {
+                chat = new Chat()
+                {
+                    FirstUser = user1,
+                    SecondUser = user2,
+                };
+                _chatService.Update(chat);
+            }
+            chat.Messages = _messageService.GetAll(chat).ToList();
+            return View(chat);
         }
     }
 }

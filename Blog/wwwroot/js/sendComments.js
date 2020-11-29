@@ -5,7 +5,7 @@ const commentItems = ['<div class="card border-dark mb-3 w-50"><div class="card-
     '</p><p class="card-text text-right"><small class="text-muted">',
     '</small></p></div></div>'];
 
-var connection = new signalR.HubConnectionBuilder().withUrl("/comment").build();
+var connection = new signalR.HubConnectionBuilder().withUrl("/comments").build();
 document.getElementById("send").disabled = true;
 connection.start().then(AddToGroup);
 document.getElementById("send").addEventListener("click", SendComment);

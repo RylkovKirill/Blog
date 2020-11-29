@@ -1,4 +1,5 @@
-﻿@model IQueryable<ApplicationUser>
+﻿@model UsersViewModel
+@inject Services.Interfaces.IRequestService _requestService
 <head>
     <title>@ViewData["Title"] - Пользователи</title>
 </head>
@@ -7,7 +8,7 @@
         <thead>
         </thead>
         <tbody>
-            @foreach (var item in Model)
+            @foreach (var item in Model.Users)
             {
                 var path = item.ProfilePhotoPath;
                 @if (path == null)
@@ -17,10 +18,18 @@
                 <tr>
                     <td><img class="rounded-circle" style="height:5rem; width:5rem" src="~/images/profiles/@path" data-holder-rendered="true"></td>
                     <td>@item.Email</td>
+                    @if (_requestService.UserInFriendsList(Model.Friends.AsQueryable(), item))
+                    {
+                        <td>
+                            <a type="button" class="btn btn-primary" asp-controller="UserRelationship" asp-action="Chat" asp-route-userId="@item.Id">Написать сообщение</a>
+                        </td>
+                    }
+                    else
+                    {
                     <td>
                         <a type="button" class="btn btn-primary" asp-controller="UserRelationship" asp-action="AddToFriends" asp-route-userId="@item.Id">Добавить в друзья</a>
-                        <a type="button" class="btn btn-primary" asp-controller="UserRelationship" asp-action="SendMessage" asp-route-userId="@item.Id">Написать сообщение</a>
                     </td>
+                    }
                 </tr>
             }
         </tbody>

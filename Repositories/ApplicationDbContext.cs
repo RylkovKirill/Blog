@@ -78,6 +78,8 @@ namespace Repositories
                 NormalizedUserName = _configuration["AdminSettings:UserName"].ToUpper(),
                 Email = _configuration["AdminSettings:Email"],
                 NormalizedEmail = _configuration["AdminSettings:Email"].ToUpper(),
+                Longitude = 53.90033,
+                Latitude = 27.55998,
                 PasswordHash = new PasswordHasher<ApplicationUser>().HashPassword(null, _configuration["AdminSettings:Password"]),
                 EmailConfirmed = bool.Parse(_configuration["AdminSettings:EmailConfirmed"]),
                 SecurityStamp = string.Empty,

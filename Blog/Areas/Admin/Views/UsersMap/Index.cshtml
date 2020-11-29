@@ -1,0 +1,66 @@
+﻿@model List<ApplicationUser>
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>Добавление метки на карту</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <!--
+            Укажите свой API-ключ. Тестовый ключ НЕ БУДЕТ работать на других сайтах.
+            Получить ключ можно в Кабинете разработчика: https://developer.tech.yandex.ru/keys/
+        -->
+        <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU&amp;apikey=1cf92fb4-4dd6-4659-9b7a-dea7e25f5a61" type="text/javascript"></script>
+        <script>
+            var myMap
+            ymaps.ready(init);
+
+            function init() {
+                myMap = new ymaps.Map("map", {
+                    center: [53.90033, 27.55998],
+                    zoom: 4
+                }, {
+                    searchControlProvider: 'yandex#search'
+                });
+                loadStatForMap()
+            }
+
+            function loadStatForMap() {
+                //Loading markers from controller
+                $.ajax({
+                    type: 'GET',
+                    url: '@Url.Action("GetMarks", "UsersMap")',
+                    accept: 'application/json',
+                    success: function (markers) {
+                        // and setting markers to map
+                        if (myMap) {
+                            for (let marker of markers) {
+                                myMap.geoObjects.add(
+                                    new ymaps.Placemark([marker.x, marker.y], {
+                                        balloonContent: 'цвет <strong>голубой</strong>',
+                                        iconCaption: 'Очень длиннный, но невероятно интересный текст'
+                                    }, {
+                                            preset: 'islands#blueCircleDotIconWithCaption',
+                                            iconCaptionMaxWidth: '50',
+                                    })
+                                );
+                            }
+                        } else {
+                            throw "Map is not defined";
+                        }
+                    }
+                });
+            }
+
+        </script>
+        <style>
+            html, body, #map {
+                width: 100%;
+                height: 600px;
+                padding: 0;
+                margin: 0;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="map"></div>
+    </body>
+</html>

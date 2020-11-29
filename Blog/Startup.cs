@@ -45,6 +45,8 @@ namespace Blog
             services.AddTransient<IReportCategoryService, ReportCategoryService>();
             services.AddTransient<IReportService, ReportService>();
             services.AddTransient<IRequestService, RequestService>();
+            services.AddTransient<IMessageService, MessageService>();
+            services.AddTransient<IChatService, ChatService>();
             services.AddControllers().AddNewtonsoftJson(options =>
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
             services.AddControllersWithViews();
@@ -98,7 +100,8 @@ namespace Blog
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
-                endpoints.MapHub<CommentsHub>("/comment");
+                endpoints.MapHub<CommentsHub>("/comments");
+                endpoints.MapHub<MessagesHub>("/messages");
             });
         }
     }

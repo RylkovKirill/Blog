@@ -52,6 +52,12 @@ namespace Blog.Areas.Identity.Pages.Account
             [Required]
             [EmailAddress]
             public string Email { get; set; }
+
+            [Display(Name = "Долгота")]
+            public string Longitude { get; set; }
+
+            [Display(Name = "Широта")]
+            public string Latitude { get; set; }
         }
 
         public IActionResult OnGetAsync()
@@ -122,7 +128,7 @@ namespace Blog.Areas.Identity.Pages.Account
 
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = Input.Email, Email = Input.Email };
+                var user = new ApplicationUser { UserName = Input.Email, Email = Input.Email, Longitude = Convert.ToDouble(Input.Longitude.Replace(".", ",")), Latitude = Convert.ToDouble(Input.Latitude.Replace(".", ",")) };
 
                 var result = await _userManager.CreateAsync(user);
                 if (result.Succeeded)

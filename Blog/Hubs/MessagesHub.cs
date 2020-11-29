@@ -1,22 +1,22 @@
-﻿using Blog.Service;
-using Entities;
+﻿using Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.SignalR;
-using Services;
 using Services.Interfaces;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Blog.Hubs
 {
-    public class CommentsHub : Hub
+    public class MessagesHub : Hub
     {
-        private readonly ICommentService _commentService;
+        private readonly IMessageService _messageService;
         private readonly UserManager<ApplicationUser> _userManager;
 
-        public CommentsHub(ICommentService commentService, UserManager<ApplicationUser> userManager)
+        public MessagesHub(IMessageService messageService, UserManager<ApplicationUser> userManager)
         {
-            _commentService = commentService;
+            _messageService = messageService;
             _userManager = userManager;
         }
 
@@ -34,15 +34,15 @@ namespace Blog.Hubs
         {
             var user = await _userManager.GetUserAsync(Context.User);
 
-            Comment comment = new Comment
+            Message message = new Message
             {
-                PostId = Guid.Parse(postId),
+                ChatId = Guid.Parse(postId),
                 User = user,
                 Content = content
             };
 
-            _commentService.Add(comment);
-            await Clients.Group(postId).SendAsync("Send", user.UserName, comment.Content, comment.PostedDate.Subtract(new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)).TotalMilliseconds);
+            _messageService.Add(message);
+            await Clients.Group(postId).SendAsync("Send", user.UserName, message.Content, message.PostedDate.Subtract(new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)).TotalMilliseconds);
         }
     }
 }

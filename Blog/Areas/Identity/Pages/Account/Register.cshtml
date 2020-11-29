@@ -27,6 +27,14 @@
                 <input asp-for="Input.ConfirmPassword" class="form-control" />
                 <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
             </div>
+            <div class="form-group">
+                <input id="longitude" asp-for="Input.Longitude" type="hidden" class="form-control" value="0"/>
+                <span asp-validation-for="Input.Longitude" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input id="latitude" asp-for="Input.Latitude" type="hidden" class="form-control" value="0"/>
+                <span asp-validation-for="Input.Latitude" class="text-danger"></span>
+            </div>
             <button type="submit" class="btn btn-primary">Register</button>
         </form>
     </div>
@@ -61,6 +69,18 @@
         </section>
     </div>
 </div>
+<script>
+    navigator.geolocation.getCurrentPosition(showPosition);
+    function showPosition(position) {
+        document.getElementById("longitude").value = position.coords.longitude;
+        document.getElementById("latitude").value = position.coords.latitude
+
+    }
+    //$('#longitude').val("GeeksForGeeks"); 
+    //$('#latitude').val("GeeksForGeeks");
+    // position.coords.latitude + 
+    //"<br>Longitude: " + position.coords.longitude;
+</script>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />

@@ -20,6 +20,12 @@ namespace Entities
         [Display(Name = "Фотография")]
         public string ProfilePhotoPath { get; set; }
 
+        [Display(Name = "Долгота")]
+        public double Longitude { get; set; }
+
+        [Display(Name = "Широта")]
+        public double Latitude { get; set; }
+
         [Display(Name = "Список постов")]
         public List<Post> Posts { get; set; }
 

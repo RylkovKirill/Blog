@@ -1,4 +1,5 @@
-﻿@model IQueryable<ApplicationUser>
+﻿@model FriendsViewModel
+
 <head>
     <title>@ViewData["Title"] - Пользователи</title>
 </head>
@@ -7,7 +8,7 @@
         <thead>
         </thead>
         <tbody>
-            @foreach (var item in Model)
+            @foreach (var item in Model.Friends)
             {
                 var path = item.ProfilePhotoPath;
 @if (path == null)
@@ -18,8 +19,8 @@
                     <td><img class="rounded-circle" style="height:5rem; width:5rem" src="~/images/profiles/@path" data-holder-rendered="true"></td>
                     <td>@item.Email</td>
                     <td>
-                        <a type="button" class="btn btn-primary" asp-controller="UserRelationship" asp-action="AddToFriends" asp-route-userId="@item.Id">Написать сообщение</a>
-                        <a type="button" class="btn btn-primary" asp-controller="UserRelationship" asp-action="ChangeRequestStatus" asp-route-requestId="@item.Id" asp-route-confirmed="@false">Удалить из друзей</a>
+                        <a type="button" class="btn btn-primary" asp-controller="UserRelationship" asp-action="Chat" asp-route-userId="@item.Id">Написать сообщение</a>
+                        <a type="button" class="btn btn-primary" asp-controller="UserRelationship" asp-action="ChangeRequestStatus" asp-route-requestId="@Model.Requests.ElementAt(Model.Friends.IndexOf(item)).Id" asp-route-confirmed="@false">Удалить из друзей</a>
                     </td>
                 </tr>            
                 }

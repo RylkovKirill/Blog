@@ -61,6 +61,12 @@ namespace Blog.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
+
+            [Display(Name = "Долгота")]
+            public string Longitude { get; set; }
+
+            [Display(Name = "Широта")]
+            public string Latitude { get; set; }
         }
 
         public async Task OnGetAsync(string returnUrl = null)
@@ -75,7 +81,7 @@ namespace Blog.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = Input.Email, Email = Input.Email };
+                var user = new ApplicationUser { UserName = Input.Email, Email = Input.Email, Longitude = Convert.ToDouble(Input.Longitude.Replace(".",",")), Latitude = Convert.ToDouble(Input.Latitude.Replace(".", ",")) };
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {
