@@ -69,6 +69,7 @@ namespace Blog
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -102,6 +103,7 @@ namespace Blog
                 endpoints.MapRazorPages();
                 endpoints.MapHub<CommentsHub>("/comments");
                 endpoints.MapHub<MessagesHub>("/messages");
+                endpoints.MapHub<UsersHub>("/users");
             });
         }
     }

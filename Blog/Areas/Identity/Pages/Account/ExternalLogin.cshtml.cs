@@ -128,7 +128,7 @@ namespace Blog.Areas.Identity.Pages.Account
 
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = Input.Email, Email = Input.Email, Longitude = Convert.ToDouble(Input.Longitude.Replace(".", ",")), Latitude = Convert.ToDouble(Input.Latitude.Replace(".", ",")) };
+                var user = new ApplicationUser { UserName = Input.Email, Email = Input.Email, Longitude = Convert.ToDouble(Input.Longitude), Latitude = Convert.ToDouble(Input.Latitude) };
 
                 var result = await _userManager.CreateAsync(user);
                 if (result.Succeeded)

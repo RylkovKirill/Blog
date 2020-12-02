@@ -22,9 +22,14 @@
             <label class="mr-sm-2" asp-for="Category"></label>
             <select class="custom-select mr-sm-2" asp-for="CategoryId" asp-items="ViewBag.Categories"></select>
         </div>
+        @*<div class="form-group">
+            <label asp-for="PostedDate" class="control-label"></label>
+            <input asp-for="PostedDate" class="date-input form-control" />
+            <span asp-validation-for="PostedDate" class="text-danger"></span>
+        </div>*@
         <div class="form-group">
             <label asp-for="PostedDate" class="control-label"></label>
-            <input asp-for="PostedDate" class="form-control" />
+            <input asp-for="PostedDate" class="date-input form-control" />
             <span asp-validation-for="PostedDate" class="text-danger"></span>
         </div>
         <div>
@@ -39,8 +44,11 @@
                 <span class="card-img"><img src="~/images/posts/@Model.TitleImagePath" /></span>
             </div>
         </div>
+        @*<div class="form-group">
+            <button id="submitButton" type="submit" class="btn btn-primary">Сохранить</button>
+        </div>*@
         <div class="form-group">
-            <button type="submit" class="btn btn-primary">Сохранить</button>
+            <button id="submitButton" type="submit" class="btn btn-primary">Сохранить</button>
         </div>
     </form>
     <script src="~/js/ckeditor5/ckeditor.js"></script>

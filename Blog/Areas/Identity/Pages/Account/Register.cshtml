@@ -69,18 +69,7 @@
         </section>
     </div>
 </div>
-<script>
-    navigator.geolocation.getCurrentPosition(showPosition);
-    function showPosition(position) {
-        document.getElementById("longitude").value = position.coords.longitude;
-        document.getElementById("latitude").value = position.coords.latitude
-
-    }
-    //$('#longitude').val("GeeksForGeeks"); 
-    //$('#latitude').val("GeeksForGeeks");
-    // position.coords.latitude + 
-    //"<br>Longitude: " + position.coords.longitude;
-</script>
+<script src="~/js/getUserCoordinates.js"></script>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />

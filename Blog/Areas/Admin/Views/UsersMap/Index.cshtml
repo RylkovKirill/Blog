@@ -35,11 +35,11 @@
                             for (let marker of markers) {
                                 myMap.geoObjects.add(
                                     new ymaps.Placemark([marker.x, marker.y], {
-                                        balloonContent: 'цвет <strong>голубой</strong>',
-                                        iconCaption: 'Очень длиннный, но невероятно интересный текст'
+                                        balloonContent: marker.balloonContent,
+                                        iconCaption: ''
                                     }, {
-                                            preset: 'islands#blueCircleDotIconWithCaption',
-                                            iconCaptionMaxWidth: '50',
+                                            preset: 'islands#greenDotIcon',
+                                            iconCaptionMaxWidth: '100',
                                     })
                                 );
                             }

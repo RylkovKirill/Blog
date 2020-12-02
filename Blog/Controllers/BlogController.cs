@@ -95,7 +95,7 @@ namespace Blog.Controllers
                 {
                     post.TitleImagePath = _imageService.Save(imageFile, this._webHostEnvironment, _configuration["ImagePath:Post"], post.UserId + "-" + post.PostedDate.ToString("dd-MM-yyyy-hh-mm-ss"));
                 }
-                post.PostedDate = _timeZoneService.GetUTCDateTime(post.PostedDate);
+                //post.PostedDate = _timeZoneService.GetUTCDateTime(post.PostedDate);
                 _postService.Update(post);
                 return RedirectToAction(nameof(Index));
             }

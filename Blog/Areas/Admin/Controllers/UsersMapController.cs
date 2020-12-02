@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Blog.Models;
 using Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -27,39 +28,26 @@ namespace Blog.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public List<MapMarker> GetMarks()
+        public List<PlacemarkViewModel> GetMarks()
         {
-            var places = _userManager.Users.ToList();
+            var users = _userManager.Users.Where(p => (p.Latitude != 0 && p.Longitude != 0)).ToList();
 
-            List<MapMarker> markers = new List<MapMarker>();
+            List<PlacemarkViewModel> markers = new List<PlacemarkViewModel>();
 
-
-            foreach (var place in places)
+            foreach (var user in users)
             {
                 markers.Add(
-                    new MapMarker
+                    new PlacemarkViewModel
                     {
-                        x = place.Latitude,
-                        y = place.Longitude,
+                        x = user.Latitude,
+                        y = user.Longitude,
                         balloonCloseButton = true,
-                        balloonContent =
-                            $"<div> В этом месте проголоcовало: </div>",
+                        balloonContent = $"<div>" + user.Email + "</div>",
                         hideIconOnBalloonOpen = false,
                         preset = "islands#yellowStretchyIcon"
                     });
             }
             return markers;
         }
-    }
-
-    public  class MapMarker : ApplicationUser
-    {
-        public double x { get; set; }
-        public double y { get; set; }
-        public bool balloonCloseButton { get; set; }
-        public string balloonContent { get; set; }
-        public bool hideIconOnBalloonOpen { get; set; }
-        public string iconContent { get; set; }
-        public string preset { get; set; }
     }
 }

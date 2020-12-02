@@ -4,25 +4,30 @@
     <title>@ViewData["Title"] - Пользователи</title>
 </head>
 <body>
-    <table class="table">
+    <div>
+        Пользователей онлайн : <span id="onlineUsersCount"></span>
+    </div>
+    <table class="table" id="userList">
         <thead>
         </thead>
         <tbody>
             @foreach (var item in Model.Friends)
             {
                 var path = item.ProfilePhotoPath;
-@if (path == null)
+            @if (path == null)
 {
     path = "no-profile-image-m.svg";
 }
-                <tr>
-                    <td><img class="rounded-circle" style="height:5rem; width:5rem" src="~/images/profiles/@path" data-holder-rendered="true"></td>
-                    <td>@item.Email</td>
-                    <td>
-                        <a type="button" class="btn btn-primary" asp-controller="UserRelationship" asp-action="Chat" asp-route-userId="@item.Id">Написать сообщение</a>
-                        <a type="button" class="btn btn-primary" asp-controller="UserRelationship" asp-action="ChangeRequestStatus" asp-route-requestId="@Model.Requests.ElementAt(Model.Friends.IndexOf(item)).Id" asp-route-confirmed="@false">Удалить из друзей</a>
-                    </td>
-                </tr>            
+            <tr>
+                <td><img class="rounded-circle" style="height:5rem; width:5rem" src="~/images/profiles/@path" data-holder-rendered="true"></td>
+                <td>Ofline</td>
+                <td>@item.Email</td>
+                <td>
+                    <a type="button" class="btn btn-primary" asp-controller="UserRelationship" asp-action="Chat" asp-route-userId="@item.Id">Написать сообщение</a>
+                    <a type="button" class="btn btn-primary" asp-controller="UserRelationship" asp-action="ChangeRequestStatus" asp-route-requestId="@Model.Requests.ElementAt(Model.Friends.IndexOf(item)).Id" asp-route-confirmed="@false">Удалить из друзей</a>
+                </td>
+            </tr>
+
                 }
         </tbody>
     </table>

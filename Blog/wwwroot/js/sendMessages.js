@@ -6,11 +6,11 @@ const commentItems = ['<div  class="box box_left"><p class="card-text">',
     '</h5><p class="card-text text-right"><small class="text">',
     '</small></p></div></div></div>'];
 
-var connection = new signalR.HubConnectionBuilder().withUrl("/messages").build();
+var messageConnection = new signalR.HubConnectionBuilder().withUrl("/messages").build();
 document.getElementById("send").disabled = true;
-connection.start().then(AddToGroup);
+messageConnection.start().then(AddToGroup);
 document.getElementById("send").addEventListener("click", SendComment);
-connection.on("Send", AddComment);
+messageConnection.on("Send", AddComment);
 const a = currentUserName;
 
 function AddComment(userName, content, postedDate) {
@@ -34,13 +34,13 @@ function AddComment(userName, content, postedDate) {
 function AddToGroup() {
     document.getElementById("send").disabled = false;
     var postId = document.getElementById("postId").value;
-    connection.invoke("AddToGroup", postId)
+    messageConnection.invoke("AddToGroup", postId)
 }
 
 function SendComment(event) {
     var postId = document.getElementById("postId").value;
     var content = document.getElementById("content").value;
-    connection.invoke("SendComment", postId, content);
+    messageConnection.invoke("SendComment", postId, content);
     //$("#comments").load("dialogsList/", function () {
     //    $(".box:last").addClass('box_right');
     //})

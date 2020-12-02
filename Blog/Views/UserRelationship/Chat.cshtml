@@ -28,9 +28,18 @@
         <input class="btn btn-primary" type="submit" value="Отправить" id="send" />
     </div>
 </form>
-<script>
-    const currentUserName = "@User.Identity.Name";
-</script>
+<style>
+    #comments {
+        text-align: left;
+        margin: 0 auto;
+        margin-bottom: 25px;
+        padding: 10px;
+        background: #fff;
+        height: 40rem;
+        width: 100%;
+        overflow: auto;
+    }
+</style>
 <link rel="stylesheet" href="~/css/message.css"/>
 <style>
 
@@ -56,5 +65,8 @@
         margin-top: 0px;
     }
 </style>
+<script>
+    const currentUserName = '@User.Identity.Name';
+</script>
 <script src="~/js/signalr/dist/browser/signalr.min.js"></script>
 <script src="~/js/sendMessages.js"></script>

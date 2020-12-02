@@ -1,6 +1,7 @@
 ﻿"use strict";
 
-var images = $('.d-block').each(function () {
+var images = $('.d-block').each(function ()
+{
     var n = getRandomNumber(0, 360);
     $(this).css("-webkit-filter", "hue-rotate(" + n + "deg)");
     $(this).css("filter", "hue-rotate(" + n + "deg)");

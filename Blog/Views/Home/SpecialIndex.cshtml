@@ -19,7 +19,8 @@
                 <img src="~/images/posts/@path" class="d-block w-100" alt="...">
                 <div class="carousel-caption d-none d-md-block">
                     <h5>@post.Title</h5>
-                    <p>@timeZoneService.GetLocalDateTime(post.PostedDate)</p>
+                    @*<p>@timeZoneService.GetLocalDateTime(post.PostedDate)</p>*@
+                    <p class="card-text"><small class="date-output text-muted">@post.PostedDate</small></p>
                     <a asp-area="" asp-controller="Blog" asp-action="Details" asp-route-id="@post.Id" class="btn btn-primary">Читать полностью</a>
                 </div>
             </div>

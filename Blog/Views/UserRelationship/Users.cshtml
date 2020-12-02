@@ -4,7 +4,10 @@
     <title>@ViewData["Title"] - Пользователи</title>
 </head>
 <body>
-    <table class="table">
+    <div>
+        Пользователей онлайн : <span id="onlineUsersCount"></span>
+    </div>
+    <table class="table" id="userList">
         <thead>
         </thead>
         <tbody>
@@ -15,22 +18,23 @@
                 {
                     path = "no-profile-image-m.svg";
                 }
-                <tr>
-                    <td><img class="rounded-circle" style="height:5rem; width:5rem" src="~/images/profiles/@path" data-holder-rendered="true"></td>
-                    <td>@item.Email</td>
-                    @if (_requestService.UserInFriendsList(Model.Friends.AsQueryable(), item))
-                    {
-                        <td>
-                            <a type="button" class="btn btn-primary" asp-controller="UserRelationship" asp-action="Chat" asp-route-userId="@item.Id">Написать сообщение</a>
-                        </td>
-                    }
-                    else
-                    {
+            <tr>
+                <td><img class="rounded-circle" style="height:5rem; width:5rem" src="~/images/profiles/@path" data-holder-rendered="true"></td>
+                <td>Ofline</td>
+                <td>@item.Email</td>
+                @if (_requestService.UserInFriendsList(Model.Friends.AsQueryable(), item))
+                {
+                    <td>
+                        <a type="button" class="btn btn-primary" asp-controller="UserRelationship" asp-action="Chat" asp-route-userId="@item.Id">Написать сообщение</a>
+                    </td>
+                }
+                else
+                {
                     <td>
                         <a type="button" class="btn btn-primary" asp-controller="UserRelationship" asp-action="AddToFriends" asp-route-userId="@item.Id">Добавить в друзья</a>
                     </td>
-                    }
-                </tr>
+                }
+            </tr>
             }
         </tbody>
     </table>

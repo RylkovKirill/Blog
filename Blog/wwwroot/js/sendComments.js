@@ -5,11 +5,11 @@ const commentItems = ['<div class="card border-dark mb-3 w-50"><div class="card-
     '</p><p class="card-text text-right"><small class="text-muted">',
     '</small></p></div></div>'];
 
-var connection = new signalR.HubConnectionBuilder().withUrl("/comments").build();
+var commentConnection = new signalR.HubConnectionBuilder().withUrl("/comments").build();
 document.getElementById("send").disabled = true;
-connection.start().then(AddToGroup);
+commentConnection.start().then(AddToGroup);
 document.getElementById("send").addEventListener("click", SendComment);
-connection.on("Send", AddComment);
+commentConnection.on("Send", AddComment);
 
 function AddComment(userName, content, postedDate) {
     var clientTimeZoneOffset = new Date().getTimezoneOffset();
@@ -24,12 +24,12 @@ function AddComment(userName, content, postedDate) {
 function AddToGroup() {
     document.getElementById("send").disabled = false;
     var postId = document.getElementById("postId").value;
-    connection.invoke("AddToGroup", postId)
+    commentConnection.invoke("AddToGroup", postId)
 }
 
 function SendComment(event) {
     var postId = document.getElementById("postId").value;
     var content = document.getElementById("content").value;
-    connection.invoke("SendComment", postId, content)
+    commentConnection.invoke("SendComment", postId, content)
     event.preventDefault();
 }
