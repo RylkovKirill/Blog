@@ -1,4 +1,4 @@
-﻿@model IndexViewModel
+﻿@model PostsViewModel
 @inject TimeZoneService timeZoneService
 @addTagHelper *, Blog
 @foreach (Post post in Model.Posts)
@@ -23,8 +23,8 @@
             {
             <h5 class="card-title">@post.Title</h5>
             }
-            @*<p class="card-text"><small class="text-muted">@Html.Raw(timeZoneService.GetLocalDateTime(post.PostedDate))</small></p>*@
-            <p class="card-text"><small class="date-output text-muted">@post.PostedDate</small></p>
+            <p class="card-text"><small class="text-muted">@Html.Raw(timeZoneService.GetLocalDateTime(post.PostedDate))</small></p>
+            @*<p class="card-text"><small class="date-output text-muted">@post.PostedDate</small></p>*@
             <a asp-area="" asp-controller="Blog" asp-action="Details" asp-route-id="@post.Id" class="btn btn-primary">Читать полностью</a>
         </div>
     </div>

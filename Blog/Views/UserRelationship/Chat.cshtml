@@ -7,15 +7,15 @@
     {
         @foreach (var message in Model.Messages)
         {
-                <div class="box @(message.UserId == userManager.FindByNameAsync(User.Identity.Name).Result.Id ? "box_right" : "box_left")">
-                    <p class="card-text">@userManager.GetUserNameAsync(userManager.FindByIdAsync(message.UserId.ToString()).Result).Result</p>
-                    <div class="card text-white bg-info mb-3 w-100">
-                        <div class="card-body">
-                            <h5 class="card-title">@message.Content</h5>
-                            <p class="card-text text-right"><small class="text">@timeZoneService.GetLocalDateTime(message.PostedDate)</small></p>
-                        </div>
+            <div class="box @(message.UserId == userManager.FindByNameAsync(User.Identity.Name).Result.Id ? "box_right" : "box_left")">
+                <p class="card-text">@userManager.GetUserNameAsync(userManager.FindByIdAsync(message.UserId.ToString()).Result).Result</p>
+                <div class="card text-white bg-info mb-3 w-100">
+                    <div class="card-body">
+                        <h5 class="card-title">@message.Content</h5>
+                        <p class="card-text text-right"><small class="text">@timeZoneService.GetLocalDateTime(message.PostedDate)</small></p>
                     </div>
                 </div>
+            </div>
         }
     }
 </div>
@@ -40,7 +40,7 @@
         overflow: auto;
     }
 </style>
-<link rel="stylesheet" href="~/css/message.css"/>
+<link rel="stylesheet" href="~/css/message.css" />
 <style>
 
     .box {
@@ -65,8 +65,19 @@
         margin-top: 0px;
     }
 </style>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script>
     const currentUserName = '@User.Identity.Name';
+    var curPos = $(document).scrollTop();
+    var height = $("#comments").height();
+    var scrollTime = (height - curPos) / 1.73;
+    //$("#comments").animate({ "scrollTop": height }, "slow");
+    //$("#comments").animate({
+    //    scrollTop: ($("#comments").offset().top + $("#comments").height())
+    //}, 500);
+  //  $("#comments").scrollTop(100)
+    var objDiv = document.getElementById("comments");
+    objDiv.scrollTop = objDiv.scrollHeight;
 </script>
 <script src="~/js/signalr/dist/browser/signalr.min.js"></script>
 <script src="~/js/sendMessages.js"></script>

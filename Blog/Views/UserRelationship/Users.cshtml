@@ -1,4 +1,5 @@
-﻿@model UsersViewModel
+﻿@addTagHelper *, Blog
+@model UsersViewModel
 @inject Services.Interfaces.IRequestService _requestService
 <head>
     <title>@ViewData["Title"] - Пользователи</title>
@@ -38,6 +39,9 @@
             }
         </tbody>
     </table>
+    <div>
+    <page-link  page-model="Model.PageViewModel" page-action="Users"></page-link>
+    </div>
 </body>
 @*<style>
     .btn {

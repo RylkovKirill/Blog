@@ -27,7 +27,9 @@ function AddComment(userName, content, postedDate) {
     else {
         li.innerHTML = commentItems[1] + userName + commentItems[2] + content + commentItems[3] + date + commentItems[4];
     }
-     comments.appendChild(li);
+    comments.appendChild(li);
+    var comments = document.getElementById("comments");
+    objDiv.scrollTop = comments.scrollHeight;
 }
 
 

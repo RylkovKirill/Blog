@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Blog.Models
 {
-    public class IndexViewModel
+    public class PostsViewModel
     {
         public IEnumerable<Post> Posts { get; set; }
         public PageViewModel PageViewModel { get; set; }

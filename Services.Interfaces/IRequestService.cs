@@ -19,5 +19,6 @@ namespace Services.Interfaces
         void Remove(Guid id);
         IQueryable<ApplicationUser> GetUserFriends(ApplicationUser user);
         bool UserInFriendsList(IQueryable<ApplicationUser> friends, ApplicationUser user);
+        bool IsRequestExistence(ApplicationUser user1, ApplicationUser user2);
     }
 }

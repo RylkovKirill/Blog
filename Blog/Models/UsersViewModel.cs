@@ -10,5 +10,6 @@ namespace Blog.Models
     {
         public List<ApplicationUser> Users { get; set; }
         public List<ApplicationUser> Friends { get; set; }
+        public PageViewModel PageViewModel { get; set; }
     }
 }

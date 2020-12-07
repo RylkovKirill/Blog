@@ -1,40 +1,47 @@
-﻿.rating {
+﻿.rating 
+{
     float: left;
     display: inline-block;
 }
 
-    .rating:not(:checked) > input {
-        visibility: hidden;
-        position: absolute;
-    }
+.rating:not(:checked) > input 
+{
+    visibility: hidden;
+    position: absolute;
+}
 
-    .rating:not(:checked) > label {
-        float: right;
-        width: 1em;
-        overflow: hidden;
-        white-space: nowrap;
-        cursor: pointer;
-        font-size: 36px;
-        color: #ccc;
-    }
+.rating:not(:checked) > label 
+{
+    float: right;
+    width: 1em;
+    overflow: hidden;
+    white-space: nowrap;
+    cursor: pointer;
+    font-size: 36px;
+    color: #ccc;
+}
 
-        .rating:not(:checked) > label:before {
-            content: "\2605";
-        }
+.rating:not(:checked) > label:before 
+{
+    content: "\2605";
+}
 
-    .rating > input:checked ~ label {
-        color: #ffc700;
-    }
+.rating > input:checked ~ label 
+{
+    color: #ffc700;
+}
 
-    .rating:not(:checked) > label:hover,
-    .rating:not(:checked) > label:hover ~ label {
-        color: #deb217;
-    }
+.rating:not(:checked) > label:hover,
+.rating:not(:checked) > label:hover ~ label 
+{
+    color: #deb217;
+}
 
-    .rating > input:checked + label:hover,
-    .rating > input:checked + label:hover ~ label,
-    .rating > input:checked ~ label:hover,
-    .rating > input:checked ~ label:hover ~ label,
-    .rating > label:hover ~ input:checked ~ label {
-        color: #c59b08;
-    }
+.rating > input:checked + label:hover,
+.rating > input:checked + label:hover ~ label,
+.rating > input:checked ~ label:hover,
+.rating > input:checked ~ label:hover ~ label,
+.rating > label:hover ~ input:checked ~ label 
+{
+    color: #c59b08;
+}

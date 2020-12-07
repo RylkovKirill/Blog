@@ -77,5 +77,17 @@ namespace Services
         {
             return friends.Contains(user);
         }
+
+        public bool IsRequestExistence(ApplicationUser user1, ApplicationUser user2)
+        {
+            if( _repository.GetAll().Where((r => ((r.UserSender == user1 && r.UserReceiver == user2)&&r.RequestStatus==RequestStatus.WAITING) || ((r.UserSender == user2 && r.UserReceiver == user1) && r.RequestStatus == RequestStatus.WAITING))).Count() > 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 }

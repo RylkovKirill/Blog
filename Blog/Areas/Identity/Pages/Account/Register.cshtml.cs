@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using System.Globalization;
 
 namespace Blog.Areas.Identity.Pages.Account
 {
@@ -80,8 +81,8 @@ namespace Blog.Areas.Identity.Pages.Account
             returnUrl = returnUrl ?? Url.Content("~/");
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
-            {
-                var user = new ApplicationUser { UserName = Input.Email, Email = Input.Email, Longitude = Convert.ToDouble(Input.Longitude), Latitude = Convert.ToDouble(Input.Latitude)};
+            {   
+                var user = new ApplicationUser { UserName = Input.Email, Email = Input.Email, Longitude = Convert.ToDouble(Input.Longitude.Replace(",","."), CultureInfo.InvariantCulture), Latitude = Convert.ToDouble(Input.Latitude.Replace(",", "."), CultureInfo.InvariantCulture) };
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {

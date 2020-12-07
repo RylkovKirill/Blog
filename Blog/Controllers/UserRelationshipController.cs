@@ -17,6 +17,7 @@ namespace Blog.Controllers
         private readonly IRequestService _requestService;
         private readonly IChatService _chatService;
         private readonly IMessageService _messageService;
+        private int pageSize = 10;
 
         public UserRelationshipController(UserManager<ApplicationUser> userManager, IRequestService requestService, IChatService chatService, IMessageService messageService)
         {
@@ -26,33 +27,44 @@ namespace Blog.Controllers
             _messageService = messageService;
         }
 
-        public async Task<IActionResult> FriendsAsync()
+        public async Task<IActionResult> FriendsAsync(int page = 1)
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
             var friends = _requestService.GetUserFriends(user).ToList();
+            var count = friends.Count();
+            var items = friends.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+
+            PageViewModel pageViewModel = new PageViewModel(count, page, pageSize);
             List<Request> requests = new List<Request>();
-            foreach (var friend in friends)
+            foreach (var friend in items)
             {
                 requests.Add(_requestService.Get(user, friend));
             }
             var friendsViewModel = new FriendsViewModel()
             {
-                Friends = friends,
-                Requests = requests
-
+                Friends = items,
+                Requests = requests,
+                PageViewModel = pageViewModel,
             };
             return View(friendsViewModel);
         }
 
-        public async Task<IActionResult> UsersAsync()
+        public async Task<IActionResult> UsersAsync(int page = 1)
         {
+
             var user = await _userManager.GetUserAsync(HttpContext.User);
-            var users = new UsersViewModel()
+            var users = _userManager.Users.Where(u => u != user).ToList();
+            var count = users.Count();
+            var items =  users.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+
+            PageViewModel pageViewModel = new PageViewModel(count, page, pageSize);
+            var usersViewModel = new UsersViewModel()
             {
-                Users = _userManager.Users.Where(u => u != user).ToList(),
-                Friends = _requestService.GetUserFriends(user).ToList()
+                Users = items,
+                Friends = _requestService.GetUserFriends(user).ToList(),
+                PageViewModel = pageViewModel,
             };
-            return View(users);
+            return View(usersViewModel);
         }
 
         public async Task<IActionResult> RequestsAsync()
@@ -68,12 +80,15 @@ namespace Blog.Controllers
 
         public async Task<IActionResult> AddToFriendsAsync(string userId)
         {
-            var request = new Request()
+            if (!_requestService.IsRequestExistence(await _userManager.GetUserAsync(HttpContext.User),await _userManager.FindByIdAsync(userId)))
             {
-                UserReceiverId = userId,
-                UserSender = await _userManager.GetUserAsync(HttpContext.User),
-            };
-            _requestService.Update(request);
+                var request = new Request()
+                {
+                    UserReceiverId = userId,
+                    UserSender = await _userManager.GetUserAsync(HttpContext.User),
+                };
+                _requestService.Update(request);
+            }
             return RedirectToAction("Users");
         }
 

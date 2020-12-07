@@ -7,7 +7,11 @@ connections.on("UpdateOnlineUsers", function (users) {
             $(this).find("td:nth-child(2)").text("Online");
             count++;
         }
+        else {
+            $(this).find("td:nth-child(2)").text("Ofline");
+        }
     });
     document.getElementById("onlineUsersCount").innerText = count;
+    //document.getElementById("onlineUsersCount").innerText = users.length;
 });
 connections.start();

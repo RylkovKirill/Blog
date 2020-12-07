@@ -1,11 +1,12 @@
-﻿@model FriendsViewModel
+﻿@addTagHelper *, Blog
+@model FriendsViewModel
 
 <head>
     <title>@ViewData["Title"] - Пользователи</title>
 </head>
 <body>
     <div>
-        Пользователей онлайн : <span id="onlineUsersCount"></span>
+        Друзей онлайн : <span id="onlineUsersCount"></span>
     </div>
     <table class="table" id="userList">
         <thead>
@@ -31,6 +32,9 @@
                 }
         </tbody>
     </table>
+    <div>
+    <page-link  page-model="Model.PageViewModel" page-action="Friends"></page-link>
+    </div>
 </body>
 @*<style>
         .btn {

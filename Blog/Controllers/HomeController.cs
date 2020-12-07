@@ -53,7 +53,7 @@ namespace Blog.Controllers
             var items =await source.Skip((page - 1) * pageSize).Take(pageSize).ToListAsync();
 
             PageViewModel pageViewModel = new PageViewModel(count, page, pageSize);
-            IndexViewModel viewModel = new IndexViewModel
+            PostsViewModel viewModel = new PostsViewModel
             {
                 PageViewModel = pageViewModel,
                 Posts = items
@@ -83,7 +83,7 @@ namespace Blog.Controllers
             var items = source.Skip((page - 1) * pageSize).Take(pageSize).ToList();
 
             PageViewModel pageViewModel = new PageViewModel(count, page, pageSize);
-            IndexViewModel viewModel = new IndexViewModel
+            PostsViewModel viewModel = new PostsViewModel
             {
                 PageViewModel = pageViewModel,
                 Posts = items
@@ -130,7 +130,7 @@ namespace Blog.Controllers
             var items = await posts.Skip((page - 1) * pageSize).Take(pageSize).ToListAsync();
 
             PageViewModel pageViewModel = new PageViewModel(count, page, pageSize);
-            IndexViewModel viewModel = new IndexViewModel
+            PostsViewModel viewModel = new PostsViewModel
             {
                 PageViewModel = pageViewModel,
                 Posts = items

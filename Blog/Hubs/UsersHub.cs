@@ -26,9 +26,7 @@ namespace Blog.Hubs
         {
             var userGuid = this.Context.User.Identity.Name;
 
-            //try to remove key from dictionary
             if (!_onlineUsers.TryRemove(userGuid, out _))
-                //if not possible to remove key from dictionary, then try to mark key as not existing in cache
                 _onlineUsers.TryUpdate(userGuid, false, true);
 
             await UpdateOnlineUsers();
