@@ -8,6 +8,7 @@ namespace Entities
     public class Post : Base
     {
         [Required(ErrorMessage = "Название не может быть пустым")]
+        [StringLength(200, ErrorMessage = "Длинна названия не должна привышать 200 символов")]
         [Display(Name = "Название")]
         public string Title { get; set; }
 

@@ -86,7 +86,12 @@ namespace Blog.Controllers
         public async Task<IActionResult> Edit(Post post, IFormFile imageFile)
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
-
+            /*
+            if (post.Title.Length > 5)
+            {
+                ModelState.AddModelError("Title", "Недопустимая длина строки");
+            }
+            */
             if (ModelState.IsValid)
             {
                 post.UserId = user.Id;
